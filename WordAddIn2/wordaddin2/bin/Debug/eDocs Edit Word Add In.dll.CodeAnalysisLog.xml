@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio 12.0\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="12.0">
+ <Targets>
+  <Target Name="C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\eDocs Edit Word Add In.dll">
+   <Modules>
+    <Module Name="edocs edit word add in.dll">
+     <Namespaces>
+      <Namespace Name="WordAddIn2">
+       <Types>
+        <Type Name="DocSettings" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Active" Created="2015-07-17 11:26:45Z" FixCategory="DependsOnFix">
+           <Issue Name="DependsOnFix" Certainty="95" Level="CriticalError">Implement IDisposable on 'DocSettings' because it creates members of the following IDisposable types: 'DataTable'. If 'DocSettings' has previously shipped, adding new members that implement IDisposable to this type is considered a breaking change to existing consumers.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#process_doc(System.Boolean)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2015-07-17 11:26:45Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="c:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2" File="DocSettings.cs" Line="399">Object 'writer' can be disposed more than once in method 'DocSettings.process_doc(bool)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 399</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#set_datatable()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2015-07-17 11:26:45Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="c:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2" File="DocSettings.cs" Line="143">Object 'writer' can be disposed more than once in method 'DocSettings.set_datatable()'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 143</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="PageRevisionFrm" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#btn_cancel_Click(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2015-07-17 11:26:45Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="c:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2" File="PageRevisionFrm.cs" Line="29">Object 'this' can be disposed more than once in method 'PageRevisionFrm.btn_cancel_Click(object, EventArgs)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 29</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#btn_ok_Click(System.Object,System.EventArgs)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2015-07-17 11:26:45Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="c:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2" File="PageRevisionFrm.cs" Line="43">Object 'this' can be disposed more than once in method 'PageRevisionFrm.btn_ok_Click(object, EventArgs)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 43</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202">
+   <Name>Do not dispose objects multiple times</Name>
+   <Description>A correctly implemented Dispose method can be called multiple times without throwing an exception. However, this is not guaranteed and to avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.</Description>
+   <Resolution Name="Default">Object {0} can be disposed more than once in method {1}. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 43</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182334.aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="12.0.0.0" />
+  </Rule>
+  <Rule TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001">
+   <Name>Types that own disposable fields should be disposable</Name>
+   <Description>Types that declare disposable members should also implement IDisposable. If the type does not own any unmanaged resources, do not implement a finalizer on it.</Description>
+   <Resolution Name="DependsOnFix">Implement IDisposable on {0} because it creates members of the following IDisposable types: {1}. If {0} has previously shipped, adding new members that implement IDisposable to this type is considered a breaking change to existing consumers.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182172.aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalError</MessageLevel>
+   <File Name="designrules.dll" Version="12.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Category</String>
+  <String Key="Certainty">Certainty</String>
+  <String Key="CollapseAll">Collapse All</String>
+  <String Key="CheckId">Check Id</String>
+  <String Key="Error">Error</String>
+  <String Key="Errors">error(s)</String>
+  <String Key="ExpandAll">Expand All</String>
+  <String Key="Help">Help</String>
+  <String Key="Line">Line</String>
+  <String Key="Messages">message(s)</String>
+  <String Key="LocationNotStoredInPdb">[Location not stored in Pdb]</String>
+  <String Key="Project">Project</String>
+  <String Key="Resolution">Resolution</String>
+  <String Key="Rule">Rule</String>
+  <String Key="RuleFile">Rule File</String>
+  <String Key="RuleDescription">Rule Description</String>
+  <String Key="Source">Source</String>
+  <String Key="Status">Status</String>
+  <String Key="Target">Target</String>
+  <String Key="Warning">Warning</String>
+  <String Key="Warnings">warning(s)</String>
+  <String Key="ReportTitle">Code Analysis Report</String>
+ </Localized>
+</FxCopReport>

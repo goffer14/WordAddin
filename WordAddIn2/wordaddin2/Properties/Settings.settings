@@ -1,0 +1,39 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WordAddIn2.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="FirstUse" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="StartTime" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="addin_license" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="days_for_use" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Last_connction" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="serverString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">server=edocsaddinserver.col1u7zgsknb.us-west-2.rds.amazonaws.com;database=edocsusers;uid=admin;pwd=mypassword;</Value>
+    </Setting>
+    <Setting Name="is_active" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="heading1_name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Heading 1</Value>
+    </Setting>
+    <Setting Name="heading2_name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Heading 2</Value>
+    </Setting>
+    <Setting Name="introduction1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Introduction‎ 1</Value>
+    </Setting>
+    <Setting Name="introduction2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Introduction‎ 2</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

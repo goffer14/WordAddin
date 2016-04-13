@@ -1,0 +1,100 @@
+G:\Visual Studio\WordAddIn2\WordAddIn2\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+G:\Visual Studio\WordAddIn2\WordAddIn2\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
+G:\Visual Studio\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.Properties.Resources.resources
+G:\Visual Studio\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.csproj.GenerateResource.Cache
+G:\Visual Studio\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.PageRevisionFrm.resources
+G:\Visual Studio\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.csprojResolveAssemblyReference.cache
+G:\Visual Studio\WordAddIn2\WordAddIn2\bin\Debug\eDocs Edit Word Add In.dll
+G:\Visual Studio\WordAddIn2\WordAddIn2\bin\Debug\eDocs Edit Word Add In.pdb
+G:\Visual Studio\WordAddIn2\WordAddIn2\bin\Debug\eDocs Edit Word Add In.dll.manifest
+G:\Visual Studio\WordAddIn2\WordAddIn2\bin\Debug\eDocs Edit Word Add In.vsto
+G:\Visual Studio\WordAddIn2\WordAddIn2\obj\Debug\eDocs Edit Word Add In.dll
+G:\Visual Studio\WordAddIn2\WordAddIn2\obj\Debug\eDocs Edit Word Add In.pdb
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.PageRevisionFrm.resources
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.Properties.Resources.resources
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.csproj.GenerateResource.Cache
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\eDocs Edit Word Add In.dll
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\eDocs Edit Word Add In.pdb
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\eDocs Edit Word Add In.dll.manifest
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\eDocs Edit Word Add In.vsto
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\Microsoft.Office.Tools.Common.dll
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\Microsoft.Office.Tools.dll
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\Microsoft.Office.Tools.v4.0.Framework.dll
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\Microsoft.Office.Tools.Word.dll
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\Microsoft.Office.Tools.v4.0.Framework.xml
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\Microsoft.Office.Tools.Common.xml
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\Microsoft.Office.Tools.Word.xml
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\obj\Debug\eDocs Edit Word Add In.dll
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\obj\Debug\eDocs Edit Word Add In.pdb
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\eDocs Edit Word Add In.dll.CodeAnalysisLog.xml
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\eDocs Edit Word Add In.dll.lastcodeanalysissucceeded
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.dll
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.pdb
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.dll.manifest
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.vsto
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.v4.0.Framework.dll
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.v4.0.Framework.xml
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\test1\SmoothProgressBar.dll
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\test1\SmoothProgressBar.pdb
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.csprojResolveAssemblyReference.cache
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\obj\Debug\BackgroundWorkerDemo.AlertForm.resources
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.resetH.resources
+C:\Users\Weiss\Desktop\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.dll.config
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\BackgroundWorkerDemo.AlertForm.resources
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.resetH.resources
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.PageRevisionFrm.resources
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.Properties.Resources.resources
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.csproj.GenerateResource.Cache
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.dll.config
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.dll
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.pdb
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.dll.manifest
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Common.dll
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.dll
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.v4.0.Framework.dll
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Word.v4.0.Utilities.dll
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.VisualStudio.Tools.Applications.Runtime.dll
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\stdole.dll
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Common.xml
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Word.v4.0.Utilities.xml
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.VisualStudio.Tools.Applications.Runtime.xml
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.v4.0.Framework.xml
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\eDocs Edit Word Add In.dll
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\eDocs Edit Word Add In.pdb
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.vsto
+C:\Users\goffe\Downloads\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.csprojResolveAssemblyReference.cache
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.dll.config
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.dll
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.pdb
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.dll.manifest
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\eDocs Edit Word Add In.vsto
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Common.dll
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.dll
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.v4.0.Framework.dll
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Word.dll
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Word.v4.0.Utilities.dll
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.VisualStudio.Tools.Applications.Runtime.dll
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\stdole.dll
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Common.xml
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Word.xml
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Word.v4.0.Utilities.xml
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.VisualStudio.Tools.Applications.Runtime.xml
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.v4.0.Framework.xml
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\BackgroundWorkerDemo.AlertForm.resources
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.FreeTextfrm.resources
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.resetH.resources
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.PageRevisionFrm.resources
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.Properties.Resources.resources
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.csproj.GenerateResource.Cache
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\eDocs Edit Word Add In.dll
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\eDocs Edit Word Add In.pdb
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Debug\test1\MySql.Data.dll
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Debug\WordAddIn2.AuthenticateForm.resources
