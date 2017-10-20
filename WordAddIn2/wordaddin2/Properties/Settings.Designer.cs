@@ -8,12 +8,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WordAddIn2.Properties {
+namespace eDocs_Editor.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
         
@@ -25,10 +25,10 @@ namespace WordAddIn2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool FirstUse {
+        [global::System.Configuration.DefaultSettingValueAttribute("true")]
+        public string FirstUse {
             get {
-                return ((bool)(this["FirstUse"]));
+                return ((string)(this["FirstUse"]));
             }
             set {
                 this["FirstUse"] = value;
@@ -37,6 +37,7 @@ namespace WordAddIn2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2016-06-23")]
         public global::System.DateTime StartTime {
             get {
                 return ((global::System.DateTime)(this["StartTime"]));
@@ -81,25 +82,23 @@ namespace WordAddIn2.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("server=edocsaddinserver.col1u7zgsknb.us-west-2.rds.amazonaws.com;database=edocsus" +
             "ers;uid=admin;pwd=mypassword;")]
         public string serverString {
             get {
                 return ((string)(this["serverString"]));
             }
-            set {
-                this["serverString"] = value;
-            }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool is_active {
+        [global::System.Configuration.DefaultSettingValueAttribute("false")]
+        public string is_active {
             get {
-                return ((bool)(this["is_active"]));
+                return ((string)(this["is_active"]));
             }
             set {
                 this["is_active"] = value;

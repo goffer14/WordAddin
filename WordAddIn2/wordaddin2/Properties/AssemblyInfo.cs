@@ -6,12 +6,12 @@ using System.Security;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("eDocs Edit Word Add In")]
+[assembly: AssemblyTitle("eDocs Editor")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Global eDocs")]
-[assembly: AssemblyProduct("eDocs Edit Word Add In")]
-[assembly: AssemblyCopyright("Copyright: Global eDocs ©  2015")]
+[assembly: AssemblyProduct("eDocs Editor")]
+[assembly: AssemblyCopyright("Copyright: Global eDocs ©  2016")]
 [assembly: AssemblyTrademark("Global eDocs")]
 [assembly: AssemblyCulture("")]
 
@@ -21,7 +21,7 @@ using System.Security;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("fd7f2cbd-101f-4be4-b34a-c1d640b95fe2")]
+[assembly: Guid("9984BEB8-C8A1-4135-8FDE-F70E51A5CFCE")]
 
 // Version information for an assembly consists of the following four values:
 //

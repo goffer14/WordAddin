@@ -74,6 +74,7 @@ C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Of
 C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.Word.dll
 C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.Word.v4.0.Utilities.dll
 C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.VisualStudio.Tools.Applications.Runtime.dll
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\MySql.Data.dll
 C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\stdole.dll
 C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.Common.xml
 C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.Word.xml
@@ -82,12 +83,40 @@ C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Vi
 C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.v4.0.Framework.xml
 C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
 C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\BackgroundWorkerDemo.AlertForm.resources
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\WordAddIn2.AuthenticateForm.resources
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\WordAddIn2.setStylesToDoc.resources
+C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\WordAddIn2.FreeTextfrm.resources
 C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\WordAddIn2.PageRevisionFrm.resources
 C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\WordAddIn2.Properties.Resources.resources
 C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\WordAddIn2.csproj.GenerateResource.Cache
 C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\eDocs Edit Word Add In.dll
 C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\eDocs Edit Word Add In.pdb
-C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\MySql.Data.dll
-C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\WordAddIn2.AuthenticateForm.resources
-C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\WordAddIn2.FreeTextfrm.resources
-C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\WordAddIn2.setStylesToDoc.resources
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\BackgroundWorkerDemo.AlertForm.resources
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\WordAddIn2.AuthenticateForm.resources
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\WordAddIn2.FreeTextfrm.resources
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\WordAddIn2.PageRevisionFrm.resources
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\WordAddIn2.Properties.Resources.resources
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\WordAddIn2.csproj.GenerateResource.Cache
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.Common.dll
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.dll
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.v4.0.Framework.dll
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.Word.dll
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.Word.v4.0.Utilities.dll
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.VisualStudio.Tools.Applications.Runtime.dll
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\MySql.Data.dll
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\stdole.dll
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.Common.xml
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.Word.xml
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.Word.v4.0.Utilities.xml
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.VisualStudio.Tools.Applications.Runtime.xml
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.v4.0.Framework.xml
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\eDocs Edit Word Add In - Lite.dll.config
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\eDocs Edit Word Add In - Lite.dll
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\eDocs Edit Word Add In - Lite.pdb
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\eDocs Edit Word Add In - Lite.dll.manifest
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\eDocs Edit Word Add In - Lite.vsto
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\bin\Release\eDocs Edit Word Add In - Lite.tlb
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\eDocs Edit Word Add In - Lite.dll
+C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\WordAddIn2\obj\Release\eDocs Edit Word Add In - Lite.pdb

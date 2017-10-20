@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WordAddIn2.Properties {
+namespace eDocs_Editor.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace WordAddIn2.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WordAddIn2.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("eDocs_Editor.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,6 +66,16 @@ namespace WordAddIn2.Properties {
         internal static System.Drawing.Bitmap Animation {
             get {
                 object obj = ResourceManager.GetObject("Animation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap change_rivision {
+            get {
+                object obj = ResourceManager.GetObject("change_rivision", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

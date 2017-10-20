@@ -1,53 +1,56 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="Ribbon_Load">
-  
+ 
   <ribbon>
-
     <tabs>
-      <tab id="edocs" label="Global eDocs">
-        <group id="GeneralGroup_ribbon" label="Creating eDocs">
-          <button id="CreateEdocFromThis_ribbon" label="Make This eDoc" screentip="Create New eDoc From This Doc" getImage="GetImage" size="large" onAction="SelectStylesfromDoc" supertip="Creates a new Document in an eDocs Format, FromThis Doc" />
-          <button id="Header1ToTop_ribbon" label="Heading1 To Top" screentip="Heading1 To Top" getImage="GetImage" size="large" onAction="OnHeader1ToTop" supertip="Reset Headers" />
-           <button id="ProcessEdoc_ribbon" label="Process eDoc"  screentip="Process eDoc" getImage="GetImage" size="large" onAction="OnProcesseDoc" supertip="Rebuilds Structure and Process Visualisation for eDoc Format." />
-        </group>
-        <group id="ProcessGroup" label="Revision Management">
-          <button id="PageRevision_ribbon" label="Page Revision" screentip="Page Revision" getImage="GetImage" size="large" onAction="PageRevisionForm" supertip="Add Revision to Edit Pages." />
-          <button id="FreeText_ribbon" label="Free Text Fields" screentip="Insert Free Text Fields" getImage="GetImage" size="large" onAction="FreeText" supertip="Add Text to Edit Pages." />
-          <button id="ProcessListOfE_ribbon" label="List of Effective Pages" screentip="list of effective pages" getImage="GetImage" size="large" onAction="OnListOf" supertip="Create List of Effective Pages.(in Diffrent Document)" />
+      <tab id="edocs" label="eDocs Editor">
+        <group id="RivisionGroup" label="Revision Management">
+          <button id="setStyels_ribbon" label="Process Doc" getImage="GetImage" size="large" onAction="seteDocsStyels"/>
+          <button id="PageRevision_ribbon" label="Control Panel" screentip="Page Revision" getImage="GetImage" size="large" onAction="PageRevisionForm" supertip="Add Revision to Edit Pages." />
+          <button id="Loep_ribbon" label="Multi LOEP" screentip="Create Multi LOEP" getImage="GetImage" size="large" onAction="openLOEP" supertip="Create Multi LOEP in one Doc" />
+           </group>
+        <group id="DocumentGroup" label="Document Management">
+          <button id="ProcessListOfE_ribbon" label="Create LOEP" screentip="list of effective pages" getImage="GetImage" size="large" onAction="OnListOf" supertip="Create List of Effective Pages" />
+          <button id="ExportChanges_ribbon" label="Export Changes" screentip="Export Rivision Changes to new Doc" getImage="GetImage" size="large" onAction="OnExportChagnes" supertip="Export Changes to new Doc (Only Inserted + Deleted Changes)" />
+          <button id="ProcessTOC_ribbon" label="Replace TOC Paging" screentip="Update Table of Content" getImage="GetImage" size="large" onAction="OnTOC" supertip="Update Table of Content" />
+          <button id="sameAsPrevious_ribbon" label="Same as Previous" screentip="All Sections Same as Previous" getImage="GetImage" size="large" onAction="makeAllSameAsPrevious" supertip="Make all section Headers And Footers same as Previous" />
         </group>
 
         <group id="auto_rivision_control" label="Auto Revision Management">
-          <toggleButton id="toggleButton_ribbon" label="Auto Page Revision" screentip="auto revision and date control" getImage="GetImage" getPressed ="GetEnable" onAction="autoRev" supertip="if pressed eDoc will change revision and date as you go" />
-          <editBox id="rev_cbo" label="Revision:" getEnabled="GetEnable" onChange="ocCurrentRev"/>
+          <toggleButton id="toggleButton_ribbon" getLabel="GetMonitorText" screentip="auto revision and date control" getImage="GetImage" getPressed ="GetEnable" onAction="autoRev" supertip="if pressed eDoc will change revision and date as you go" />
+          <editBox id="rev_cbo" label="Revision:" getEnabled="GetEnable" onChange="ocCurrentRev" getText="onGetEbCurrentRev"/> 
           <editBox id="date_cbo" label="Date:" getEnabled="GetEnable" onChange="ocCurrentDate" getText="onGetEbCurrentDate"/>
-        </group>
-        <group id="EditTemplate" label="Edit Templates">
-          <button id="Edit_doc_Template_ribbon" label="Edit eDoc Template" screentip="Edit the Template" getImage="GetImage" size="large" onAction="edit_doc_template" supertip="Edit the eDoc Template as you like" />
-        </group>
-        <group id="ChangeStyle" label="Styles Management">
-          <button id="Change_style_button" label="Change eDoc Styles" screentip="Change the eDoc Styles" getImage="GetImage" size="large" onAction="ChangeStyleSettings" supertip="Edit the eDoc Styles as you like" />
-        </group>
+          </group>
       </tab>
     </tabs>
 
   </ribbon>
 
   <contextMenus>
- 
-    <contextMenu idMso="ContextMenuHeaderArea">
-      <menu id="edocs_header" label="eDocs">
-        <button id="PageRevision_header" label="Page Revision" screentip="Page Revision" onAction="PageRevisionForm" supertip="Add Revision to Edit Pages." />
-        <button id="ProcessEdoc_header" label="Process eDoc" screentip="Process eDoc" onAction="OnProcesseDoc" supertip="Rebuilds Structure and Process Visualisation for eDoc Format." />
-        <button id="CreateEdoc_header" label="Create New eDoc" screentip="Create New eDoc" onAction="OnCreateEdoc" supertip="Creates a new Document in an eDocs Format." />
+    <contextMenu idMso="ContextMenuText">
+      <menu id="edocs_text" label="Add eDoc Code">
+          <button id="Page_Section_text" label="Page code" onAction="insertSectionPageText" />
+          <button id="Revision_Section_text" label="Revision code" onAction="insertSectionRevText" />
+          <button id="Date_Section_text" label="Date code" onAction="insertSectionDateText" />
+          <button id="Issue_Section_text" label="Issue code" onAction="insertSectionIssueText" />
+          <button id="Effictive_Section_text" label="Effective Date" onAction="insertSectionEffictiveText" />
+          <button id="Text_Section_1_text" label="Text 1 code" onAction="insertSectionText1Text" />
+          <button id="Text_Section_2_text" label="Text 2 code" onAction="insertSectionText2Text" />
+          <button id="Text_Section_3_text" label="Text 3 code" onAction="insertSectionText3Text" />
+          <button id="Text_Section_4_text" label="Text 4 code" onAction="insertSectionText4Text" />
       </menu>
     </contextMenu>
-
-    <contextMenu idMso="ContextMenuText">
-      <menu id="edocs_text" label="eDocs">
-        <button id="PageRevision_text" label="Page Revision" screentip="Page Revision" onAction="PageRevisionForm" supertip="Add Revision to Edit Pages." />
-        <button id="ProcessEdoc_text" label="Process eDoc" screentip="Process eDoc" onAction="OnProcesseDoc" supertip="Rebuilds Structure and Process Visualisation for eDoc Format." />
-        <button id="CreateEdoc_text" label="Create New eDoc" screentip="Create New eDoc" onAction="OnCreateEdoc" supertip="Creates a new Document in an eDocs Format." />
-        <button id="ProcessListOfE_right_click" label="Add list of effective pages" screentip="list of effective pages" onAction="OnListOf" supertip="Create List of Effective Pages.(in Diffrent Document)" />
+    <contextMenu idMso="ContextMenuTextTable">
+      <menu id="edocs_text_cell" label="Add eDoc Code">
+        <button id="Page_Section_text_cell" label="Page code" onAction="insertSectionPageText" />
+          <button id="Revision_Section_text_cell" label="Revision code" onAction="insertSectionRevText" />
+          <button id="Date_Section_text_cell" label="Date code" onAction="insertSectionDateText" />
+          <button id="Issue_Section_text_cell" label="Issue code" onAction="insertSectionIssueText" />
+          <button id="Effictive_Section_text_cell" label="Effective Date" onAction="insertSectionEffictiveText" />
+          <button id="Text_Section_1_text_cell" label="Text 1 code" onAction="insertSectionText1Text" />
+          <button id="Text_Section_2_text_cell" label="Text 2 code" onAction="insertSectionText2Text" />
+          <button id="Text_Section_3_text_cell" label="Text 3 code" onAction="insertSectionText3Text" />
+          <button id="Text_Section_4_text_cell" label="Text 4 code" onAction="insertSectionText4Text" />
       </menu>
     </contextMenu>
 

@@ -1,4 +1,4 @@
-﻿namespace WordAddIn2
+﻿namespace eDocs_Editor
 {
     partial class AuthenticateForm
     {

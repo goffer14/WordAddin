@@ -1,27 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Security.Cryptography;
 
 using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
-using System.Drawing;
-using System.ComponentModel;
-using System.IO;
 using BackgroundWorkerDemo;
-using WordAddIn2.Properties;
+using eDocs_Editor.Properties;
 using MySql.Data.MySqlClient;
 using System.Net;
+using System.Diagnostics;
 
-namespace WordAddIn2
+namespace eDocs_Editor
 {
     public static class settings
     {
         public static string doc_password = "edocs_protection";
-        public static Dictionary<string, string> original_sections = new Dictionary<string, string> { };
+        public static Dictionary<int, int> original_sections = new Dictionary<int, int> { };
         public static string last_rev = "";
         public static string last_date = "";
         public static string last_text1 = "";
@@ -31,11 +25,11 @@ namespace WordAddIn2
         public static Office.IRibbonControl control_of_list;
         public static PageRevisionFrm page_rev_frm = null;
         public static AuthenticateForm Authenticate_frm = null;
-        public static FreeTextfrm free_text_frm = null;
         public static AlertForm alert;
         public static int num_of_click = 0;
+        public static bool monitorDoc = false;
+        public static DateTime dateToMonitor;
         public static bool View_ShowComments;
-        public static bool save_text=false;
         public static bool View_ShowRevisionsAndComments;
         public static bool with_page_zero = true;
         public static bool TrackFormatting;
@@ -47,36 +41,102 @@ namespace WordAddIn2
         public static object which = Microsoft.Office.Interop.Word.WdGoToDirection.wdGoToFirst;
         public static object missing = System.Reflection.Missing.Value;
         public static object routeDocument = false;
-        public static bool check_if_edoc(Word.Document Doc)
+        public static int freeDaysOfUse = 14;
+        public static bool toCheckInInternet = false;
+         public static bool check_if_edoc(Word.Document Doc)
         {
-            int numOfData = 0;
-            foreach (Word.Variable varr in Doc.Variables)
-                if (varr.Name.Contains("edocs"))
-                    numOfData++;
-
-            if (numOfData >= 12)
-                return true;
-            return false;
+            try { Doc.Fields.Locked = 0; } catch { return true;};
+            return true;
         }
-
-        public static void check_if_vaild_copy()
+        public static void check_if_vaild_copy(bool isOnStatUp)
         {
-            if (Settings.Default.FirstUse)
+            Settings.Default.Reload();
+            if (Settings.Default.FirstUse == "true")
             {
+                if (isOnStatUp)
+                {
+                    if (!toCheckInInternet && freeDaysOfUse != 0)
+                    {
+                        Settings.Default.StartTime = DateTime.Now.Date;
+                        Settings.Default.Last_connction = DateTime.Now.Date;
+                        Settings.Default.days_for_use = freeDaysOfUse;
+                        Settings.Default.is_active = "true";
+                        Settings.Default.FirstUse = "false";
+                        Settings.Default.Save();
+                    }
+                    return;
+                }
+                if (toCheckInInternet)
+                {
+                 
                     Authenticate_frm = new AuthenticateForm();
                     Authenticate_frm.Show();
                     return;
-            }
-            else if(CheckForInternetConnection())
-            {
-                updateLicense();
-            }
-            if (Settings.Default.Last_connction.Add(new TimeSpan(10, 0, 0, 0)) < DateTime.Now.Date)
-                Settings.Default.is_active = false;
-            if (Settings.Default.StartTime.Add(new TimeSpan(Settings.Default.days_for_use, 0, 0, 0)) < DateTime.Now.Date)
-                Settings.Default.is_active = false;
+             
+                }
+                else
+                {
+                    Settings.Default.StartTime = DateTime.Now.Date;
+                    Settings.Default.Last_connction = DateTime.Now.Date;
+                    Settings.Default.days_for_use = freeDaysOfUse;
+                    Settings.Default.is_active = "true";
+                    Settings.Default.FirstUse = "false";
+                    Settings.Default.Save();
+                }
 
+            }
+            else if (toCheckInInternet)
+            {
+                if (CheckForInternetConnection())
+                    updateLicense();
+                if (Settings.Default.Last_connction.Add(new TimeSpan(30, 0, 0, 0)) < DateTime.Now.Date)
+                    Settings.Default.is_active = "false";
+            }
+            if (Settings.Default.StartTime.Add(new TimeSpan(Settings.Default.days_for_use, 0, 0, 0)) < DateTime.Now.Date)
+                Settings.Default.is_active = "false";
             Settings.Default.Save();
+        }
+        public static void check_if_vaild_onStartUp()
+        {
+            Settings.Default.Upgrade();
+            Settings.Default.Reload();
+            Settings.Default.Save();
+            check_if_vaild_copy(true);
+        }
+        public static void process_doc(Word.Document Doc)
+        {
+            DocSettings DS = new DocSettings(Doc);
+            DS.IsAlert = true;
+            int DocPageNumber = DS.GetPageNumber(Doc);
+            if (DS.PageNumberFromHeaders(DocPageNumber))
+                if (settings.monitorDoc)
+                {
+                    DS.processMonitoring();
+                    settings.monitorDoc = false;
+                }
+            DS.UpDateFields();
+            trackChange(Doc, false);
+            Doc.Application.ActiveWindow.VerticalPercentScrolled = 0;
+            Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("toggleButton_ribbon");
+            Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("rev_cbo");
+            Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("date_cbo");
+
+
+        }
+        public static void makeAllSameAsPrevious(Word.Document Doc)
+        {
+            int i;
+            if (Doc.Sections.Count > 2)
+                for (i = 0; i <= Doc.Sections.Count; i++)
+                {
+                    try{Doc.Sections[i].Headers[Word.WdHeaderFooterIndex.wdHeaderFooterFirstPage].LinkToPrevious = true;} catch{}
+                    try { Doc.Sections[i].Headers[Word.WdHeaderFooterIndex.wdHeaderFooterEvenPages].LinkToPrevious = true; } catch { }
+                    try { Doc.Sections[i].Headers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].LinkToPrevious = true; } catch { }
+                    try { Doc.Sections[i].Footers[Word.WdHeaderFooterIndex.wdHeaderFooterFirstPage].LinkToPrevious = true; } catch { }
+                    try { Doc.Sections[i].Footers[Word.WdHeaderFooterIndex.wdHeaderFooterEvenPages].LinkToPrevious = true; } catch { }
+                    try { Doc.Sections[i].Footers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].LinkToPrevious = true; } catch { }
+                }
+            Doc.Application.ActiveWindow.VerticalPercentScrolled = 0;
         }
         public static void updateLicense()
         {
@@ -85,32 +145,27 @@ namespace WordAddIn2
             MySqlCommand mcd;
             MySqlDataReader mdr;
             DateTime CurrentDate = DateTime.Now.Date;
+            mcon.Open();
+                s = "select * from license_table where license_key = '" + Settings.Default.addin_license + "'" + " and is_active = " + 1;
+                mcd = new MySqlCommand(s, mcon);
             try
             {
-                mcon.Open(); s = "select * from license_table where license_key = '" + Settings.Default.addin_license + "'";
-                mcd = new MySqlCommand(s, mcon);
                 mdr = mcd.ExecuteReader();
-                if (mdr.Read())
-                {
-                    int is_active = mdr.GetInt32("is_active");
-                    mcon.Close();
-                    if (is_active == 1)
-                        Settings.Default.is_active = true;
-                    else
-                        Settings.Default.is_active = false;
-                }
-                else
-                {
-                    Settings.Default.is_active = false;
-                }
-                Settings.Default.Last_connction = CurrentDate;
-                Settings.Default.Save();
             }
             catch (Exception ex)
             {
-
+                Debug.Write(ex);
+                mcon.Close();
+                return;
             }
-            
+            if (mdr.Read())
+                Settings.Default.is_active = "true";
+            else
+                Settings.Default.is_active = "false";
+            mcon.Close();
+            Settings.Default.Last_connction = CurrentDate;
+            Settings.Default.Save();
+                
         }
         public static bool CheckForInternetConnection()
         {
@@ -129,118 +184,11 @@ namespace WordAddIn2
                 return false;
             }
         }
-        public static string[] GetCellFromPage(Word.Document Doc, int pageNum)
-        {
-
-            string[] vars = new string[3];
-            string letssee;
-            try
-            {
-                vars[0] = Doc.Variables["edocs_PAGE" + pageNum + "_page"].Value;
-            }
-            catch
-            {
-                vars[0] = "No Page";
-                vars[1] = "No Revision";
-                vars[2] = "No Date";
-                return vars;
-            }
-            try
-            {
-                letssee = "edocs_PAGE" + vars[0] + "_rev";
-                vars[1] = Doc.Variables[letssee].Value;
-            }
-            catch
-            {
-                vars[1] = "No Revision";
-            }
-            try
-            {
-                vars[2] = Doc.Variables["edocs_PAGE" + vars[0] + "_date"].Value;
-            }
-            catch
-            {
-                vars[2] = "No Date";
-            }
-            return vars;
-
-        }
-  
-        public static bool init_doc(Word.Document Doc)
-        {
-            DocSettings DS = new DocSettings(Doc);
-            if (!DS.dt_init())
-                return false;
-            DS.InsertCodeToHeader();
-            DS.InesrtDatatoHeadingCells();
-            if(DS.insertSectionBreakBeforeHeading1())
-              DS.resetHeadersInFirstSection();
-            DS.UpDateFields();
-            return true;
-        }
-        public static void ChagneStyles(Word.Document Doc)
-        {
-            DocSettings DS = new DocSettings(Doc);
-            DS.InsertCodeToHeader();
-            if (Doc.Sections.Count>1)
-                DS.resetHeadersInFirstSection();
-            DS.UpDateFields();
-        }
-
         public static void trackChange(Word.Document Doc, bool boolSum)
         {
             Doc.TrackFormatting = false;
             Doc.TrackMoves = false;
             Doc.TrackRevisions = false;
-
-        }
-        public static void OnCreateEdocFromDoc(Word.Document CopyTo, string open_file)
-        {
-            Word.Document TeamlpateToCopy = Globals.ThisAddIn.Application.Documents.Add(open_file);
-            object saveOption = Word.WdSaveOptions.wdDoNotSaveChanges;
-            object originalFormat = Word.WdOriginalFormat.wdOriginalDocumentFormat;
-            object routeDocument = false;
-            if(!replacSectionBreak(CopyTo))
-            {
-                //MessageBox.Show("In Order to Proceed Delete all Section Breaks in Doc");
-                TeamlpateToCopy.Close(ref saveOption, ref originalFormat, ref routeDocument);
-                settings.alert.Close();
-                return;
-            }
-            for (int i = 1; i <= CopyTo.Sections.Count; i++)
-            {
-                TeamlpateToCopy.Sections[1].Headers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range.Tables[1].Range.Copy();
-                CopyTo.Sections[i].Headers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range.Application.Selection.WholeStory();
-                CopyTo.Sections[i].Headers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range.Paste();
-                CopyTo.Sections[i].Headers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].PageNumbers.RestartNumberingAtSection = false;
-                try
-                {
-                    TeamlpateToCopy.Sections[1].Footers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range.Tables[1].Range.Copy();
-                    CopyTo.Sections[i].Footers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range.Application.Selection.WholeStory();
-                    CopyTo.Sections[i].Footers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].Range.Paste();
-                    CopyTo.Sections[i].Footers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].PageNumbers.RestartNumberingAtSection = false;
-                }
-                catch {}
-            }
-            TeamlpateToCopy.Close(ref saveOption, ref originalFormat, ref routeDocument);
-            CopyTo.Application.Selection.Collapse();
-            if (!settings.init_doc(CopyTo))
-            {
-                MessageBox.Show("Something Went Wrong");
-                settings.alert.Close();
-                return;
-            }
-
-            CopyTo.Application.ActiveWindow.VerticalPercentScrolled = 0;
-            CopyTo.Application.Selection.Collapse();
-            CopyTo.Application.ActiveWindow.View.ShowFieldCodes = false;
-        }
-        public static void changeStyles(Word.Document CopyTo)
-        {
-            settings.ChagneStyles(CopyTo);
-            CopyTo.Application.ActiveWindow.VerticalPercentScrolled = 0;
-            CopyTo.Application.Selection.Collapse();
-            CopyTo.Application.ActiveWindow.View.ShowFieldCodes = false;
         }
         public static bool replacSectionBreak(Word.Document Doc)
         {
@@ -248,7 +196,6 @@ namespace WordAddIn2
             Word.Range rng = Doc.Range();
             while (rng.Find.Execute(findText))
             {
-
                 Object beginPageNext = rng.Start;
                 Object endPageNext = rng.End;
                 Word.Range rangeForBreak = Doc.Range(ref beginPageNext, ref endPageNext);
@@ -264,95 +211,109 @@ namespace WordAddIn2
         {
             return doc.ComputeStatistics(Word.WdStatistic.wdStatisticPages, System.Reflection.Missing.Value);
         }
-        public static void process_doc(Word.Document Doc)
+        public static void ChangesExport(Word.Document Doc)
         {
             DocSettings DS = new DocSettings(Doc);
-            DS.IsAlert = true;
-            int DocPageNumber = DS.GetPageNumber(Doc);
-            if (DS.PageNumberFromHeaders(DocPageNumber))
-                DS.UpDateFields();
+            DS.ChangesExport();
             trackChange(Doc, true);
-            save_text = false;
-            Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("toggleButton_ribbon");
-            Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("rev_cbo");
-            Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("date_cbo");
-            Doc.Application.ActiveWindow.VerticalPercentScrolled = 0;
-
         }
-        public static void Header1ToTop(Word.Document Doc)
+        public static void CreateMultiLOEP(Word.Document Doc,List<loepDocument> loepDocumentArray)
         {
-
-            // Blind the Application to do the magic behind the curtains!
-            //Doc.Application.ScreenUpdating = false;
             DocSettings DS = new DocSettings(Doc);
-            Doc.Application.ScreenUpdating = true;
-            DS.arrangeHeader1();
+            DS.CreateMultiLOEP(loepDocumentArray);
             trackChange(Doc, true);
-            Doc.Application.ActiveWindow.VerticalPercentScrolled = 0;
-
         }
-        public static void SavePagesText(Word.Document Doc)
+        
+        public static void ProcessMonitoring(Word.Document Doc)
         {
+            DocSettings DS = new DocSettings(Doc);
+            for(int i=1;i<= DS.GetPageNumber(Doc);i++)
+                DS.changePageData(i);
+            DS.UpDateFields();
+        }
+        private static int GetPageNumberOfRange(Word.Range range)
+        {
+            return (int)range.get_Information(Word.WdInformation.wdActiveEndPageNumber);
+        }
+        public static string LOEPPath(int pageSize)
+        {
+            string DocPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            if(pageSize==5)
+                DocPath = DocPath + "\\Global eDocs\\eDocs Add-in\\Templates" + "\\eDoc List of effective Template - A5.docx";
+            else
+                DocPath = DocPath + "\\Global eDocs\\eDocs Add-in\\Templates" + "\\eDoc List of effective Template - A4.docx";
+            return DocPath;
+        
+        }
+        public static void initTOC(Word.Document Doc)
+        {
+            DocSettings DS = new DocSettings(Doc);
 
-            // Blind the Application to do the magic behind the curtains!
-            //Doc.Application.ScreenUpdating = false;
-            if (!save_text)
-                return;
-
-                DocSettings DS = new DocSettings(Doc);
-                save_text = true;
-                original_sections = DS.saveAllRangsText();
-            if (original_sections == null)
+            if (Doc.TablesOfContents.Count < 0)
             {
-                save_text = false;
-                Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("toggleButton_ribbon");
-                Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("rev_cbo");
-                Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("date_cbo");
+                MessageBox.Show("Cant Find TOC in DOC");
+                return;
             }
-                Doc.Application.ActiveWindow.VerticalPercentScrolled = 0;
-            
+            DS.initTOC();
+            trackChange(Doc, true);
+
         }
-        public static void init_ListOfE_New(Word.Document RealDoc, string fileName)
+        public static void init_ListOfE_New(Word.Document RealDoc,int pageSize)
         {
+            // JUST FOR ADD PAGES TO
+           // BuildTable_ListOfEffctive_BigData(RealDoc, RealDoc.Tables[2]);
+            //return;
+            //END OF BIG DATA
             Object SelectionNext;
             DocSettings DS = new DocSettings(RealDoc);
             SelectionNext = RealDoc.Application.Selection.End;
             Word.Range rangeForToCopy = RealDoc.Range(ref SelectionNext, ref SelectionNext);
             int currentPageNum = Convert.ToInt32(RealDoc.Application.Selection.get_Information(Microsoft.Office.Interop.Word.WdInformation.wdActiveEndPageNumber));
             object currentPageNumToRef = currentPageNum;
-            Word.Document DocOfE = Globals.ThisAddIn.Application.Documents.Add(fileName);
-            
-            // JUST FOR ADD PAGES TO
-            // BuildTable_ListOfEffctivePage_BigData(DocOfE, DocOfE.Tables[2], 1500);
-            //return;
-            //END OF BIG DATA
+            Word.Document DocOfE = null;
+            try
+            {
+                DocOfE = Globals.ThisAddIn.Application.Documents.Add(LOEPPath(pageSize));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Something Went Wrong - " + ex.Message);
+                OpenFileDialog openFile = new OpenFileDialog();
+                openFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                openFile.Title = "Select Word Template";
+                openFile.FileName = "";
+                openFile.Filter = "Word Documents (*.doc;*.docx)|*.doc;*.docx";
+                if (openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    DocOfE = Globals.ThisAddIn.Application.Documents.Add(openFile.FileName);
+            }
+
             DocOfE.Tables[1].Range.Copy();
-            rangeForToCopy.Paste();
+            rangeForToCopy.PasteAndFormat(Word.WdRecoveryType.wdFormatOriginalFormatting);
             try
             {
                 int DocPageNumber = DS.GetPageNumber(RealDoc);
                 RealDoc.Activate();
-                int FirstHeaderPage = DS.GetFirstHeader()[1]-1;
+                int FirstHeaderPage = 0;
                 int pageToDo = BuildTable_ListOfEffctivePage(RealDoc, rangeForToCopy.Tables[1], DocPageNumber, FirstHeaderPage);
-                copyCellsToTable(rangeForToCopy.Tables[1], DocOfE.Tables[2], (DocPageNumber + pageToDo- FirstHeaderPage), FirstHeaderPage);
+                copyCellsToTable(rangeForToCopy.Tables[1], DocOfE.Tables[2], (DocPageNumber + pageToDo - FirstHeaderPage), FirstHeaderPage);
                 DocOfE.Close(ref saveOption, ref originalFormat, ref routeDocument);
-
                 if (pageToDo > 0)
                 {
-                    string PageString = RealDoc.Variables["edocs_PAGE" + currentPageNum + "_page"].Value;
-                    string PageRev = RealDoc.Variables["edocs_PAGE" + PageString + "_rev"].Value;
-                    string PageDate = RealDoc.Variables["edocs_PAGE" + PageString + "_date"].Value;
-                    int pageNum = Convert.ToInt32(PageString.Substring(PageString.IndexOf("P-") + 2));
-                    PageString = PageString.Substring(0, PageString.IndexOf("P-") + 2);
-                    for (int i = 1; i <= pageToDo; i++)
+                    try
                     {
-                        string EndPageString = PageString + (pageNum + i).ToString();
-                        RealDoc.Variables["edocs_PAGE" + currentPageNum + i + "_page"].Value = EndPageString;
-                        RealDoc.Variables["edocs_PAGE" + EndPageString + "_rev"].Value = PageRev;
-                        RealDoc.Variables["edocs_PAGE" + EndPageString + "_date"].Value = PageDate;
+                        string PageString = RealDoc.Variables["edocs_Page" + currentPageNum + "_page"].Value;
+                        string PageRev = RealDoc.Variables["edocs_Page" + PageString + "_rev"].Value;
+                        string PageDate = RealDoc.Variables["edocs_Page" + PageString + "_date"].Value;
+                        for (int i = currentPageNum + 1; i <= currentPageNum + pageToDo; i++)
+                        {
+                            string PageString2 = RealDoc.Variables["edocs_Page" + i + "_page"].Value;
+                            RealDoc.Variables["edocs_Page" + PageString2 + "_rev"].Value = PageRev;
+                            RealDoc.Variables["edocs_Page" + PageString2 + "_date"].Value = PageDate;
+                        }
                     }
+                    catch { }
                 }
-                if (pageToDo == -1 || !DS.PageNumberFromHeaders(DocPageNumber+ pageToDo))
+                if (pageToDo == -1 || !DS.PageNumberFromHeaders(DocPageNumber + pageToDo))
                     return;
                 DS.UpDateFields();
                 RealDoc.Application.Selection.GoTo(ref what, ref which, ref currentPageNumToRef, ref missing);
@@ -366,10 +327,6 @@ namespace WordAddIn2
                 MessageBox.Show("Something Went Wrong - " + ex.Message);
                 settings.alert.Close();
             }
-        }
-        private static int GetPageNumberOfRange(Word.Range range)
-        {
-            return (int)range.get_Information(Word.WdInformation.wdActiveEndPageNumber);
         }
         public static void copyCellsToTable(Word.Table Realdoc_tbl, Word.Table ListOfEff_tbl, int pageToDo,int FirstHeaderPage)
         {
@@ -388,22 +345,34 @@ namespace WordAddIn2
             Word.Range RangeToPaste = Realdoc_tbl.Range;
             RangeToPaste.SetRange(Realdoc_tbl.Cell(3, 1).Range.Start, Realdoc_tbl.Cell(Realdoc_tbl.Rows.Count, 4).Range.End);
             RangeToPaste.Select();
-            RangeToPaste.Paste();
+            RangeToPaste.PasteSpecial(Word.WdPasteDataType.wdPasteRTF);
+            RangeToPaste.Paragraphs.SpaceAfter = 0;
+            RangeToPaste.Paragraphs.SpaceBefore = 0;
+            RangeToPaste.Paragraphs.LeftIndent = 0;
+            RangeToPaste.Paragraphs.RightIndent = 0;
+            RangeToPaste.Paragraphs.KeepWithNext = 0;
+            RangeToPaste.Paragraphs.KeepTogether = 0;
             RangeToCopy.SetRange(ListOfEff_tbl.Rows[leftTbl + 1+ FirstHeaderPage].Range.Start, ListOfEff_tbl.Rows[right].Range.End);
             RangeToCopy.Copy();
 
             RangeToPaste.SetRange(Realdoc_tbl.Cell(3, 5).Range.Start, Realdoc_tbl.Cell(Realdoc_tbl.Rows.Count-z, 8).Range.End);
             RangeToPaste.Select();
-            RangeToPaste.Paste();
+            RangeToPaste.PasteSpecial(Word.WdPasteDataType.wdPasteRTF);
+            RangeToPaste.Paragraphs.SpaceAfter = 0;
+            RangeToPaste.Paragraphs.SpaceBefore = 0;
+            RangeToPaste.Paragraphs.LeftIndent = 0;
+            RangeToPaste.Paragraphs.KeepWithNext = 0;
+            RangeToPaste.Paragraphs.KeepTogether = 0;
+            RangeToPaste.Paragraphs.RightIndent = 0;
+            Realdoc_tbl.Cell(1, 1).Range.ListFormat.RemoveNumbers();
         }
-        public static int BuildTable_ListOfEffctivePage(Word.Document RealDoc, Word.Table tbl, int PageNum,int FirstHeaderPage)
+        public static int BuildTable_ListOfEffctivePage(Word.Document RealDoc, Word.Table tbl, int PageNum, int FirstHeaderPage)
         {
             DocSettings DS = new DocSettings(RealDoc);
             int pagesSum = 1;
             PageNum = PageNum - FirstHeaderPage;
             int startPageNumber = PageNum;
             int RowToadd=0;
-           
                 while (pagesSum * 2 < PageNum)
                 {
                 if (settings.alert.worker.CancellationPending)
@@ -413,11 +382,11 @@ namespace WordAddIn2
                     RowToadd = RowToadd+1;
 
                     tbl.Rows[tbl.Rows.Count].Select();
-                    RealDoc.ActiveWindow.Selection.InsertRowsBelow(RowToadd);
+                RealDoc.ActiveWindow.Selection.InsertRowsBelow(RowToadd);
                 pagesSum = tbl.Rows.Count-2;
                 PageNum = DS.GetPageNumber(RealDoc) - FirstHeaderPage;
                 }
-            
+
             if (PageNum % 2 != 0)
             {
                 tbl.Cell(tbl.Rows.Count, 5).Range.Text = "x";
@@ -425,51 +394,39 @@ namespace WordAddIn2
                 tbl.Cell(tbl.Rows.Count, 7).Range.Text = "x";
                 tbl.Cell(tbl.Rows.Count, 8).Range.Text = "x";
             }
+
             return PageNum - startPageNumber;
         }
-        public static void insertDocVirableToRange(Word.Document RealDoc, Word.Table tbl, int pageNum)
+        public static void BuildTable_ListOfEffctive_BigData(Word.Document LOEP, Word.Table tbl)
         {
-            //1 - chepter , 2 - page , 3-date , 4-rev
             Word.Range rng;
-            object PageString;
-            object StringJob;
+            string PageString;
+            for (int i=1;i<= tbl.Rows.Count; i++)
+            {
+                try {
+                    PageString = getDataText(i, "date");
+                    rng = tbl.Cell(i, 2).Range;
+                    rng.Text = "";
+                    rng.SetRange(tbl.Cell(i, 2).Range.Start, tbl.Cell(i, 2).Range.Start);
+                    LOEP.Fields.Add(rng, Word.WdFieldType.wdFieldDocVariable, PageString, true);
 
-            tbl.Cell(pageNum, 1).Range.Text = pageNum.ToString();
+                    PageString = getDataText(i, "rev");
+                    rng = tbl.Cell(i, 3).Range;
+                    rng.Text = "";
+                    rng.SetRange(tbl.Cell(i, 3).Range.Start, tbl.Cell(i, 3).Range.Start);
+                    LOEP.Fields.Add(rng, Word.WdFieldType.wdFieldDocVariable, PageString, true);
 
-            PageString = "\"edocs_PAGE" + pageNum + "_page\"";
-            rng = tbl.Cell(pageNum, 2).Range;
-            rng.SetRange(tbl.Cell(pageNum, 2).Range.Start, tbl.Cell(pageNum, 2).Range.Start);
-            RealDoc.Fields.Add(rng, Word.WdFieldType.wdFieldDocVariable, PageString, true);
-
-            tbl.Cell(pageNum, 2).Range.Fields.Update();
-
-            StringJob = "\"edocs_PAGE_date\"";
-            rng.SetRange(tbl.Cell(pageNum, 3).Range.Start, tbl.Cell(pageNum, 3).Range.Start);
-            RealDoc.Fields.Add(rng, Word.WdFieldType.wdFieldDocVariable, StringJob, true);
-            rng.Start = rng.Start + 25;
-            RealDoc.Fields.Add(rng, Word.WdFieldType.wdFieldDocVariable, PageString, true);
-
-            tbl.Cell(pageNum, 3).Range.Fields.Update();
-
-            StringJob = "\"edocs_PAGE_rev\"";
-            rng.SetRange(tbl.Cell(pageNum, 4).Range.Start, tbl.Cell(pageNum, 4).Range.Start);
-            RealDoc.Fields.Add(rng, Word.WdFieldType.wdFieldDocVariable, StringJob, true);
-            rng.Start = rng.Start + 25;
-            RealDoc.Fields.Add(rng, Word.WdFieldType.wdFieldDocVariable, PageString, true);
-
-            tbl.Cell(pageNum, 4).Range.Fields.Update();
-
-
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
         }
-        public static void add_new_page(Word.Document Doc)
+        public static string getDataText(int page,string data)
         {
-            Object beginPageNext;
-            beginPageNext = Doc.Application.Selection.Range.End;
-            Word.Range rangeForBreak = Doc.Range(ref beginPageNext);
-            rangeForBreak.InsertBreak(Word.WdBreakType.wdSectionBreakNextPage);
-            Word.HeaderFooter header_footer = rangeForBreak.Sections.First.Headers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary];
-            header_footer.LinkToPrevious = false;
+            return "\"edocs_Page" + page + "_" + data + "\"";
         }
-        
+
     }
 }

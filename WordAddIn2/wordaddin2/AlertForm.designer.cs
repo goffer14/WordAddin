@@ -40,7 +40,7 @@
             this.labelMessage.AutoSize = true;
             this.labelMessage.Location = new System.Drawing.Point(12, 75);
             this.labelMessage.Name = "labelMessage";
-            this.labelMessage.Size = new System.Drawing.Size(207, 15);
+            this.labelMessage.Size = new System.Drawing.Size(185, 13);
             this.labelMessage.TabIndex = 0;
             this.labelMessage.Text = "Working on your eDoc, please wait... ";
             // 
@@ -54,7 +54,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::WordAddIn2.Properties.Resources.Animation;
+            this.pictureBox1.Image = global::eDocs_Editor.Properties.Resources.Animation;
             this.pictureBox1.Location = new System.Drawing.Point(86, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(56, 50);
@@ -88,7 +88,6 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Processing";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.AlertForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using WordAddIn2;
+using eDocs_Editor;
 using Word = Microsoft.Office.Interop.Word;
+using System.Collections.Generic;
 
 namespace BackgroundWorkerDemo
 {
@@ -14,20 +15,21 @@ namespace BackgroundWorkerDemo
         public Word.Document Doc;
         public BackgroundWorker worker;
         public int WhatToDo;
-        public int FromPage;
-        string filename;
+        public int pageSize;
+        public List<loepDocument> loepDocumentArray;
         #endregion
 
 
-        public AlertForm(Word.Document doc, int WhatToDo, int FromPage , string filename)
+        public AlertForm(Word.Document doc, int WhatToDo,List<loepDocument> loepDocumentArray,int pageSize)
         {
             InitializeComponent();
             if (backgroundWorker1.IsBusy != true)
             {
                 this.WhatToDo = WhatToDo;
+                this.pageSize = pageSize;
                 this.Doc = doc;
-                this.filename = filename;
-                this.FromPage = FromPage;
+                if(loepDocumentArray!=null)
+                    this.loepDocumentArray = new List<loepDocument>(loepDocumentArray);
                 backgroundWorker1.RunWorkerAsync();
             }
         }
@@ -35,32 +37,34 @@ namespace BackgroundWorkerDemo
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             worker = sender as BackgroundWorker;
-            if(WhatToDo!= 6)
+            if(WhatToDo!= 1)
                 settings.trackChange(Doc, false);
             settings.alert = this;
             switch (WhatToDo)
             {
-                case 1:
-                    settings.process_doc(Doc);
-                    break;
                 case 2:
-                    settings.process_doc(Doc); 
+                    settings.ProcessMonitoring(Doc);
                     break;
                 case 3:
-                    settings.init_ListOfE_New(Doc , filename);
+                    settings.ChangesExport(Doc);
                     break;
                 case 4:
-                    settings.Header1ToTop(Doc);
+                    settings.init_ListOfE_New(Doc, pageSize);
                     break;
                 case 5:
-                    settings.OnCreateEdocFromDoc(Doc,filename);
+                    settings.process_doc(Doc);
                     break;
                 case 6:
-                    settings.SavePagesText(Doc);
+                    settings.makeAllSameAsPrevious(Doc);
                     break;
                 case 7:
-                    settings.changeStyles(Doc);
+                    settings.CreateMultiLOEP(Doc, loepDocumentArray);
                     break;
+                case 8:
+                    settings.initTOC(Doc);
+                    break;
+
+
             }
 
         }

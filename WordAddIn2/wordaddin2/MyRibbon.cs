@@ -1,5 +1,6 @@
 ﻿using BackgroundWorkerDemo;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -7,9 +8,10 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 
 using System.Windows.Forms;
-using WordAddIn2.Properties;
+using eDocs_Editor.Properties;
 using Office = Microsoft.Office.Core;
 using Word = Microsoft.Office.Interop.Word;
+using System.Threading;
 
 // TODO:  Follow these steps to enable the Ribbon (XML) item:
 
@@ -30,7 +32,7 @@ using Word = Microsoft.Office.Interop.Word;
 // For more information, see the Ribbon XML documentation in the Visual Studio Tools for Office Help.
 
 
-namespace WordAddIn2
+namespace eDocs_Editor
 {
     [ComVisible(true)]
     public class MyRibbon : Office.IRibbonExtensibility
@@ -38,9 +40,11 @@ namespace WordAddIn2
         public Office.IRibbonUI ribbon;
         public static AlertForm  alert;
         public static setStylesToDoc setStyle_frm;
+        public static monitoringFrm monitoring_Frm;
+        public static LoepCreator multiLoep;
+        public static AuthenticateForm Authenticate_frm = null;
         public MyRibbon()
         {
-          
         }
         public Word.Document Doc;
         public static string DocLoction;
@@ -49,50 +53,6 @@ namespace WordAddIn2
         public static string AutoDateString = "";
         object Miss = System.Reflection.Missing.Value;
 
-        public static string DocPath()
-        {
-             string DocPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            DocPath = DocPath + "\\Global eDocs\\eDocs Add-in\\Templates";
-            DocLoction = DocPath;
-             return DocPath;
-
-        }
-        /**
-        public void OnCreateEdoc(Office.IRibbonControl control)
-        {
-            if (settings.escape)
-            {
-                MessageBox.Show("Evaluation Ended");
-                return;
-            }
-            if(settings.save_text)
-            {
-                MessageBox.Show("Auto Rivision on, Please Turn off");
-                return;
-            }
-            OpenFileDialog openFile = new OpenFileDialog();
-            openFile.InitialDirectory = DocPath();
-            openFile.Title = "Select Word Template";
-            openFile.FileName = "";
-            openFile.Filter = "Word Documents (*.doc;*.docx)|*.doc;*.docx";
-            if (openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                Doc = Globals.ThisAddIn.Application.Documents.Add(openFile.FileName);
-            
-            Doc.Application.Selection.WholeStory();
-            Doc.Application.Selection.Delete();
-                if (!settings.init_doc(Doc))
-                {
-                    object saveOption = Word.WdSaveOptions.wdDoNotSaveChanges;
-                    object originalFormat = Word.WdOriginalFormat.wdOriginalDocumentFormat;
-                    object routeDocument = false;
-                    Doc.Close(ref saveOption, ref originalFormat, ref routeDocument);
-                }
-            Doc.Application.ActiveWindow.VerticalPercentScrolled = 0;
-            Doc.Application.ActiveWindow.View.ShowFieldCodes = false;
-            }
-        }
-    **/
         public bool unsecure_for_edit(Word.Document DocToUnSecure)
         {
             object password = settings.doc_password;
@@ -105,57 +65,6 @@ namespace WordAddIn2
                 return false;
             }
             return true;
-        }
-        public void SelectStylesfromDoc(Office.IRibbonControl control)
-        {
-            if (!isActiveAddin())
-                return;
-            if (settings.save_text)
-            {
-                MessageBox.Show("Auto Rivision on, Please Turn off");
-                return;
-            }
-            OpenFileDialog openFile = new OpenFileDialog();
-            openFile.InitialDirectory = DocPath();
-            openFile.Title = "Select Word Template";
-            openFile.FileName = "";
-            openFile.Filter = "Word Documents (*.doc;*.docx)|*.doc;*.docx";
-            if (openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                Doc = Globals.ThisAddIn.Application.ActiveDocument;
-                if (setStyle_frm != null)
-                {
-                    setStyle_frm.Close();
-                    setStyle_frm.Dispose();
-                    setStyle_frm = null;
-                }
-                settings.trackChange(Doc, false);
-                setStyle_frm = new setStylesToDoc(Doc, openFile.FileName);
-                setStyle_frm.Show();
-            }
-        }
-        public void ChangeStyleSettings(Office.IRibbonControl control)
-        {
-            Doc = Globals.ThisAddIn.Application.ActiveDocument;
-            if (setStyle_frm != null)
-            {
-                setStyle_frm.Close();
-                setStyle_frm.Dispose();
-                setStyle_frm = null;
-            }
-            settings.trackChange(Doc, false);
-            setStyle_frm = new setStylesToDoc(Doc, null);
-            setStyle_frm.Show();
-        }
-        public static void CreateEdocFromDoc(Word.Document Doc,String FileName)
-        {
-            alert = new AlertForm(Doc, 5, 0, FileName);
-            alert.Show();
-        }
-        public static void changeStyles(Word.Document Doc)
-        {
-            alert = new AlertForm(Doc, 7, 0, "");
-            alert.Show();
         }
         public bool unsecure_for_edit()
         {
@@ -178,11 +87,11 @@ namespace WordAddIn2
                     {
                         return PictureConverter.ImageToPictureDisp(Properties.Resources.new_doc);
                     }
-                case "ProcessEdoc_ribbon":
+                case "finish_page_rivision_ribbon":
                     {
                         return PictureConverter.ImageToPictureDisp(Properties.Resources.procces_doc);
                     }
-                case "CreateEdocFromThis_ribbon":
+                case "setStyels_ribbon":
                     {
                         return PictureConverter.ImageToPictureDisp(Properties.Resources.procces_doc);
                     }
@@ -196,7 +105,7 @@ namespace WordAddIn2
                     }
                 case "ProcessListOfE_ribbon":
                     {
-                        return PictureConverter.ImageToPictureDisp(Properties.Resources.list_of_effctive);
+                        return PictureConverter.ImageToPictureDisp(Properties.Resources.list_of_effctive); 
                     }
                 case "Edit_list_Template_ribbon":
                     {
@@ -206,7 +115,11 @@ namespace WordAddIn2
                     {
                         return PictureConverter.ImageToPictureDisp(Properties.Resources.reset_header);
                     }
-                case "FreeText_ribbon":
+                case "Loep_ribbon":
+                    {
+                        return PictureConverter.ImageToPictureDisp(Properties.Resources.reset_header);
+                    }
+                case "sameAsPrevious_ribbon":
                     {
                         return PictureConverter.ImageToPictureDisp(Properties.Resources.free_text_Img);
                     }
@@ -218,25 +131,41 @@ namespace WordAddIn2
                     {
                         return PictureConverter.ImageToPictureDisp(Properties.Resources.reset_header);
                     }
+                case "ProcessTOC_ribbon":
+                    {
+                        return PictureConverter.ImageToPictureDisp(Properties.Resources.reset_header);
+                    }
+                case "ExportChanges_ribbon":
+                    {
+                        return PictureConverter.ImageToPictureDisp(Properties.Resources.change_rivision);
+                    }
+                case "removeUnWantedStyles":
+                    {
+                        return PictureConverter.ImageToPictureDisp(Properties.Resources.change_rivision);
+                    }
             }
             return null;
-
         }
         public bool isActiveAddin()
         {
-            if (!Settings.Default.is_active)
+            try { Doc.Fields.Locked = 0; } catch { };
+            if (Settings.Default.is_active == "false")
             {
-                DialogResult dialogResult = MessageBox.Show("License Expired or Out of Date, Enter Additional License?", "License Expired", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("License Required, Enter License?", "License Required", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    Settings.Default.FirstUse = true;
+                    Settings.Default.FirstUse = "true";
                     Settings.Default.Save();
-                    settings.check_if_vaild_copy();
-
+                    settings.check_if_vaild_copy(false);
+                    Application.Run(new AuthenticateForm());
                 }
                 return false;
             }
             return true;
+        }
+        static void menu_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(((MenuItem)sender).Text);
         }
         internal class PictureConverter : AxHost
         {
@@ -251,21 +180,116 @@ namespace WordAddIn2
         {
             if (!isActiveAddin())
                 return;
-            if (settings.save_text)
+            if (settings.monitorDoc)
             {
                 MessageBox.Show("Auto Rivision on, Please Turn off");
                 return;
             }
+            /**
+            DialogResult dialogResult = MessageBox.Show("Create list of effective pages in A4 format?", "If A4 format click yes, if A5 format click no", MessageBoxButtons.YesNoCancel);
+            if (dialogResult == DialogResult.Yes)
+                CreateLOEP(4);
+            if (dialogResult == DialogResult.No)
+                CreateLOEP(5);
+            **/
+
+            DialogResult dialogResult = MessageBox.Show("Create list of effective pages?", "To Start click yes, To cancel click no", MessageBoxButtons.YesNoCancel);
+            if (dialogResult == DialogResult.Yes)
+                CreateLOEP(5);
+            if (dialogResult == DialogResult.No)
+                return;
+
+        }
+        private void CreateLOEP(int pageSize)
+        {
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             if (!settings.check_if_edoc(Doc))
             {
                 MessageBox.Show("eDoc Only");
                 return;
             }
-            Doc = Globals.ThisAddIn.Application.ActiveDocument;
             settings.trackChange(Doc, false);
-            alert = new AlertForm(Doc, 3, 0, DocPath() + "//eDoc List of effective Template - A5.docx");
+            alert = new AlertForm(Doc, 4, null, pageSize);
             alert.Show();
+        }
+        public void OnTOC(Office.IRibbonControl control)
+        {
+            if (!isActiveAddin())
+                return;
+            if (settings.monitorDoc)
+            {
+                MessageBox.Show("Auto Rivision on, Please Turn off");
+                return;
+            }
+                Doc = Globals.ThisAddIn.Application.ActiveDocument;
+                if (!settings.check_if_edoc(Doc))
+                {
+                    MessageBox.Show("eDoc Only");
+                    return;
+                }
+                settings.trackChange(Doc, false);
+                alert = new AlertForm(Doc, 8, null, 1);
+                alert.Show();
+        }
+        public void insertSectionPageText(Office.IRibbonControl control)
+        {
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            insertText("page", Doc.Application.Selection.Range);
+        }
+        public void insertSectionRevText(Office.IRibbonControl control)
+        {
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            insertText("rev", Doc.Application.Selection.Range);
+        }
+        public void insertSectionDateText(Office.IRibbonControl control)
+        {
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            insertText("date", Doc.Application.Selection.Range);
+        }
+        public void insertSectionIssueText(Office.IRibbonControl control)
+        {
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            insertText("issue", Doc.Application.Selection.Range);
+        }
+        public void insertSectionEffictiveText(Office.IRibbonControl control)
+        {
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            insertText("effective", Doc.Application.Selection.Range);
+        }
+        public void insertSectionText1Text(Office.IRibbonControl control)
+        {
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            insertText("text1", Doc.Application.Selection.Range);
+        }
+        public void insertSectionText2Text(Office.IRibbonControl control)
+        {
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            insertText("text2", Doc.Application.Selection.Range);
+        }
+        public void insertSectionText3Text(Office.IRibbonControl control)
+        {
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            insertText("text3", Doc.Application.Selection.Range);
+        }
+        public void insertSectionText4Text(Office.IRibbonControl control)
+        {
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            insertText("text4", Doc.Application.Selection.Range);
+        }
+        public void insertText(string filedName,Word.Range rng)
+        {
+            if (!isActiveAddin())
+                return;
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            if (!settings.check_if_edoc(Doc))
+            {
+                MessageBox.Show("eDoc Only");
+                return;
+            }
+            settings.trackChange(Doc, false);
+            DocSettings DS = new DocSettings();
+            DS.InesrtRevDatatoAllHeadingCells(filedName,rng);
+            DS.UpDateFields();
         }
         public void OnProcesseDoc(Office.IRibbonControl control)
         {
@@ -279,28 +303,101 @@ namespace WordAddIn2
                 return;
             }
 
-            alert = new AlertForm(Doc, 1 , 1, "");
+            alert = new AlertForm(Doc, 5, null,0);
             alert.Show();
         }
-        public void OnHeader1ToTop(Office.IRibbonControl control)
+        public void seteDocsStyels(Office.IRibbonControl control)
         {
-
-            if (!isActiveAddin())
-                return;
-            if (settings.save_text)
+            if (setStyle_frm != null)
+            {
+                setStyle_frm.Close();
+                setStyle_frm.Dispose();
+                setStyle_frm = null;
+            }
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            settings.trackChange(Doc, false);
+            setStyle_frm = new setStylesToDoc(Doc);
+            setStyle_frm.Show();
+        }
+        public void openLOEP(Office.IRibbonControl control)
+        {
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            if (multiLoep != null)
+            {
+                multiLoep.Close();
+                multiLoep.Dispose();
+                multiLoep = null;
+            }
+            settings.trackChange(Doc, false); 
+             multiLoep = new LoepCreator(Doc);
+            multiLoep.Show();
+        }
+        public static void changeStyles(Word.Document Doc)
+        {
+            alert = new AlertForm(Doc, 5, null,0);
+            alert.Show();
+        }
+        public void OnExportChagnes(Office.IRibbonControl control)
+        {
+            if (settings.monitorDoc)
             {
                 MessageBox.Show("Auto Rivision on, Please Turn off");
                 return;
             }
+            if (!isActiveAddin())
+                return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             if (!settings.check_if_edoc(Doc))
             {
                 MessageBox.Show("eDoc Only");
                 return;
             }
-            settings.trackChange(Doc, false);
-            alert = new AlertForm(Doc, 4, 1, "");
+
+            alert = new AlertForm(Doc, 3,null, 0);
             alert.Show();
+        }
+        public void removeUnwantedStyles(Office.IRibbonControl control)
+        {
+            if (settings.monitorDoc)
+            {
+                MessageBox.Show("Auto Rivision on, Please Turn off");
+                return;
+            }
+            if (!isActiveAddin())
+                return;
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            if (!settings.check_if_edoc(Doc))
+            {
+                MessageBox.Show("eDoc Only");
+                return;
+            }
+            int totalStyles = Doc.Styles.Count;
+            DialogResult dialogResult = MessageBox.Show("Remove unused styles? - styels count: " + totalStyles, "Continue?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                Thread thread = new Thread(removeStyles);
+                thread.Start();
+            }
+        }
+        private void removeStyles()
+        {
+            
+            int deletedStyles = 0;
+            foreach (Word.Style mStyle in Doc.Styles)
+            {
+                if (!mStyle.BuiltIn)
+                {
+                    Doc.Content.Find.ClearFormatting();
+                    Doc.Content.Find.set_Style(mStyle);
+                    if (!Doc.Content.Find.Execute())
+                    {
+                        mStyle.Delete();
+                        deletedStyles++;
+                    }
+
+                }
+            }
+            MessageBox.Show("Deleted Styles - " + deletedStyles);
         }
         public void autoRev(Office.IRibbonControl control, bool Pressed)
         {
@@ -311,39 +408,65 @@ namespace WordAddIn2
                 Doc = Globals.ThisAddIn.Application.ActiveDocument;
                 if (!settings.check_if_edoc(Doc))
                 {
+                    updateMonitorRibbon();
                     MessageBox.Show("eDoc Only");
-                    ribbon.InvalidateControl("toggleButton_ribbon");
                     return;
                 }
-                settings.save_text = true;
-                settings.trackChange(Doc, true);
-                alert = new AlertForm(Doc, 6, 1, "");
-                alert.Show();
+                settings.monitorDoc = true;
+                DateTime ts = DateTime.Now;
+                settings.dateToMonitor = new DateTime(ts.Year, ts.Month, ts.Day, ts.Hour, ts.Minute, 0);
+                Doc.TrackFormatting = true;
+                Doc.TrackMoves = true;
+                Doc.TrackRevisions = true;
+                /**
+
+                if (monitoring_Frm != null)
+                {
+                    monitoring_Frm.Close();
+                    monitoring_Frm.Dispose();
+                    monitoring_Frm = null;
+                }
+                monitoring_Frm = new monitoringFrm(Doc);
+                monitoring_Frm.Show();
+                updateMonitorRibbon();
+    **/
             }
             else
             {
-                DialogResult dialogResult = MessageBox.Show("Do Not Cancel Auto Page Revision - or you will lose all changes.To continue: Press - Yes - and then press Process eDoc ", "Attention !!", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("Do Not Cancel Monitoring - or you will lose all changes.To continue: Press - Yes - and then press Process to save changes ", "Attention !!", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
-                {
-                    ribbon.InvalidateControl("toggleButton_ribbon");
-                }
+                    updateMonitorRibbon();
                 else if (dialogResult == DialogResult.No)
                 {
-                    settings.save_text = false;
-                    ribbon.InvalidateControl("toggleButton_ribbon");
+                    settings.monitorDoc = false;
+                    updateMonitorRibbon();
                 }
                 
             }
+
+        }
+        public void updateMonitorRibbon()
+        {
+            ribbon.InvalidateControl("toggleButton_ribbon");
             ribbon.InvalidateControl("rev_cbo");
             ribbon.InvalidateControl("date_cbo");
-
+        }
+        public void updateMonitorRibbonFrm()
+        {
+            ribbon.InvalidateControl("rev_cbo");
+            ribbon.InvalidateControl("date_cbo");
         }
         public bool GetEnable(Office.IRibbonControl control)
         {
-            if (settings.save_text)
-                return true;
-                return false;
+            return settings.monitorDoc;
         }
+        public string GetMonitorText(Office.IRibbonControl control)
+        {
+            if (settings.monitorDoc)
+                return "Stop Monitoring";
+            return "Start Monitoring";
+        }
+
         public void ocCurrentRev(Office.IRibbonControl control, string text)
         {
             AutoRevString = text;
@@ -357,49 +480,15 @@ namespace WordAddIn2
         {
             return AutoDateString;
         }
-
-
-        public void edit_doc_template(Office.IRibbonControl control)
+        public string onGetEbCurrentRev(Office.IRibbonControl control)
         {
-            if (!isActiveAddin())
-                return;
-            if (settings.save_text)
-            {
-                MessageBox.Show("Auto Rivision on, Please Turn off");
-                return;
-            }
-            OpenFileDialog openFile = new OpenFileDialog();
-            openFile.InitialDirectory = DocPath();
-            openFile.Title = "Select eDocs Word Template";
-            openFile.FileName = "";
-            openFile.Filter = "Word Documents (*.doc;*.docx)|*.doc;*.docx";
-            if (openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                Globals.ThisAddIn.Application.Documents.Open(openFile.FileName);
-        }
-        
-        public void edit_list_template(Office.IRibbonControl control)
-        {
-
-            if (!isActiveAddin())
-                return;
-            if (settings.save_text)
-            {
-                MessageBox.Show("Auto Rivision on, Please Turn off");
-                return;
-            }
-            OpenFileDialog openFile = new OpenFileDialog();
-            openFile.InitialDirectory = DocPath();
-            openFile.Title = "Select eDocs List of effective pages Word Template";
-            openFile.FileName = "";
-            openFile.Filter = "Word Documents (*.doc;*.docx)|*.doc;*.docx";
-            if (openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                Globals.ThisAddIn.Application.Documents.Open(openFile.FileName);
+            return AutoRevString;
         }
         public void PageRevisionForm(Office.IRibbonControl control)
         {
             if (!isActiveAddin())
                 return;
-            if (settings.save_text)
+            if (settings.monitorDoc)
             {
                 MessageBox.Show("Auto Rivision on, Please Turn off");
                 return;
@@ -423,7 +512,7 @@ namespace WordAddIn2
                     settings.page_rev_frm.page_rev.Text = settings.last_rev;
                 if (settings.last_date == "")
                     settings.last_date = DateTime.Now.Date.ToString("d", DateTimeFormatInfo.InvariantInfo);
-                settings.page_rev_frm.rev_date.Text = settings.last_date;
+                settings.page_rev_frm.date_rev.Text = settings.last_date;
 
                 System.Drawing.Point cursor_pos = new System.Drawing.Point(Cursor.Position.X -50, Cursor.Position.Y-10);
                 settings.page_rev_frm.Location = cursor_pos;
@@ -436,47 +525,21 @@ namespace WordAddIn2
                 MessageBox.Show("eDoc Only");
             }
         }
-        public void FreeText(Office.IRibbonControl control)
+        public void makeAllSameAsPrevious(Office.IRibbonControl control)
         {
             if (!isActiveAddin())
                 return;
-            if (settings.save_text)
+            if (settings.monitorDoc)
             {
                 MessageBox.Show("Auto Rivision on, Please Turn off");
                 return;
             }
-            if (settings.free_text_frm != null)
-            {
-                settings.free_text_frm.Close();
-                settings.free_text_frm.Dispose();
-                settings.free_text_frm = null;
-            }
-
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
-            DocSettings DS = new DocSettings(Doc);
-
             if (settings.check_if_edoc(Doc))
             {
-                Doc.Application.ScreenUpdating = false;
                 settings.trackChange(Doc, false);
-                settings.free_text_frm = new FreeTextfrm(Doc);
-
-                if (settings.last_text1 != "")
-                    settings.free_text_frm.text1.Text = settings.last_text1;
-
-                if (settings.last_text2 != "")
-                    settings.free_text_frm.text2.Text = settings.last_text2;
-
-                if (settings.last_text3 != "")
-                    settings.free_text_frm.text3.Text = settings.last_text3;
-
-                if (settings.last_text4 != "")
-                    settings.free_text_frm.text4.Text = settings.last_text4;
-                System.Drawing.Point cursor_pos = new System.Drawing.Point(Cursor.Position.X - 50, Cursor.Position.Y - 10);
-                settings.free_text_frm.Location = cursor_pos;
-                Doc.Application.ScreenUpdating = true;
-                settings.trackChange(Doc, true);
-                settings.free_text_frm.Show();
+                alert = new AlertForm(Doc, 6,null, 0);
+                alert.Show();
             }
             else
             {
@@ -487,7 +550,7 @@ namespace WordAddIn2
 
         public string GetCustomUI(string ribbonID)
         {
-            return GetResourceText("WordAddIn2.MyRibbon.xml");
+            return GetResourceText("eDocs_Editor.MyRibbon.xml");
         }
 
         #endregion
@@ -497,7 +560,7 @@ namespace WordAddIn2
 
         public void Ribbon_Load(Office.IRibbonUI ribbonUI)
         {
-            if (!Settings.Default.is_active) return;
+            if (Settings.Default.is_active=="false") return;
             AutoDateString = DateTime.Now.Date.ToString("d", DateTimeFormatInfo.InvariantInfo);
             this.ribbon = ribbonUI;
         }

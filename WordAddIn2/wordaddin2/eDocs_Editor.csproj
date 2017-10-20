@@ -25,9 +25,9 @@
     <ProjectGuid>{52F67C68-853B-4B14-A057-61F2A1609C04}</ProjectGuid>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
-    <RootNamespace>WordAddIn2</RootNamespace>
-    <AssemblyName>eDocs Edit Word Add In</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>eDocs_Editor</RootNamespace>
+    <AssemblyName>eDocs Editor</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <IsWebBootstrapper>False</IsWebBootstrapper>
     <FileUpgradeFlags>
@@ -36,19 +36,21 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>12.0</OldToolsVersion>
     <VSTO_TrustAssembliesLocation>true</VSTO_TrustAssembliesLocation>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <PublishUrl>D:\eDocs Edit Word Add In\</PublishUrl>
+    <PublishUrl>C:\Users\goffe\Dropbox\AddIn Setup\eDocs develop\Lite Install\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>1.0.0.5</ApplicationVersion>
+    <ApplicationVersion>1.0.0.6</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateInterval>0</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
-    <ProductName>eDocs Edit Word Add In</ProductName>
+    <ProductName>eDocs Editor</ProductName>
     <PublisherName>Global eDocs</PublisherName>
     <SupportUrl>http://globaledocs.com/help</SupportUrl>
-    <FriendlyName>eDocs Edit Word Add In</FriendlyName>
+    <FriendlyName>eDocs Editor</FriendlyName>
     <OfficeApplicationDescription />
     <LoadBehavior>3</LoadBehavior>
   </PropertyGroup>
@@ -120,6 +122,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
     <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <!--
     This section defines properties that are set when the "Release" configuration is selected.
@@ -145,6 +148,8 @@
     <DefineConstants>DEBUG;VSTO40</DefineConstants>
     <WarningLevel>4</WarningLevel>
     <RegisterForComInterop>true</RegisterForComInterop>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <!--
     This section specifies references for the project.
@@ -153,7 +158,31 @@
     <Reference Include="Accessibility">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="IdentityModel, Version=2.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IdentityModel.2.6.0\lib\net45\IdentityModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IdentityModel.OidcClient, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IdentityModel.OidcClient.2.1.2\lib\net452\IdentityModel.OidcClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Logging, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.1.1.1\lib\netstandard1.1\Microsoft.Extensions.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.1.1.1\lib\netstandard1.1\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=1.1.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.1.1.3\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=5.1.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.5.1.3\lib\net451\Microsoft.IdentityModel.Tokens.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -168,7 +197,15 @@
     </Reference>
     <Reference Include="Microsoft.Office.Tools.Word.v4.0.Utilities, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Tools.Applications.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Office, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -182,11 +219,22 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Services" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.1.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.1.3\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0.1\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Tools.v4.0.Framework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -222,21 +270,22 @@
     <Compile Include="AuthenticateForm.Designer.cs">
       <DependentUpon>AuthenticateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="setStylesToDoc.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="setStylesToDoc.Designer.cs">
-      <DependentUpon>setStylesToDoc.cs</DependentUpon>
-    </Compile>
     <Compile Include="header.cs" />
-    <Compile Include="HeadingPos.cs" />
-    <Compile Include="MyRibbon.cs" />
-    <Compile Include="FreeTextfrm.cs">
+    <Compile Include="LoepCreator.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FreeTextfrm.Designer.cs">
-      <DependentUpon>FreeTextfrm.cs</DependentUpon>
+    <Compile Include="LoepCreator.Designer.cs">
+      <DependentUpon>LoepCreator.cs</DependentUpon>
     </Compile>
+    <Compile Include="loepDocument.cs" />
+    <Compile Include="monitoringFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="monitoringFrm.Designer.cs">
+      <DependentUpon>monitoringFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="multiLOEP.cs" />
+    <Compile Include="MyRibbon.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -257,11 +306,11 @@
     <EmbeddedResource Include="AuthenticateForm.resx">
       <DependentUpon>AuthenticateForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="setStylesToDoc.resx">
-      <DependentUpon>setStylesToDoc.cs</DependentUpon>
+    <EmbeddedResource Include="LoepCreator.resx">
+      <DependentUpon>LoepCreator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FreeTextfrm.resx">
-      <DependentUpon>FreeTextfrm.cs</DependentUpon>
+    <EmbeddedResource Include="monitoringFrm.resx">
+      <DependentUpon>monitoringFrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PageRevisionFrm.resx">
       <DependentUpon>PageRevisionFrm.cs</DependentUpon>
@@ -271,10 +320,16 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <EmbeddedResource Include="setStylesToDoc.resx">
+      <DependentUpon>setStylesToDoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="eDocs_Editor_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">
@@ -282,8 +337,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="setStylesToDoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="setStylesToDoc.Designer.cs">
+      <DependentUpon>setStylesToDoc.cs</DependentUpon>
+    </Compile>
     <Compile Include="settings.cs" />
-    <Compile Include="Settings1.cs" />
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -294,7 +354,6 @@
       <DependentUpon>ThisAddIn.Designer.xml</DependentUpon>
     </Compile>
     <AppDesigner Include="Properties\" />
-    <None Include="WordAddIn2_1_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyRibbon.xml">
@@ -312,6 +371,7 @@
     <None Include="Resources\reset_header.png" />
     <None Include="Resources\procces_doc.png" />
     <None Include="Resources\edit_listof.png" />
+    <None Include="Resources\change_rivision.png" />
     <Content Include="Resources\edit_rev.png" />
     <Content Include="Resources\edit_template.png" />
     <None Include="Resources\Warning.png" />
@@ -319,6 +379,7 @@
     <None Include="Resources\Information.png" />
     <None Include="Resources\globaledocs logo.png" />
     <None Include="Resources\free_text_Img.png" />
+    <None Include="Resources\export_revision.bmp" />
     <Content Include="Resources\list_of_effctive.png" />
     <Content Include="Resources\new_doc.png" />
   </ItemGroup>
@@ -330,10 +391,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>WordAddIn2_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>eDocs_Editor_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>4329F7B1DF4A66084B8729AD23C05844780CAF0F</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>2EC2A74AF921796C77DFEF9ECF7D31E180D2930F</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -354,8 +415,8 @@
     <VisualStudio>
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
         <ProjectProperties HostName="Word" HostPackage="{29A7B9D7-A7F1-4328-8EF0-6B2D1A56B2C1}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="Word" Language="cs" TemplatesPath="VSTOTemplates" DebugInfoExeName="#Software\Microsoft\Office\16.0\Word\InstallRoot\Path#WINWORD.EXE" DebugInfoCommandLine="/w" AddItemTemplatesGuid="{51063C3A-E220-4D12-8922-BDA915ACD783}" />
-        <Host Name="Word" GeneratedCodeNamespace="WordAddIn2" PublishedHash="69C324AB27932AA2FBF2B7EA72250886FF164DE6" IconIndex="0">
-          <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="AddIn" PublishedHash="338D93E16E9DCCD280184B55EFCB5135AE8412DA" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" />
+        <Host Name="Word" GeneratedCodeNamespace="eDocs_Editor" PublishedHash="69C324AB27932AA2FBF2B7EA72250886FF164DE6" IconIndex="0">
+          <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="AddIn" PublishedHash="E12B9FA9B2C7CD0561500FB0476D85AEF31BEFC6" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" />
         </Host>
       </FlavorProperties>
     </VisualStudio>

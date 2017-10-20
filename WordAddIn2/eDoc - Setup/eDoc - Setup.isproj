@@ -28,9 +28,10 @@
 		</TaggedOutputs> -->
 	</ItemGroup>
 	<Import Project="$(MSBuildExtensionsPath32)\InstallShield\2015Limited\InstallShield.targets"/>
+	<ItemGroup/>
 	<ItemGroup>
-		<ProjectReference Include="..\WordAddIn2\WordAddIn2.csproj">
-			<Name>WordAddIn2</Name>
+		<ProjectReference Include="..\WordAddIn2\eDocs_Editor.csproj">
+			<Name>eDocs_Editor</Name>
 			<Project>{52F67C68-853B-4B14-A057-61F2A1609C04}</Project>
 		</ProjectReference>
 	</ItemGroup>

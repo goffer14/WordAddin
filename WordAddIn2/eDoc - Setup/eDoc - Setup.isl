@@ -52,7 +52,7 @@
 	<summary>
 		<codepage>1252</codepage>
 		<title>Installation Database</title>
-		<subject></subject>
+		<subject>##ID_STRING3##</subject>
 		<author>##ID_STRING2##</author>
 		<keywords>Installer,MSI,Database</keywords>
 		<comments>Contact:  Your local administrator</comments>
@@ -345,7 +345,7 @@
 		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{74FC825C-DCA2-42AF-A23C-B63DB595158F}</td><td>EDOCS_ADD_IN</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{0FB13145-6109-4D8E-BBEC-29FBA8F10C4B}</td><td>TEMPLATES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{64B25EB5-F016-419A-9B8C-0FB82435B947}</td><td>TEMPLATES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>WordAddIn2.Primary_output</td><td>{E0C1066B-7922-40ED-8237-E3F20D15D08B}</td><td>INSTALLDIR</td><td>2</td><td/><td>wordaddin2.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>eDocs_Editor.Primary_output</td><td>{D3488278-34E5-4D41-BEB8-F6660C5BFB49}</td><td>INSTALLDIR</td><td>2</td><td/><td>edocs_editor.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
 	<table name="Condition">
@@ -1062,7 +1062,7 @@
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT3</td></row>
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT4</td></row>
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT5</td></row>
-		<row><td>INSTALLDIR</td><td>WordAddIn2.Primary_output</td></row>
+		<row><td>INSTALLDIR</td><td>eDocs_Editor.Primary_output</td></row>
 		<row><td>TEMPLATES</td><td>ISX_DEFAULTCOMPONENT4</td></row>
 		<row><td>TEMPLATES</td><td>ISX_DEFAULTCOMPONENT5</td></row>
 		<row><td>USERPROFILE</td><td>ISX_DEFAULTCOMPONENT1</td></row>
@@ -1154,6 +1154,7 @@
 		<row><td>DesktopFolder</td><td>TARGETDIR</td><td>.:Desktop</td><td/><td>3</td><td/></row>
 		<row><td>EDOCS_ADD_IN</td><td>GLOBAL_EDOCS1</td><td>EDOCSA~1|eDocs Add-in</td><td/><td>0</td><td/></row>
 		<row><td>EDOCS_EDITOR</td><td>GLOBAL_EDOCS</td><td>EDOCSE~1|eDocs editor</td><td/><td>0</td><td/></row>
+		<row><td>EDOCS_EDITOR_LITE</td><td>GLOBAL_EDOCS</td><td>EDOCSE~1|eDocs editor Lite</td><td/><td>0</td><td/></row>
 		<row><td>FavoritesFolder</td><td>TARGETDIR</td><td>.:FAVORI~1|Favorites</td><td/><td>0</td><td/></row>
 		<row><td>FontsFolder</td><td>TARGETDIR</td><td>.:Fonts</td><td/><td>0</td><td/></row>
 		<row><td>GLOBAL_EDOCS</td><td>ProgramFilesFolder</td><td>GLOBAL~1|Global eDocs</td><td/><td>0</td><td/></row>
@@ -1886,7 +1887,7 @@
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT3</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT4</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT5</td></row>
-		<row><td>AlwaysInstall</td><td>WordAddIn2.Primary_output</td></row>
+		<row><td>AlwaysInstall</td><td>eDocs_Editor.Primary_output</td></row>
 	</table>
 
 	<table name="File">
@@ -1901,12 +1902,10 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>edoc_list_of_effective_templ1</td><td>ISX_DEFAULTCOMPONENT4</td><td>EDOCLI~1.DOC|eDoc List of effective Template - A5.docx</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\wordaddin2\bin\Release\Templates\eDoc List of effective Template - A5.docx</td><td>1</td><td/></row>
-		<row><td>edocs_edit_word_add_in.dll.m</td><td>ISX_DEFAULTCOMPONENT</td><td>EDOCSE~1.MAN|eDocs Edit Word Add In.dll.manifest</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\wordaddin2\bin\Release\eDocs Edit Word Add In.dll.manifest</td><td>1</td><td/></row>
-		<row><td>edocs_edit_word_add_in.vsto</td><td>ISX_DEFAULTCOMPONENT</td><td>EDOCSE~1.VST|eDocs Edit Word Add In.vsto</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\wordaddin2\bin\Release\eDocs Edit Word Add In.vsto</td><td>1</td><td/></row>
-		<row><td>edoctemplate___a4.docx</td><td>ISX_DEFAULTCOMPONENT4</td><td>EDOCTE~1.DOC|eDocTemplate - A4.docx</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\wordaddin2\bin\Release\Templates\eDocTemplate - A4.docx</td><td>1</td><td/></row>
-		<row><td>edoctemplate___a5.docx</td><td>ISX_DEFAULTCOMPONENT4</td><td>EDOCTE~1.DOC|eDocTemplate - A5.docx</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\goffe\Desktop\WordAddIn2\WordAddIn2\wordaddin2\bin\Release\Templates\eDocTemplate - A5.docx</td><td>1</td><td/></row>
-		<row><td>wordaddin2.primary_output</td><td>WordAddIn2.Primary_output</td><td>WordAddIn2.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;WordAddIn2&gt;|Built</td><td>3</td><td/></row>
+		<row><td>edoc_list_of_effective_templ</td><td>ISX_DEFAULTCOMPONENT4</td><td>EDOCLI~1.DOC|eDoc List of effective Template - A5.docx</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\wordaddin2\bin\Release\Templates\eDoc List of effective Template - A5.docx</td><td>1</td><td/></row>
+		<row><td>edocs_editor.dll.manifest</td><td>ISX_DEFAULTCOMPONENT</td><td>EDOCSE~1.MAN|eDocs Editor.dll.manifest</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\wordaddin2\bin\Release\eDocs Editor.dll.manifest</td><td>1</td><td/></row>
+		<row><td>edocs_editor.primary_output</td><td>eDocs_Editor.Primary_output</td><td>eDocs_Editor.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;eDocs_Editor&gt;|Built</td><td>3</td><td/></row>
+		<row><td>edocs_editor.vsto</td><td>ISX_DEFAULTCOMPONENT</td><td>EDOCSE~1.VST|eDocs Editor.vsto</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\wordaddin2\bin\Release\eDocs Editor.vsto</td><td>1</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -2056,7 +2055,7 @@
 		<row><td>ISX_DEFAULTCOMPONENT3</td><td/><td/><td>_0EBCEF74_43C5_473B_B8AE_EA689C300F2E_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT4</td><td/><td/><td>_9D52D1A8_0E56_495D_8C46_80043AF546EF_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_1C04D04F_4002_4311_95B3_B0AFFBBA4A7B_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>WordAddIn2.Primary_output</td><td/><td/><td>_DFA518E1_32B0_4B0F_837C_A64C68B525F3_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>eDocs_Editor.Primary_output</td><td/><td/><td>_F22020BC_6E7A_4475_8976_3423E5F0CE79_FILTER</td><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="ISCustomActionReference">
@@ -2343,6 +2342,7 @@
 		<row><td>SystemFolder</td><td/><td/><td>1</td></row>
 		<row><td>WindowsFolder</td><td/><td/><td>1</td></row>
 		<row><td>WordAddIn2</td><td>WordAddIn2\WordAddIn2.csproj</td><td/><td>2</td></row>
+		<row><td>eDocs_Editor</td><td>WordAddIn2\eDocs_Editor.csproj</td><td/><td>2</td></row>
 	</table>
 
 	<table name="ISProductConfiguration">
@@ -2403,7 +2403,7 @@
 		<row><td>DVD-18</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>Default</td><td>3</td><td>1033</td><td>0</td><td>2</td><td>Intel</td><td/><td>1033</td><td>0</td><td>15.83</td><td>1</td><td>2048</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>75805</td><td/><td/><td/><td>3</td></row>
 		<row><td>DVD-5</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>Default</td><td>3</td><td>1033</td><td>0</td><td>2</td><td>Intel</td><td/><td>1033</td><td>0</td><td>4.38</td><td>1</td><td>2048</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>75805</td><td/><td/><td/><td>3</td></row>
 		<row><td>DVD-9</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>Default</td><td>3</td><td>1033</td><td>0</td><td>2</td><td>Intel</td><td/><td>1033</td><td>0</td><td>7.95</td><td>1</td><td>2048</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>75805</td><td/><td/><td/><td>3</td></row>
-		<row><td>SingleImage</td><td>Express</td><td>C:\Users\goffe\Dropbox\AddIn Setup\eDocs develop</td><td>PackageName</td><td>1</td><td>1033</td><td>0</td><td>1</td><td>Intel</td><td/><td>1033</td><td>0</td><td>0</td><td>0</td><td>0</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>109085</td><td/><td/><td/><td>2</td></row>
+		<row><td>SingleImage</td><td>Express</td><td>C:\Users\goffe\Dropbox\AddIn Setup\eDocs develop\Lite Install</td><td>PackageName</td><td>1</td><td>1033</td><td>0</td><td>1</td><td>Intel</td><td/><td>1033</td><td>0</td><td>0</td><td>0</td><td>0</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>75805</td><td/><td/><td/><td>2</td></row>
 		<row><td>WebDeployment</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>PackageName</td><td>4</td><td>1033</td><td>2</td><td>1</td><td>Intel</td><td/><td>1033</td><td>0</td><td>0</td><td>0</td><td>0</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>124941</td><td/><td/><td/><td>3</td></row>
 	</table>
 
@@ -2614,9 +2614,8 @@
 		<col def="I2">ISSetupLocation</col>
 		<col def="S255">ISReleaseFlags</col>
 		<row><td>_5BD0AEB5_21FE_40D9_8AFD_183176E078E6_</td><td>Visual Studio 2010 Tools for Office Runtime.prq</td><td/><td>2</td><td/></row>
-		<row><td>_C1036B55_8809_4BA3_BB59_0556AA53EDC3_</td><td>Microsoft Visual C++ 2010 Redistributable Package (x86).prq</td><td/><td>2</td><td/></row>
 		<row><td>_C4A5F06B_AF86_4DC4_818A_05BE185F332C_</td><td>Microsoft VSTO 2010 Runtime.prq</td><td/><td>2</td><td/></row>
-		<row><td>_E810BC59_8DB8_4E17_987D_7E4755459AAF_</td><td>Microsoft .NET Framework 4.5 Full.prq</td><td/><td>2</td><td/></row>
+		<row><td>_F42A132B_CD02_480E_ABD4_13FE421589E1_</td><td>Microsoft .NET Framework 4.5.2 Full.prq</td><td/><td>2</td><td/></row>
 	</table>
 
 	<table name="ISSetupType">
@@ -2650,7 +2649,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>Global eDocs</td><td>0</td><td/><td>1109676495</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>Global eDocs</td><td>0</td><td/><td>1277525228</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>1159970122</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>1159970122</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_OS</td><td>1033</td><td>The operating system is not adequate for running [ProductName].</td><td>0</td><td/><td>1159970122</td></row>
@@ -3750,8 +3749,9 @@
 		<row><td>IDS__TargetReq_DESC_PROCESSOR</td><td>1033</td><td>The processor is not adequate for running [ProductName].</td><td>0</td><td/><td>1159970122</td></row>
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>1159970122</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>1159970122</td></row>
-		<row><td>ID_STRING1</td><td>1033</td><td>http://www.GlobaleDocs.com</td><td>0</td><td/><td>1109676495</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>Global eDocs</td><td>0</td><td/><td>1109676495</td></row>
+		<row><td>ID_STRING1</td><td>1033</td><td>http://www.GlobaleDocs.com</td><td>0</td><td/><td>1277525228</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>Global eDocs</td><td>0</td><td/><td>1277525228</td></row>
+		<row><td>ID_STRING3</td><td>1033</td><td>eDocs Editor</td><td>0</td><td/><td>-719039762</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>1159970122</td></row>
 	</table>
 
@@ -3998,7 +3998,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{7ABD6DD9-9039-408C-8F64-C3A68AAEEBCC}</td></row>
 		<row><td>ISUSSignature</td><td>{24E82655-898D-4C8B-A975-2BF3CA64BCE2}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewObjects,viewProject,viewISToday,viewLearnMore,viewRelease,viewAppFiles,viewRegistry,viewUI,viewUpgradePaths,viewShortcuts,viewIniFiles,viewFileExtensions,viewEnvironmentVariables,viewVRoots,viewServices,viewTextMessages,viewCustomActions,viewSystemSearch</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewObjects,viewProject,viewISToday,viewLearnMore,viewRelease,viewAppFiles,viewRegistry,viewUI,viewUpgradePaths,viewShortcuts,viewIniFiles,viewFileExtensions,viewEnvironmentVariables,viewVRoots,viewServices,viewTextMessages,viewCustomActions,viewSystemSearch,viewUpdateService</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
@@ -4369,9 +4369,9 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGMSG_IIS_ROLLBACKAPPPOOLS</td><td>##IDS_PROGMSG_IIS_ROLLBACKAPPPOOLS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKVROOTS</td><td>##IDS_PROGMSG_IIS_ROLLBACKVROOTS##</td><td/></row>
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
-		<row><td>ProductCode</td><td>{F0E257D6-3315-4301-9827-EB17EC20B241}</td><td/></row>
-		<row><td>ProductName</td><td>eDoc Add-in</td><td/></row>
-		<row><td>ProductVersion</td><td>1.00.0000</td><td/></row>
+		<row><td>ProductCode</td><td>{05F965FD-0DCA-436D-A47E-2D112B565CBD}</td><td/></row>
+		<row><td>ProductName</td><td>eDocs Editor</td><td/></row>
+		<row><td>ProductVersion</td><td>2.2.7</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>
@@ -4386,7 +4386,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>SecureCustomProperties</td><td>ISFOUNDNEWERPRODUCTVERSION;USERNAME;COMPANYNAME;ISX_SERIALNUM;SUPPORTDIR</td><td/></row>
 		<row><td>SelectedSetupType</td><td>##IDS__DisplayName_Typical##</td><td/></row>
 		<row><td>SetupType</td><td>Typical</td><td/></row>
-		<row><td>UpgradeCode</td><td>{5C1FFB87-113E-4CA4-AC17-D9FAD621FC94}</td><td/></row>
+		<row><td>UpgradeCode</td><td>{8579C390-9141-4231-939E-30F9E8057ACA}</td><td/></row>
 		<row><td>_IsMaintenance</td><td>Change</td><td/></row>
 		<row><td>_IsSetupTypeMin</td><td>Typical</td><td/></row>
 	</table>
@@ -4438,10 +4438,10 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S0">Value</col>
 		<col def="s72">Component_</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>Registry1</td><td>1</td><td>Software\Microsoft\Office\Word\Addins\Global.eDocs.WordAddIn</td><td>Description</td><td>eDocs editor-Addin</td><td>ISX_DEFAULTCOMPONENT</td><td>0</td></row>
-		<row><td>Registry2</td><td>1</td><td>Software\Microsoft\Office\Word\Addins\Global.eDocs.WordAddIn</td><td>FriendlyName</td><td>eDocs editor-Addin</td><td>ISX_DEFAULTCOMPONENT</td><td>0</td></row>
-		<row><td>Registry3</td><td>1</td><td>Software\Microsoft\Office\Word\Addins\Global.eDocs.WordAddIn</td><td>LoadBehavior</td><td>#3</td><td>ISX_DEFAULTCOMPONENT</td><td>0</td></row>
-		<row><td>Registry4</td><td>1</td><td>Software\Microsoft\Office\Word\Addins\Global.eDocs.WordAddIn</td><td>Manifest</td><td>file:///[INSTALLDIR]eDocs Edit Word Add In.vsto|vstolocal</td><td>ISX_DEFAULTCOMPONENT</td><td>0</td></row>
+		<row><td>Registry13</td><td>1</td><td>SOFTWARE\Microsoft\Office\Word\Addins\Global.eDocs.Editor</td><td>FriendlyName</td><td>eDocs Editor</td><td>ISX_DEFAULTCOMPONENT</td><td>0</td></row>
+		<row><td>Registry14</td><td>1</td><td>SOFTWARE\Microsoft\Office\Word\Addins\Global.eDocs.Editor</td><td>LoadBehavior</td><td>#3</td><td>ISX_DEFAULTCOMPONENT</td><td>0</td></row>
+		<row><td>Registry15</td><td>1</td><td>SOFTWARE\Microsoft\Office\Word\Addins\Global.eDocs.Editor</td><td>Manifest</td><td>file:///[INSTALLDIR]eDocs Editor.vsto|vstolocal</td><td>ISX_DEFAULTCOMPONENT</td><td>0</td></row>
+		<row><td>Registry16</td><td>1</td><td>SOFTWARE\Microsoft\Office\Word\Addins\Global.eDocs.Editor</td><td>Description</td><td>eDocs Editor</td><td>ISX_DEFAULTCOMPONENT</td><td>0</td></row>
 	</table>
 
 	<table name="RemoveFile">
