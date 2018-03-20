@@ -52,16 +52,25 @@ namespace eDocs_Editor
 
         private void button2_Click(object sender, EventArgs e)
         {
-            List<loepDocument> loepDocumentArray = new List<loepDocument>();
-            foreach (ListViewItem listItem in pageView.Items)
+            DialogResult dialogResult = MessageBox.Show("Please Save current Doc before proceeding, to countinue?", "Create LOEP?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                loepDocument item = new loepDocument(listItem.SubItems[1].Text, listItem.SubItems[2].Text);
-                loepDocumentArray.Add(item);
+                List<loepDocument> loepDocumentArray = new List<loepDocument>();
+                foreach (ListViewItem listItem in pageView.Items)
+                {
+                    loepDocument item = new loepDocument(listItem.SubItems[1].Text, listItem.SubItems[2].Text);
+                    loepDocumentArray.Add(item);
+                }
+                alert = new AlertForm(Doc, 7, loepDocumentArray, 0);
+                alert.Show();
+                this.Close();
+                this.Dispose();
             }
-            alert = new AlertForm(Doc, 7, loepDocumentArray,0);
-            alert.Show();
-            this.Close();
-            this.Dispose();
+            else
+            {
+                this.Close();
+                this.Dispose();
+            }
 
         }
     }

@@ -25,88 +25,6 @@ namespace eDocs_Editor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("true")]
-        public string FirstUse {
-            get {
-                return ((string)(this["FirstUse"]));
-            }
-            set {
-                this["FirstUse"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2016-06-23")]
-        public global::System.DateTime StartTime {
-            get {
-                return ((global::System.DateTime)(this["StartTime"]));
-            }
-            set {
-                this["StartTime"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string addin_license {
-            get {
-                return ((string)(this["addin_license"]));
-            }
-            set {
-                this["addin_license"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int days_for_use {
-            get {
-                return ((int)(this["days_for_use"]));
-            }
-            set {
-                this["days_for_use"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.DateTime Last_connction {
-            get {
-                return ((global::System.DateTime)(this["Last_connction"]));
-            }
-            set {
-                this["Last_connction"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=edocsaddinserver.col1u7zgsknb.us-west-2.rds.amazonaws.com;database=edocsus" +
-            "ers;uid=admin;pwd=mypassword;")]
-        public string serverString {
-            get {
-                return ((string)(this["serverString"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("false")]
-        public string is_active {
-            get {
-                return ((string)(this["is_active"]));
-            }
-            set {
-                this["is_active"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Heading 1")]
         public string heading1_name {
             get {
@@ -150,6 +68,42 @@ namespace eDocs_Editor.Properties {
             }
             set {
                 this["introduction2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("123789")]
+        public string userId {
+            get {
+                return ((string)(this["userId"]));
+            }
+            set {
+                this["userId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("false")]
+        public string is_active_auth {
+            get {
+                return ((string)(this["is_active_auth"]));
+            }
+            set {
+                this["is_active_auth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UpgradeRequired {
+            get {
+                return ((bool)(this["UpgradeRequired"]));
+            }
+            set {
+                this["UpgradeRequired"] = value;
             }
         }
     }

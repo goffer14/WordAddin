@@ -3,7 +3,17 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using eDocs_Editor.Properties;
 using System.Diagnostics;
+using Auth0.OidcClient;
 using IdentityModel.OidcClient;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Text;
+using System.Collections.Generic;
+using System.Net;
+using System.IO;
+using System.Web;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json.Linq;
 
 namespace eDocs_Editor
 {
@@ -59,129 +69,67 @@ namespace eDocs_Editor
         }
         private void button1_Click(object sender, EventArgs e)
         {
-
-            DateTime CurrentDate = DateTime.Now.Date;
-            MyThreadStartMethod();
-        }
-        private  void MyThreadStartMethod()
-        {
             if (button1.Text == "Close")
+            {
                 this.Close();
+                this.Dispose();
+            }
+            if (!settings.CheckForInternetConnection())
+            {
+                out_put_text.Text = "Need Internet Connection";
+                return;
+            }
             if (ValidData())
-            {
-                if (Settings.Default.is_active == "true")
-                {
-                    if (isOnline)
-                        check_license();
-                    else
-                    {
-                        isOnline = settings.CheckForInternetConnection();
-                        if (isOnline)
-                            check_license();
-                        else
-                        {
-                            out_put_text.Text = "Need Internet Connection";
-                            check_license();
-                        }
-                    }
-                }
-                else
-                    out_put_text.Text = "Alreadגy Authenticate";
-                button1.Text = "Close";
-            }
+                authUser();
         }
-        private void DisplayResult(LoginResult loginResult)
+        public void authUser()
         {
-            DateTime CurrentDate = DateTime.Now.Date;
-            // Display error
-            if (loginResult.IsError)
-            {
-                Debug.WriteLine($"An error occurred during login: {loginResult.Error}");
-                Settings.Default.is_active = "true";
-
-            }
-            else if (!loginResult.IsError)
-            {
-
-                Debug.WriteLine($"name: {loginResult.User.FindFirst(c => c.Type == "name")?.Value}");
-                Debug.WriteLine($"email: {loginResult.User.FindFirst(c => c.Type == "email")?.Value}");
-                var days_for_use = 180;
-
-                Settings.Default.days_for_use = days_for_use;
-                Settings.Default.addin_license = loginResult.User.FindFirst(c => c.Type == "name")?.Value;
-                Settings.Default.StartTime = CurrentDate;
-                Settings.Default.Last_connction = CurrentDate;
-                Settings.Default.FirstUse = "false";
-                Settings.Default.is_active = "true";
-                Settings.Default.Save();
-            }
-        }
-        public void check_license()
-        {
-            DateTime CurrentDate = DateTime.Now.Date;
-            out_put_text.Text = "Conncting to eDocs servers...";
-            string s;
-            MySqlConnection mcon = new MySqlConnection(Settings.Default.serverString);
-            MySqlCommand mcd;
-            MySqlDataReader mdr;
             try
             {
-                mcon.Open();
-                s = "select * from license_table where license_key = '" + addin_license_Text + "'";
-                mcd = new MySqlCommand(s, mcon);
-                mdr = mcd.ExecuteReader();
-                if (mdr.Read())
+                var request = (HttpWebRequest)HttpWebRequest.Create("https://global-edocs-auth.herokuapp.com/users/auth");
+                request.Method = "POST";
+                var stream = request.GetRequestStream();
+                var bytes = Encoding.UTF8.GetBytes(getUserData());
+                request.ContentType = "application/x-www-form-urlencoded;charset=UTF-8";
+                stream.Write(bytes, 0, bytes.Length);
+                stream.Close();
+                var response = (HttpWebResponse)request.GetResponse();
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    int days_for_use = Int32.Parse(mdr.GetString("days_for_use"));
-                    int is_active = mdr.GetInt32("is_active");
-                    int license_id = mdr.GetInt32("license_id");
-                    mcon.Close();
-                    if (is_active != 0)
-                    {
-                        out_put_text.Text = "License Already Used";
-                        return;
-                    }
-                    string str1 = "update license_table set company_name='" + company_name_Text + "', contact_name='" + contact_name_Text + "', email='" + email_Text + "', is_active='" + 1 + "', activation_date='" + CurrentDate.ToShortDateString() + "' where license_id='" + license_id + "'";
-                    mcon.Open();
-                    MySqlCommand update = new MySqlCommand(str1, mcon);
-                    update.ExecuteNonQuery();
-                    mcon.Close();
-
-                    Settings.Default.days_for_use = days_for_use;
-                    Settings.Default.addin_license = addin_license.Text;
-                    Settings.Default.StartTime = CurrentDate;
-                    Settings.Default.Last_connction = CurrentDate;
-                    Settings.Default.FirstUse = "false";
-                    Settings.Default.is_active = "true";
+                    var rawJson = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                    var json = JObject.Parse(rawJson);  //Turns your raw string into a key value lookup
+                    string userId = json["_id"].ToObject<string>();
+                    System.Diagnostics.Debug.WriteLine("userId - " + userId);
+                    Settings.Default.userId = userId;
+                    Settings.Default.is_active_auth = "true";
                     Settings.Default.Save();
-                    out_put_text.Text = "Authenticate Complete";
-                    button1.Text = "Close";
-                    return;
+                    MessageBox.Show("Success, you can now use the product");
+                    this.Close();
+                    this.Dispose();
+
                 }
                 else
                 {
-                    out_put_text.Text = "No License in Database";
-                    return;
+                    out_put_text.Text = "Error trying to Auth the user\r\nPlease contect support";
+                    button1.Text = "Close";
                 }
             }
             catch
             {
-                out_put_text.Text = "Error Connecting to Server";
-                if (Settings.Default.FirstUse == "true" && addin_license_Text == "blDAWY52R0cNBoq")
-                {
-                    Settings.Default.days_for_use = 14;
-                    Settings.Default.addin_license = addin_license_Text;
-                    Settings.Default.StartTime = CurrentDate;
-                    Settings.Default.Last_connction = CurrentDate;
-                    Settings.Default.FirstUse = "false";
-                    Settings.Default.is_active = "true";
-                    Settings.Default.Save();
-                    out_put_text.Text = "Authenticate Complete";
-                    button1.Text = "Close";
-                }
-
-                return;
+                out_put_text.Text = "Error trying to Auth the user\r\nPlease contect support";
+                button1.Text = "Close";
             }
+        }
+        public string getUserData()
+        {
+            int i = 0;
+            var sb = new StringBuilder();
+            sb.AppendFormat("{0}={1}&", "email", HttpUtility.UrlEncode(email_Text));
+            sb.AppendFormat("{0}={1}&", "password", HttpUtility.UrlEncode(addin_license_Text));
+            sb.AppendFormat("{0}={1}&", "companyName", HttpUtility.UrlEncode(company_name_Text));
+            sb.AppendFormat("{0}={1}&", "contactName", HttpUtility.UrlEncode(contact_name_Text));
+            sb.Remove(sb.Length - 1, 1);
+            return sb.ToString();
         }
     }
 }

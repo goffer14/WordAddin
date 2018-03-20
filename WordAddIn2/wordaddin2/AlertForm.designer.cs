@@ -76,7 +76,6 @@
             // 
             // AlertForm
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(243, 147);
             this.ControlBox = false;
@@ -91,6 +90,8 @@
             this.Load += new System.EventHandler(this.AlertForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F); //IMPORTANT
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.PerformLayout();
 
         }

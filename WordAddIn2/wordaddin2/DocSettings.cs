@@ -532,7 +532,6 @@ namespace eDocs_Editor
             List<multiLOEP> pageMultiLOEP = new List<multiLOEP>();
             for (int i = 1; i <= GetPageNumber(tempDoc); i++)
             {
-
                 tempPageString = getString(tempDoc, "edocs_Page" + i + "_page");
                 tempPageRevisionText = getString(tempDoc, "edocs_Page" + tempPageString + "_rev");
                 tempPageDateText = getString(tempDoc, "edocs_Page" + tempPageString + "_date");

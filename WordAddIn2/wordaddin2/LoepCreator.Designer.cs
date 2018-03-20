@@ -92,8 +92,8 @@
             // 
             // LoepCreator
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(508, 218);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.pageView);
@@ -101,6 +101,9 @@
             this.Name = "LoepCreator";
             this.Text = "LoepCreator";
             this.Load += new System.EventHandler(this.LoepCreator_Load);
+
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F); //IMPORTANT
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ResumeLayout(false);
 
         }

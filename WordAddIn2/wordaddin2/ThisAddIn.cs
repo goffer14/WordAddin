@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 using System.Threading;
 using Microsoft.Office.Tools.Word;
+using eDocs_Editor.Properties;
 
 namespace eDocs_Editor
 {
@@ -13,6 +14,12 @@ namespace eDocs_Editor
         {
             try
             {
+                if (Properties.Settings.Default.UpgradeRequired)
+                {
+                    Properties.Settings.Default.Upgrade();
+                    Properties.Settings.Default.UpgradeRequired = false;
+                    Properties.Settings.Default.Save();
+                }
                 Thread oThread = new Thread(new ThreadStart(settings.check_if_vaild_onStartUp));
                 oThread.Start();
             }

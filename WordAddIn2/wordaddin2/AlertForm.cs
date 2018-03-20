@@ -49,7 +49,7 @@ namespace BackgroundWorkerDemo
                     settings.ChangesExport(Doc);
                     break;
                 case 4:
-                    settings.init_ListOfE_New(Doc, pageSize);
+                    settings.init_ListOfE_New(Doc);
                     break;
                 case 5:
                     settings.process_doc(Doc);

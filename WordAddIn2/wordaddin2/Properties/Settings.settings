@@ -2,32 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="eDocs_Editor.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="FirstUse" Type="System.String" Scope="User">
-      <Value Profile="(Default)">true</Value>
-    </Setting>
-    <Setting Name="StartTime" Type="System.DateTime" Scope="User">
-      <Value Profile="(Default)">2016-06-23</Value>
-    </Setting>
-    <Setting Name="addin_license" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="days_for_use" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="Last_connction" Type="System.DateTime" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="serverString" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;server=edocsaddinserver.col1u7zgsknb.us-west-2.rds.amazonaws.com;database=edocsusers;uid=admin;pwd=mypassword;&lt;/ConnectionString&gt;
-  &lt;ProviderName /&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">server=edocsaddinserver.col1u7zgsknb.us-west-2.rds.amazonaws.com;database=edocsusers;uid=admin;pwd=mypassword;</Value>
-    </Setting>
-    <Setting Name="is_active" Type="System.String" Scope="User">
-      <Value Profile="(Default)">false</Value>
-    </Setting>
     <Setting Name="heading1_name" Type="System.String" Scope="User">
       <Value Profile="(Default)">Heading 1</Value>
     </Setting>
@@ -39,6 +13,15 @@
     </Setting>
     <Setting Name="introduction2" Type="System.String" Scope="User">
       <Value Profile="(Default)">Introduction‎ 2</Value>
+    </Setting>
+    <Setting Name="userId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">123789</Value>
+    </Setting>
+    <Setting Name="is_active_auth" Type="System.String" Scope="User">
+      <Value Profile="(Default)">false</Value>
+    </Setting>
+    <Setting Name="UpgradeRequired" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -135,8 +135,8 @@
             // 
             // AuthenticateForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(264, 200);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.out_put_text);
@@ -156,6 +156,8 @@
             this.TopMost = true;
             this.Load += new System.EventHandler(this.AuthenticateForm_Load);
             this.ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F); //IMPORTANT
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.PerformLayout();
 
         }

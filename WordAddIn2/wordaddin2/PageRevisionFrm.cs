@@ -95,6 +95,7 @@ namespace eDocs_Editor
                 var listViewItem = new ListViewItem(row);
                 pageView.Items.Add(listViewItem);
             }
+            pageView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             Cursor.Current = Cursors.Default;
             settings.trackChange(Doc, true);
         }
@@ -174,6 +175,7 @@ namespace eDocs_Editor
 
             }
             Cursor.Current = Cursors.Default;
+            pageView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             DS.UpDateFields();
         }
         private void saveChanges(string[] vars,int i)
@@ -184,7 +186,6 @@ namespace eDocs_Editor
                 if(vars[z]!=null)
                     pageView.CheckedItems[i].SubItems[z+1].Text = vars[z];
             }
-
         }
         private string addVar(string varText,TextBox textBox)
         {

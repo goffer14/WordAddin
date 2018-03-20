@@ -14,6 +14,8 @@
           <button id="ExportChanges_ribbon" label="Export Changes" screentip="Export Rivision Changes to new Doc" getImage="GetImage" size="large" onAction="OnExportChagnes" supertip="Export Changes to new Doc (Only Inserted + Deleted Changes)" />
           <button id="ProcessTOC_ribbon" label="Replace TOC Paging" screentip="Update Table of Content" getImage="GetImage" size="large" onAction="OnTOC" supertip="Update Table of Content" />
           <button id="sameAsPrevious_ribbon" label="Same as Previous" screentip="All Sections Same as Previous" getImage="GetImage" size="large" onAction="makeAllSameAsPrevious" supertip="Make all section Headers And Footers same as Previous" />
+          <button id="removeUnWantedStyles" label="Remove Unused Styles" screentip="Remove all Unused Styles" getImage="GetImage" size="large" onAction="removeUnwantedStyles" supertip="Remove all Unused Styles" />
+
         </group>
 
         <group id="auto_rivision_control" label="Auto Revision Management">

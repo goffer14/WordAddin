@@ -149,15 +149,13 @@ namespace eDocs_Editor
         public bool isActiveAddin()
         {
             try { Doc.Fields.Locked = 0; } catch { };
-            if (Settings.Default.is_active == "false")
+            if (Settings.Default.is_active_auth == "false")
             {
                 DialogResult dialogResult = MessageBox.Show("License Required, Enter License?", "License Required", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    Settings.Default.FirstUse = "true";
-                    Settings.Default.Save();
-                    settings.check_if_vaild_copy(false);
-                    Application.Run(new AuthenticateForm());
+                    AuthenticateForm authFrm = new AuthenticateForm();
+                    authFrm.Show();
                 }
                 return false;
             }
@@ -202,6 +200,8 @@ namespace eDocs_Editor
         }
         private void CreateLOEP(int pageSize)
         {
+            if (!isActiveAddin())
+                return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             if (!settings.check_if_edoc(Doc))
             {
@@ -233,46 +233,64 @@ namespace eDocs_Editor
         }
         public void insertSectionPageText(Office.IRibbonControl control)
         {
+            if (!isActiveAddin())
+                return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             insertText("page", Doc.Application.Selection.Range);
         }
         public void insertSectionRevText(Office.IRibbonControl control)
         {
+            if (!isActiveAddin())
+                return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             insertText("rev", Doc.Application.Selection.Range);
         }
         public void insertSectionDateText(Office.IRibbonControl control)
         {
+            if (!isActiveAddin())
+                return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             insertText("date", Doc.Application.Selection.Range);
         }
         public void insertSectionIssueText(Office.IRibbonControl control)
         {
+            if (!isActiveAddin())
+                return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             insertText("issue", Doc.Application.Selection.Range);
         }
         public void insertSectionEffictiveText(Office.IRibbonControl control)
         {
+            if (!isActiveAddin())
+                return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             insertText("effective", Doc.Application.Selection.Range);
         }
         public void insertSectionText1Text(Office.IRibbonControl control)
         {
+            if (!isActiveAddin())
+                return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             insertText("text1", Doc.Application.Selection.Range);
         }
         public void insertSectionText2Text(Office.IRibbonControl control)
         {
+            if (!isActiveAddin())
+                return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             insertText("text2", Doc.Application.Selection.Range);
         }
         public void insertSectionText3Text(Office.IRibbonControl control)
         {
+            if (!isActiveAddin())
+                return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             insertText("text3", Doc.Application.Selection.Range);
         }
         public void insertSectionText4Text(Office.IRibbonControl control)
         {
+            if (!isActiveAddin())
+                return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             insertText("text4", Doc.Application.Selection.Range);
         }
@@ -293,7 +311,6 @@ namespace eDocs_Editor
         }
         public void OnProcesseDoc(Office.IRibbonControl control)
         {
-
             if (!isActiveAddin())
                 return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
@@ -308,6 +325,8 @@ namespace eDocs_Editor
         }
         public void seteDocsStyels(Office.IRibbonControl control)
         {
+            if (!isActiveAddin())
+                return;
             if (setStyle_frm != null)
             {
                 setStyle_frm.Close();
@@ -321,6 +340,8 @@ namespace eDocs_Editor
         }
         public void openLOEP(Office.IRibbonControl control)
         {
+            if (!isActiveAddin())
+                return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             if (multiLoep != null)
             {
@@ -339,6 +360,7 @@ namespace eDocs_Editor
         }
         public void OnExportChagnes(Office.IRibbonControl control)
         {
+
             if (settings.monitorDoc)
             {
                 MessageBox.Show("Auto Rivision on, Please Turn off");
@@ -381,8 +403,8 @@ namespace eDocs_Editor
         }
         private void removeStyles()
         {
-            
             int deletedStyles = 0;
+            int numOfStylesDone = 0;
             foreach (Word.Style mStyle in Doc.Styles)
             {
                 if (!mStyle.BuiltIn)
@@ -396,6 +418,8 @@ namespace eDocs_Editor
                     }
 
                 }
+                numOfStylesDone++;
+                System.Diagnostics.Debug.WriteLine("numOfStylesDone: " + numOfStylesDone);
             }
             MessageBox.Show("Deleted Styles - " + deletedStyles);
         }
@@ -428,8 +452,8 @@ namespace eDocs_Editor
                 }
                 monitoring_Frm = new monitoringFrm(Doc);
                 monitoring_Frm.Show();
-                updateMonitorRibbon();
     **/
+                updateMonitorRibbon();
             }
             else
             {
@@ -560,11 +584,9 @@ namespace eDocs_Editor
 
         public void Ribbon_Load(Office.IRibbonUI ribbonUI)
         {
-            if (Settings.Default.is_active=="false") return;
             AutoDateString = DateTime.Now.Date.ToString("d", DateTimeFormatInfo.InvariantInfo);
             this.ribbon = ribbonUI;
         }
-
         #endregion
 
         #region Helpers

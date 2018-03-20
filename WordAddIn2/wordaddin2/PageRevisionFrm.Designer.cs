@@ -60,14 +60,15 @@
             this.effectiveCheckBox = new System.Windows.Forms.CheckBox();
             this.effectiveText = new System.Windows.Forms.TextBox();
             this.issueText = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkBox1
             // 
-            this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBox1.AutoSize = true;
             this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.checkBox1.Location = new System.Drawing.Point(277, 395);
+            this.checkBox1.Location = new System.Drawing.Point(235, 271);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(70, 17);
             this.checkBox1.TabIndex = 0;
@@ -77,9 +78,8 @@
             // 
             // button1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.button1.Location = new System.Drawing.Point(1404, 395);
+            this.button1.Location = new System.Drawing.Point(19, 401);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -89,18 +89,20 @@
             // 
             // page_rev
             // 
+            this.page_rev.Dock = System.Windows.Forms.DockStyle.Top;
             this.page_rev.Enabled = false;
-            this.page_rev.Location = new System.Drawing.Point(121, 38);
+            this.page_rev.Location = new System.Drawing.Point(127, 3);
             this.page_rev.Name = "page_rev";
-            this.page_rev.Size = new System.Drawing.Size(150, 22);
+            this.page_rev.Size = new System.Drawing.Size(215, 20);
             this.page_rev.TabIndex = 4;
             // 
             // date_rev
             // 
+            this.date_rev.Dock = System.Windows.Forms.DockStyle.Top;
             this.date_rev.Enabled = false;
-            this.date_rev.Location = new System.Drawing.Point(121, 67);
+            this.date_rev.Location = new System.Drawing.Point(127, 30);
             this.date_rev.Name = "date_rev";
-            this.date_rev.Size = new System.Drawing.Size(150, 22);
+            this.date_rev.Size = new System.Drawing.Size(215, 20);
             this.date_rev.TabIndex = 5;
             // 
             // pageView
@@ -125,10 +127,9 @@
             this.pageView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.pageView.FullRowSelect = true;
             this.pageView.GridLines = true;
-            this.pageView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.pageView.Location = new System.Drawing.Point(277, 6);
+            this.pageView.Location = new System.Drawing.Point(378, 42);
             this.pageView.Name = "pageView";
-            this.pageView.Size = new System.Drawing.Size(1292, 383);
+            this.pageView.Size = new System.Drawing.Size(964, 383);
             this.pageView.TabIndex = 6;
             this.pageView.UseCompatibleStateImageBehavior = false;
             this.pageView.View = System.Windows.Forms.View.Details;
@@ -187,34 +188,38 @@
             // 
             // text2_text
             // 
+            this.text2_text.Dock = System.Windows.Forms.DockStyle.Top;
             this.text2_text.Enabled = false;
-            this.text2_text.Location = new System.Drawing.Point(121, 179);
+            this.text2_text.Location = new System.Drawing.Point(127, 138);
             this.text2_text.Name = "text2_text";
-            this.text2_text.Size = new System.Drawing.Size(150, 22);
+            this.text2_text.Size = new System.Drawing.Size(215, 20);
             this.text2_text.TabIndex = 10;
             // 
             // text1_text
             // 
+            this.text1_text.Dock = System.Windows.Forms.DockStyle.Top;
             this.text1_text.Enabled = false;
-            this.text1_text.Location = new System.Drawing.Point(121, 150);
+            this.text1_text.Location = new System.Drawing.Point(127, 111);
             this.text1_text.Name = "text1_text";
-            this.text1_text.Size = new System.Drawing.Size(150, 22);
+            this.text1_text.Size = new System.Drawing.Size(215, 20);
             this.text1_text.TabIndex = 9;
             // 
             // text4_text
             // 
+            this.text4_text.Dock = System.Windows.Forms.DockStyle.Top;
             this.text4_text.Enabled = false;
-            this.text4_text.Location = new System.Drawing.Point(121, 234);
+            this.text4_text.Location = new System.Drawing.Point(127, 192);
             this.text4_text.Name = "text4_text";
-            this.text4_text.Size = new System.Drawing.Size(150, 22);
+            this.text4_text.Size = new System.Drawing.Size(215, 20);
             this.text4_text.TabIndex = 14;
             // 
             // text3_text
             // 
+            this.text3_text.Dock = System.Windows.Forms.DockStyle.Top;
             this.text3_text.Enabled = false;
-            this.text3_text.Location = new System.Drawing.Point(121, 205);
+            this.text3_text.Location = new System.Drawing.Point(127, 165);
             this.text3_text.Name = "text3_text";
-            this.text3_text.Size = new System.Drawing.Size(150, 22);
+            this.text3_text.Size = new System.Drawing.Size(215, 20);
             this.text3_text.TabIndex = 13;
             // 
             // label7
@@ -229,10 +234,11 @@
             // 
             // dateCheckBox
             // 
+            this.dateCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.dateCheckBox.AutoSize = true;
-            this.dateCheckBox.Location = new System.Drawing.Point(13, 67);
+            this.dateCheckBox.Location = new System.Drawing.Point(3, 32);
             this.dateCheckBox.Name = "dateCheckBox";
-            this.dateCheckBox.Size = new System.Drawing.Size(59, 20);
+            this.dateCheckBox.Size = new System.Drawing.Size(52, 17);
             this.dateCheckBox.TabIndex = 16;
             this.dateCheckBox.Text = "Date:";
             this.dateCheckBox.UseVisualStyleBackColor = true;
@@ -240,10 +246,11 @@
             // 
             // revCheckBox
             // 
+            this.revCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.revCheckBox.AutoSize = true;
-            this.revCheckBox.Location = new System.Drawing.Point(13, 38);
+            this.revCheckBox.Location = new System.Drawing.Point(3, 5);
             this.revCheckBox.Name = "revCheckBox";
-            this.revCheckBox.Size = new System.Drawing.Size(83, 20);
+            this.revCheckBox.Size = new System.Drawing.Size(70, 17);
             this.revCheckBox.TabIndex = 17;
             this.revCheckBox.Text = "Revision:";
             this.revCheckBox.UseVisualStyleBackColor = true;
@@ -251,10 +258,11 @@
             // 
             // text1CheckBox
             // 
+            this.text1CheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.text1CheckBox.AutoSize = true;
-            this.text1CheckBox.Location = new System.Drawing.Point(13, 152);
+            this.text1CheckBox.Location = new System.Drawing.Point(3, 113);
             this.text1CheckBox.Name = "text1CheckBox";
-            this.text1CheckBox.Size = new System.Drawing.Size(66, 20);
+            this.text1CheckBox.Size = new System.Drawing.Size(59, 17);
             this.text1CheckBox.TabIndex = 18;
             this.text1CheckBox.Text = "Text 1:";
             this.text1CheckBox.UseVisualStyleBackColor = true;
@@ -262,10 +270,11 @@
             // 
             // text4CheckBox
             // 
+            this.text4CheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.text4CheckBox.AutoSize = true;
-            this.text4CheckBox.Location = new System.Drawing.Point(13, 234);
+            this.text4CheckBox.Location = new System.Drawing.Point(3, 194);
             this.text4CheckBox.Name = "text4CheckBox";
-            this.text4CheckBox.Size = new System.Drawing.Size(66, 20);
+            this.text4CheckBox.Size = new System.Drawing.Size(59, 17);
             this.text4CheckBox.TabIndex = 19;
             this.text4CheckBox.Text = "Text 4:";
             this.text4CheckBox.UseVisualStyleBackColor = true;
@@ -273,10 +282,11 @@
             // 
             // text3CheckBox
             // 
+            this.text3CheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.text3CheckBox.AutoSize = true;
-            this.text3CheckBox.Location = new System.Drawing.Point(13, 205);
+            this.text3CheckBox.Location = new System.Drawing.Point(3, 167);
             this.text3CheckBox.Name = "text3CheckBox";
-            this.text3CheckBox.Size = new System.Drawing.Size(66, 20);
+            this.text3CheckBox.Size = new System.Drawing.Size(59, 17);
             this.text3CheckBox.TabIndex = 20;
             this.text3CheckBox.Text = "Text 3:";
             this.text3CheckBox.UseVisualStyleBackColor = true;
@@ -284,10 +294,11 @@
             // 
             // text2CheckBox
             // 
+            this.text2CheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.text2CheckBox.AutoSize = true;
-            this.text2CheckBox.Location = new System.Drawing.Point(13, 179);
+            this.text2CheckBox.Location = new System.Drawing.Point(3, 140);
             this.text2CheckBox.Name = "text2CheckBox";
-            this.text2CheckBox.Size = new System.Drawing.Size(66, 20);
+            this.text2CheckBox.Size = new System.Drawing.Size(59, 17);
             this.text2CheckBox.TabIndex = 21;
             this.text2CheckBox.Text = "Text 2:";
             this.text2CheckBox.UseVisualStyleBackColor = true;
@@ -295,9 +306,8 @@
             // 
             // button2
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.button2.Location = new System.Drawing.Point(1485, 395);
+            this.button2.Location = new System.Drawing.Point(100, 401);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 22;
@@ -307,21 +317,21 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(358, 396);
+            this.label1.Location = new System.Drawing.Point(316, 272);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 16);
+            this.label1.Size = new System.Drawing.Size(45, 13);
             this.label1.TabIndex = 23;
             this.label1.Text = "Clear All";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // issueCheckBox
             // 
+            this.issueCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.issueCheckBox.AutoSize = true;
-            this.issueCheckBox.Location = new System.Drawing.Point(13, 93);
+            this.issueCheckBox.Location = new System.Drawing.Point(3, 59);
             this.issueCheckBox.Name = "issueCheckBox";
-            this.issueCheckBox.Size = new System.Drawing.Size(62, 20);
+            this.issueCheckBox.Size = new System.Drawing.Size(54, 17);
             this.issueCheckBox.TabIndex = 27;
             this.issueCheckBox.Text = "Issue:";
             this.issueCheckBox.UseVisualStyleBackColor = true;
@@ -329,10 +339,11 @@
             // 
             // effectiveCheckBox
             // 
+            this.effectiveCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.effectiveCheckBox.AutoSize = true;
-            this.effectiveCheckBox.Location = new System.Drawing.Point(13, 122);
+            this.effectiveCheckBox.Location = new System.Drawing.Point(3, 86);
             this.effectiveCheckBox.Name = "effectiveCheckBox";
-            this.effectiveCheckBox.Size = new System.Drawing.Size(113, 20);
+            this.effectiveCheckBox.Size = new System.Drawing.Size(97, 17);
             this.effectiveCheckBox.TabIndex = 26;
             this.effectiveCheckBox.Text = "Effective Date:";
             this.effectiveCheckBox.UseVisualStyleBackColor = true;
@@ -340,51 +351,78 @@
             // 
             // effectiveText
             // 
+            this.effectiveText.Dock = System.Windows.Forms.DockStyle.Top;
             this.effectiveText.Enabled = false;
-            this.effectiveText.Location = new System.Drawing.Point(121, 122);
+            this.effectiveText.Location = new System.Drawing.Point(127, 84);
             this.effectiveText.Name = "effectiveText";
-            this.effectiveText.Size = new System.Drawing.Size(150, 22);
+            this.effectiveText.Size = new System.Drawing.Size(215, 20);
             this.effectiveText.TabIndex = 25;
             // 
             // issueText
             // 
+            this.issueText.Dock = System.Windows.Forms.DockStyle.Top;
             this.issueText.Enabled = false;
-            this.issueText.Location = new System.Drawing.Point(121, 93);
+            this.issueText.Location = new System.Drawing.Point(127, 57);
             this.issueText.Name = "issueText";
-            this.issueText.Size = new System.Drawing.Size(150, 22);
+            this.issueText.Size = new System.Drawing.Size(215, 20);
             this.issueText.TabIndex = 24;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.95614F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.04386F));
+            this.tableLayoutPanel1.Controls.Add(this.revCheckBox, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.effectiveText, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.issueCheckBox, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.issueText, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.text4_text, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.dateCheckBox, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.text3_text, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.effectiveCheckBox, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.text2_text, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.text1CheckBox, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.text1_text, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.text4CheckBox, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.text3CheckBox, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.text2CheckBox, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.page_rev, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.date_rev, 1, 1);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(16, 42);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 8;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(345, 216);
+            this.tableLayoutPanel1.TabIndex = 28;
             // 
             // PageRevisionFrm
             // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1572, 431);
-            this.Controls.Add(this.issueCheckBox);
-            this.Controls.Add(this.effectiveText);
-            this.Controls.Add(this.issueText);
+            this.ClientSize = new System.Drawing.Size(1354, 442);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.text2CheckBox);
-            this.Controls.Add(this.text3CheckBox);
-            this.Controls.Add(this.text4CheckBox);
-            this.Controls.Add(this.text1CheckBox);
-            this.Controls.Add(this.revCheckBox);
-            this.Controls.Add(this.dateCheckBox);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.text4_text);
-            this.Controls.Add(this.text3_text);
-            this.Controls.Add(this.text2_text);
-            this.Controls.Add(this.text1_text);
             this.Controls.Add(this.pageView);
-            this.Controls.Add(this.date_rev);
-            this.Controls.Add(this.page_rev);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.effectiveCheckBox);
             this.Name = "PageRevisionFrm";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Control Panel - ";
             this.Load += new System.EventHandler(this.PageRevisionFrm_Load);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -423,5 +461,6 @@
         private System.Windows.Forms.CheckBox effectiveCheckBox;
         public System.Windows.Forms.TextBox effectiveText;
         public System.Windows.Forms.TextBox issueText;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

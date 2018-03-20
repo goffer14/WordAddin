@@ -9,6 +9,10 @@ using eDocs_Editor.Properties;
 using MySql.Data.MySqlClient;
 using System.Net;
 using System.Diagnostics;
+using System.IO;
+using Newtonsoft.Json.Linq;
+using System.Text;
+using System.Web;
 
 namespace eDocs_Editor
 {
@@ -41,67 +45,15 @@ namespace eDocs_Editor
         public static object which = Microsoft.Office.Interop.Word.WdGoToDirection.wdGoToFirst;
         public static object missing = System.Reflection.Missing.Value;
         public static object routeDocument = false;
-        public static int freeDaysOfUse = 14;
-        public static bool toCheckInInternet = false;
          public static bool check_if_edoc(Word.Document Doc)
         {
             try { Doc.Fields.Locked = 0; } catch { return true;};
             return true;
         }
-        public static void check_if_vaild_copy(bool isOnStatUp)
-        {
-            Settings.Default.Reload();
-            if (Settings.Default.FirstUse == "true")
-            {
-                if (isOnStatUp)
-                {
-                    if (!toCheckInInternet && freeDaysOfUse != 0)
-                    {
-                        Settings.Default.StartTime = DateTime.Now.Date;
-                        Settings.Default.Last_connction = DateTime.Now.Date;
-                        Settings.Default.days_for_use = freeDaysOfUse;
-                        Settings.Default.is_active = "true";
-                        Settings.Default.FirstUse = "false";
-                        Settings.Default.Save();
-                    }
-                    return;
-                }
-                if (toCheckInInternet)
-                {
-                 
-                    Authenticate_frm = new AuthenticateForm();
-                    Authenticate_frm.Show();
-                    return;
-             
-                }
-                else
-                {
-                    Settings.Default.StartTime = DateTime.Now.Date;
-                    Settings.Default.Last_connction = DateTime.Now.Date;
-                    Settings.Default.days_for_use = freeDaysOfUse;
-                    Settings.Default.is_active = "true";
-                    Settings.Default.FirstUse = "false";
-                    Settings.Default.Save();
-                }
-
-            }
-            else if (toCheckInInternet)
-            {
-                if (CheckForInternetConnection())
-                    updateLicense();
-                if (Settings.Default.Last_connction.Add(new TimeSpan(30, 0, 0, 0)) < DateTime.Now.Date)
-                    Settings.Default.is_active = "false";
-            }
-            if (Settings.Default.StartTime.Add(new TimeSpan(Settings.Default.days_for_use, 0, 0, 0)) < DateTime.Now.Date)
-                Settings.Default.is_active = "false";
-            Settings.Default.Save();
-        }
         public static void check_if_vaild_onStartUp()
         {
-            Settings.Default.Upgrade();
-            Settings.Default.Reload();
-            Settings.Default.Save();
-            check_if_vaild_copy(true);
+            if (CheckForInternetConnection())
+                logUser();
         }
         public static void process_doc(Word.Document Doc)
         {
@@ -120,8 +72,6 @@ namespace eDocs_Editor
             Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("toggleButton_ribbon");
             Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("rev_cbo");
             Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("date_cbo");
-
-
         }
         public static void makeAllSameAsPrevious(Word.Document Doc)
         {
@@ -138,34 +88,38 @@ namespace eDocs_Editor
                 }
             Doc.Application.ActiveWindow.VerticalPercentScrolled = 0;
         }
-        public static void updateLicense()
+        public static void logUser()
         {
-            string s;
-            MySqlConnection mcon = new MySqlConnection(Settings.Default.serverString);
-            MySqlCommand mcd;
-            MySqlDataReader mdr;
-            DateTime CurrentDate = DateTime.Now.Date;
-            mcon.Open();
-                s = "select * from license_table where license_key = '" + Settings.Default.addin_license + "'" + " and is_active = " + 1;
-                mcd = new MySqlCommand(s, mcon);
             try
             {
-                mdr = mcd.ExecuteReader();
+                var request = (HttpWebRequest)HttpWebRequest.Create("https://global-edocs-auth.herokuapp.com/users/login" + "?id=" + Settings.Default.userId);
+                request.Method = "GET";
+                request.ContentType = "text/xml; encoding='utf-8'";
+                var response = (HttpWebResponse)request.GetResponse();
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    var rawJson = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                    var json = JObject.Parse(rawJson);  //Turns your raw string into a key value lookup
+                    bool isActive = json["active"].ToObject<bool>();
+                    System.Diagnostics.Debug.WriteLine("isActive - " + isActive);
+                    if(isActive)
+                        Settings.Default.is_active_auth = "true";
+                    else
+                        Settings.Default.is_active_auth = "false";
+                }
+                Settings.Default.Save();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                Debug.Write(ex);
-                mcon.Close();
-                return;
+                System.Diagnostics.Debug.WriteLine("ex - " + ex);
             }
-            if (mdr.Read())
-                Settings.Default.is_active = "true";
-            else
-                Settings.Default.is_active = "false";
-            mcon.Close();
-            Settings.Default.Last_connction = CurrentDate;
-            Settings.Default.Save();
-                
+        }
+        public static string getUserData()
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat("{0}={1}&", "id", HttpUtility.UrlEncode(Settings.Default.userId));
+            sb.Remove(sb.Length - 1, 1);
+            return sb.ToString();
         }
         public static bool CheckForInternetConnection()
         {
@@ -237,18 +191,17 @@ namespace eDocs_Editor
         }
         public static string LOEPPath(int pageSize)
         {
-            string DocPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            if(pageSize==5)
-                DocPath = DocPath + "\\Global eDocs\\eDocs Add-in\\Templates" + "\\eDoc List of effective Template - A5.docx";
+            string DocPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)+ "\\Global eDocs\\eDocs Add-in\\Templates\\";
+            if (pageSize==5)
+                DocPath = DocPath +"LOEP5.docx";
             else
-                DocPath = DocPath + "\\Global eDocs\\eDocs Add-in\\Templates" + "\\eDoc List of effective Template - A4.docx";
+                DocPath = DocPath + "LOEPElse.docx";
             return DocPath;
         
         }
         public static void initTOC(Word.Document Doc)
         {
             DocSettings DS = new DocSettings(Doc);
-
             if (Doc.TablesOfContents.Count < 0)
             {
                 MessageBox.Show("Cant Find TOC in DOC");
@@ -258,7 +211,7 @@ namespace eDocs_Editor
             trackChange(Doc, true);
 
         }
-        public static void init_ListOfE_New(Word.Document RealDoc,int pageSize)
+        public static void init_ListOfE_New(Word.Document RealDoc)
         {
             // JUST FOR ADD PAGES TO
            // BuildTable_ListOfEffctive_BigData(RealDoc, RealDoc.Tables[2]);
@@ -268,6 +221,9 @@ namespace eDocs_Editor
             DocSettings DS = new DocSettings(RealDoc);
             SelectionNext = RealDoc.Application.Selection.End;
             Word.Range rangeForToCopy = RealDoc.Range(ref SelectionNext, ref SelectionNext);
+            int pageSize = 4;
+            if (rangeForToCopy.PageSetup.PaperSize == Word.WdPaperSize.wdPaperA5)
+                pageSize = 5;
             int currentPageNum = Convert.ToInt32(RealDoc.Application.Selection.get_Information(Microsoft.Office.Interop.Word.WdInformation.wdActiveEndPageNumber));
             object currentPageNumToRef = currentPageNum;
             Word.Document DocOfE = null;
@@ -284,9 +240,13 @@ namespace eDocs_Editor
                 openFile.FileName = "";
                 openFile.Filter = "Word Documents (*.doc;*.docx)|*.doc;*.docx";
                 if (openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
                     DocOfE = Globals.ThisAddIn.Application.Documents.Add(openFile.FileName);
+                }
+                else
+                    settings.alert.Close();
             }
-
+            Cursor.Current = Cursors.WaitCursor;
             DocOfE.Tables[1].Range.Copy();
             rangeForToCopy.PasteAndFormat(Word.WdRecoveryType.wdFormatOriginalFormatting);
             try
@@ -314,19 +274,21 @@ namespace eDocs_Editor
                     catch { }
                 }
                 if (pageToDo == -1 || !DS.PageNumberFromHeaders(DocPageNumber + pageToDo))
-                    return;
-                DS.UpDateFields();
+                    RealDoc.Application.ScreenUpdating = true;
                 RealDoc.Application.Selection.GoTo(ref what, ref which, ref currentPageNumToRef, ref missing);
                 trackChange(RealDoc, true);
             }
             catch (Exception ex)
             {
-
                 trackChange(RealDoc, true);
                 RealDoc.Application.ScreenUpdating = true;
                 MessageBox.Show("Something Went Wrong - " + ex.Message);
                 settings.alert.Close();
             }
+            Cursor.Current = Cursors.Default;
+            rangeForToCopy.Tables[1].Range.Fields.Locked = 0;
+            rangeForToCopy.Tables[1].Range.Fields.Update();
+            DS.UpDateFields();
         }
         public static void copyCellsToTable(Word.Table Realdoc_tbl, Word.Table ListOfEff_tbl, int pageToDo,int FirstHeaderPage)
         {

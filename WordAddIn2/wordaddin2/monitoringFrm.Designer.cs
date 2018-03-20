@@ -90,8 +90,8 @@
             // 
             // monitoringFrm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(260, 124);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -102,6 +102,9 @@
             this.Name = "monitoringFrm";
             this.Text = "monitoringFrm";
             this.Load += new System.EventHandler(this.monitoringFrm_Load);
+
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F); //IMPORTANT
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ResumeLayout(false);
             this.PerformLayout();
 

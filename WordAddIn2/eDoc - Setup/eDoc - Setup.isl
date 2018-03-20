@@ -1902,10 +1902,11 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>edoc_list_of_effective_templ</td><td>ISX_DEFAULTCOMPONENT4</td><td>EDOCLI~1.DOC|eDoc List of effective Template - A5.docx</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\wordaddin2\bin\Release\Templates\eDoc List of effective Template - A5.docx</td><td>1</td><td/></row>
 		<row><td>edocs_editor.dll.manifest</td><td>ISX_DEFAULTCOMPONENT</td><td>EDOCSE~1.MAN|eDocs Editor.dll.manifest</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\wordaddin2\bin\Release\eDocs Editor.dll.manifest</td><td>1</td><td/></row>
 		<row><td>edocs_editor.primary_output</td><td>eDocs_Editor.Primary_output</td><td>eDocs_Editor.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;eDocs_Editor&gt;|Built</td><td>3</td><td/></row>
 		<row><td>edocs_editor.vsto</td><td>ISX_DEFAULTCOMPONENT</td><td>EDOCSE~1.VST|eDocs Editor.vsto</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\wordaddin2\bin\Release\eDocs Editor.vsto</td><td>1</td><td/></row>
+		<row><td>loep5.docx</td><td>ISX_DEFAULTCOMPONENT4</td><td>LOEP5~1.DOC|LOEP5.docx</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\wordaddin2\bin\Release\Templates\LOEP5.docx</td><td>1</td><td/></row>
+		<row><td>loepelse.docx</td><td>ISX_DEFAULTCOMPONENT4</td><td>LOEPEL~1.DOC|LOEPElse.docx</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\goffe\Dropbox\eDocs Addin Project\WordAddIn2\WordAddIn2\wordaddin2\bin\Release\Templates\LOEPElse.docx</td><td>1</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -2649,7 +2650,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>Global eDocs</td><td>0</td><td/><td>1277525228</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>Global eDocs</td><td>0</td><td/><td>-2119784725</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>1159970122</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>1159970122</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_OS</td><td>1033</td><td>The operating system is not adequate for running [ProductName].</td><td>0</td><td/><td>1159970122</td></row>
@@ -3749,8 +3750,8 @@
 		<row><td>IDS__TargetReq_DESC_PROCESSOR</td><td>1033</td><td>The processor is not adequate for running [ProductName].</td><td>0</td><td/><td>1159970122</td></row>
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>1159970122</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>1159970122</td></row>
-		<row><td>ID_STRING1</td><td>1033</td><td>http://www.GlobaleDocs.com</td><td>0</td><td/><td>1277525228</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>Global eDocs</td><td>0</td><td/><td>1277525228</td></row>
+		<row><td>ID_STRING1</td><td>1033</td><td>http://www.GlobaleDocs.com</td><td>0</td><td/><td>-2119784725</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>Global eDocs</td><td>0</td><td/><td>-2119784725</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>eDocs Editor</td><td>0</td><td/><td>-719039762</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>1159970122</td></row>
 	</table>
@@ -3980,8 +3981,8 @@
 		<col def="S0">Value</col>
 		<row><td>ActiveLanguage</td><td>1033</td></row>
 		<row><td>Comments</td><td/></row>
-		<row><td>CurrentMedia</td><td dt:dt="bin.base64" md5="de9f554a3bc05c12be9c31b998217995">
-UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
+		<row><td>CurrentMedia</td><td dt:dt="bin.base64" md5="6d78a46bf2c52ee27034bbcad20f7f95">
+QwBEAF8AUgBPAE0AAQBFAHgAcAByAGUAcwBzAA==
 			</td></row>
 		<row><td>DefaultProductConfiguration</td><td>Express</td></row>
 		<row><td>EnableSwidtag</td><td>0</td></row>
@@ -4371,7 +4372,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
 		<row><td>ProductCode</td><td>{05F965FD-0DCA-436D-A47E-2D112B565CBD}</td><td/></row>
 		<row><td>ProductName</td><td>eDocs Editor</td><td/></row>
-		<row><td>ProductVersion</td><td>2.2.7</td><td/></row>
+		<row><td>ProductVersion</td><td>3.9.2</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>
