@@ -305,7 +305,7 @@ namespace eDocs_Editor
                 return;
             }
             settings.trackChange(Doc, false);
-            DocSettings DS = new DocSettings();
+            DocSettings DS = new DocSettings(Doc,"WTF");
             DS.InesrtRevDatatoAllHeadingCells(filedName,rng);
             DS.UpDateFields();
         }

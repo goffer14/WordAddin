@@ -33,8 +33,9 @@ namespace eDocs_Editor
             headingStyles = new List<object>();
             setStylesToDoc();
         }
-        public DocSettings()
+        public DocSettings(Word.Document ParentDoc,String WTF)
         {
+            Doc = ParentDoc;
         }
         public int GetPageNumber(Word.Document doc)
         {
@@ -43,11 +44,68 @@ namespace eDocs_Editor
 
         public void InesrtRevDatatoAllHeadingCells(string data, Word.Range range)
         {
-            if (data == "page")
-                BuildFields(range, "\"edocs_Page_page\"", "\"edocs_Page_" + data + "\"", data);
-            else
                 BuildFields(range, "\"edocs_Page_page\"", "\"edocs_Page_" + data + "\"", data);
         }
+        public void buildIfEmptyField(Word.Range rngTarget, object PageString, object textString, string data)
+        {
+            string sQ = '"'.ToString();
+            Word.Field fldIf = null;
+            Word.View vw = Doc.ActiveWindow.View;
+            rngTarget.Text = " ";
+            rngTarget.End = rngTarget.Start;
+            bool bViewFldCodes = false;
+            string sFieldCode;
+            string pageVar = "{PAGE  \\* ARABIC}";
+            string docVar = "{DOCVARIABLE " + sQ + "edocs_Page" +pageVar+"_page" + sQ + "\\* MERGEFORMAT}";
+            if (data == "page")
+                docVar = pageVar;
+            string fullPageVar = "{DOCVARIABLE " + sQ + "edocs_Page" + docVar + "_" + data+ sQ + "}";
+            string ifVar = "IF" + fullPageVar + "=" + sQ + "Error!*" + sQ + " " + sQ + "eDoc Empty Field" + sQ + fullPageVar;
+
+            System.Diagnostics.Debug.WriteLine("String - " + ifVar);
+
+            bViewFldCodes = vw.ShowFieldCodes;
+            //Finding text in a field codes requires field codes to be shown
+            if (!bViewFldCodes) vw.ShowFieldCodes = true;
+
+
+            fldIf = rngTarget.Fields.Add(rngTarget, Word.WdFieldType.wdFieldEmpty, ifVar, false);
+            sFieldCode = GenerateNestedField(fldIf, fullPageVar,true);
+            sFieldCode = GenerateNestedField(fldIf, fullPageVar, false);
+            if (data != "page")
+            {
+                sFieldCode = GenerateNestedField(fldIf, docVar, true);
+                sFieldCode = GenerateNestedField(fldIf, docVar, false);
+            }
+            sFieldCode = GenerateNestedField(fldIf, pageVar,true);
+            sFieldCode = GenerateNestedField(fldIf, pageVar, false);
+            rngTarget.Fields.Update();
+            vw.ShowFieldCodes = bViewFldCodes;
+
+        }
+        private string GenerateNestedField(Word.Field fldOuter, string sPlaceholder, object forward)
+        {
+            Word.Range rngFld = fldOuter.Code;
+            bool bFound;
+            string sFieldCode;
+
+            //Get the field code from the placeholder by removing the { }
+            sFieldCode = sPlaceholder.Substring(1, sPlaceholder.Length - 2); //Mid(sPlaceholder, 2, Len(sPlaceholder) - 2)
+            rngFld.TextRetrievalMode.IncludeFieldCodes = true;
+
+            System.Diagnostics.Debug.WriteLine("sFieldCode: " + sFieldCode);
+            System.Diagnostics.Debug.WriteLine("rngFld.StoryType.ToString(): " + rngFld.StoryType.ToString());
+            System.Diagnostics.Debug.WriteLine("rngFld.StoryType.ToString(): " + rngFld.Text.ToString());
+            rngFld.Fields.Update();
+            rngFld.Find.ClearFormatting();
+            bFound = rngFld.Find.Execute(sPlaceholder, ref missing, ref missing, ref missing, ref missing, ref missing, ref forward, Word.WdFindWrap.wdFindContinue, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing);
+            System.Diagnostics.Debug.WriteLine("bFound: " + bFound);
+            System.Diagnostics.Debug.WriteLine(" ");
+            if (bFound) Doc.Fields.Add(rngFld, Word.WdFieldType.wdFieldEmpty, sFieldCode, false);
+
+            return fldOuter.Code.ToString();
+        }
+
         public void BuildFields(Word.Range range, object PageString, object textString,string data)
         {
             int rangeStart = range.Start;
@@ -172,13 +230,14 @@ namespace eDocs_Editor
                         edoc_page_text = "edocs_Page" + realPage + "_page";
                         if (PageHeader[i].getHeadingString() == "INTRO")
                         {
-                            valtext = PageHeader[i].getHeadingString() + " - P-" + addToINTRO;
+                            valtext = PageHeader[i].getHeadingString() + " - P" + addToINTRO;
                             addToINTRO++;
                         }
                         else
-                            valtext = PageHeader[i].getHeadingString() + " - P-" + (j - last_page_num).ToString();
+                            valtext = PageHeader[i].getHeadingString() + " - P" + (j - last_page_num).ToString();
                         try{Doc.Variables[edoc_page_text].Delete();}catch{ }
                         Doc.Variables.Add(edoc_page_text, valtext);
+                        //addEmptyFiled(realPage);
                     }
                 }
             }
@@ -191,6 +250,40 @@ namespace eDocs_Editor
             }
             return true;
         }
+        private void addEmptyFiled(int pageNumber)
+        {
+            setVarString("page", pageNumber);
+            setVarString("date", pageNumber);
+            setVarString("rev", pageNumber);
+            setVarString("issue", pageNumber);
+            setVarString("effective", pageNumber);
+            setVarString("text1", pageNumber);
+            setVarString("text2", pageNumber);
+            setVarString("text3", pageNumber);
+            setVarString("text4", pageNumber);
+
+        }
+        public void setVarString(string varName, int page)
+        {
+            string endVar;
+            if (varName == "page")
+                try
+                {
+                    endVar = Doc.Variables["edocs_Page" + page + "_page"].Value;
+                }
+                catch
+                {
+                    Doc.Variables["edocs_Page" + page + "_page"].Value = "-";
+                }
+            try
+            {
+                endVar = Doc.Variables["edocs_Page" + Doc.Variables["edocs_Page" + page + "_page"].Value + "_" + varName].Value;
+            }
+            catch
+            {
+                Doc.Variables["edocs_Page" + Doc.Variables["edocs_Page" + page + "_page"].Value + "_" + varName].Value = "-";
+            }
+        }
         public void processMonitoring()
         {
             int numOfChanges = 0;
@@ -202,6 +295,8 @@ namespace eDocs_Editor
             }
             System.Diagnostics.Debug.WriteLine("New Pages Rivision: "+ MyRibbon.AutoRevString + " Date: " + MyRibbon.AutoDateString);
             System.Diagnostics.Debug.WriteLine("Num of Changes - " + Doc.Revisions.Count);
+            saveLastRivision("last_page_rivision", MyRibbon.AutoRevString);
+            saveLastRivision("last_date_rivision", MyRibbon.AutoDateString);
             foreach (Word.Revision oRevision in Doc.Revisions)
             {
                 if (IsAlert && settings.alert.worker.CancellationPending)
@@ -215,10 +310,19 @@ namespace eDocs_Editor
                     for (int i = 0; i <= pageNumberEnd - pageNumberStrat; i++)
                     {
                         numOfChanges++;
-                        pageString = Doc.Variables["edocs_Page" + (pageNumberStrat+i) + "_page"].Value;
-                        saveDocVariables("edocs_Page" + pageString, "rev", MyRibbon.AutoRevString);
-                        saveDocVariables("edocs_Page" + pageString, "date", MyRibbon.AutoDateString);
-                        System.Diagnostics.Debug.WriteLine("Changes Made in page : " + (pageNumberStrat + i));
+                        try
+                        {
+                            pageString = Doc.Variables["edocs_Page" + (pageNumberStrat + i) + "_page"].Value;
+                            System.Diagnostics.Debug.WriteLine("pageString : " + pageString);
+                            saveDocVariables("edocs_Page" + pageString, "rev", MyRibbon.AutoRevString);
+                            saveDocVariables("edocs_Page" + pageString, "date", MyRibbon.AutoDateString);
+                            //setAllHeaderNumbers(pageNumberStrat + i);
+                            System.Diagnostics.Debug.WriteLine("Changes Made in page : " + (pageNumberStrat + i));
+                        }
+                        catch
+                        {
+                            System.Diagnostics.Debug.WriteLine("Error in find pageString for page: " + pageNumberStrat + i);
+                        }
                     }
                 }
                 
@@ -232,6 +336,100 @@ namespace eDocs_Editor
                 System.Diagnostics.Debug.WriteLine("Total num of Changes Made from: " + settings.dateToMonitor + " Are: " + numOfChanges);
             }
 
+        }
+        private void saveLastRivision(String var,String data)
+        {
+            try
+            {
+                Doc.Variables[var].Value = data;
+            }
+            catch
+            {
+                Doc.Variables.Add(var, data);
+            }
+    }
+        private void setAllHeaderNumbers(int pageNumber)
+        {
+            try
+            {
+                //setFromFirstToIndex(pageString, pageNumber);
+                if (toSaveUntilLastPage(Doc.Variables["edocs_Page" + (pageNumber) + "_page"].Value, pageNumber + 1))
+                    setFromIndexToLast(Doc.Variables["edocs_Page" + (pageNumber) + "_page"].Value, pageNumber + 1, MyRibbon.AutoRevString, MyRibbon.AutoDateString, getFieldValue(pageNumber, "issue"), getFieldValue(pageNumber, "effective"));
+            }
+            catch
+            {
+                System.Diagnostics.Debug.WriteLine("Error in find pageString for page: " + pageNumber+1);
+            }
+        }
+        private void setFromFirstToIndex(string pageString, int toPageNumber)
+        {
+            string pageTamplate = pageString.TrimEnd(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
+            List<String> pagesArray = new List<String>();
+            for (int i = 1; i < toPageNumber; i++)
+            {
+                string page = pageTamplate + i.ToString();
+                pagesArray.Add(page);
+                saveDocVariables("edocs_Page" + page, "rev", MyRibbon.AutoRevString);
+                saveDocVariables("edocs_Page" + page, "date", MyRibbon.AutoDateString);
+                System.Diagnostics.Debug.WriteLine("Changes Made in page : " + page);
+            }
+        }
+        private void setFromIndexToLast(string pageString, int fromRealPageNumber,string rev,string date,string issue, string effective)
+        {
+            string pageTamplate = pageString.TrimEnd(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
+            bool lastPage = false;
+            int realPageIndex = fromRealPageNumber;
+            while (!lastPage)
+            { 
+                try
+                {
+                    pageString = Doc.Variables["edocs_Page" + (realPageIndex) + "_page"].Value;
+                    if (pageString.TrimEnd(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }).Equals(pageTamplate))
+                    {
+                        string page = Doc.Variables["edocs_Page" + (realPageIndex) + "_page"].Value;
+                        saveDocVariables("edocs_Page" + page, "rev", rev);
+                        saveDocVariables("edocs_Page" + page, "date", date);
+                        if(issue!=null) saveDocVariables("edocs_Page" + page, "issue", issue);
+                        if(effective!=null) saveDocVariables("edocs_Page" + page, "effective", effective);
+                        System.Diagnostics.Debug.WriteLine("Changes Made in page : " + page);
+                        realPageIndex++;
+                    }
+                    else
+                        lastPage = true;
+                }
+                catch
+                {
+                    System.Diagnostics.Debug.WriteLine("Error in find pageString for page: " + realPageIndex);
+                    lastPage = true;
+                }
+            }
+        }
+        private bool toSaveUntilLastPage(string pageString, int fromRealPageNumber)
+        {
+            string pageTamplate = pageString.TrimEnd(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
+            for(int i=fromRealPageNumber; ;i++)
+            {
+                    pageString = Doc.Variables["edocs_Page" + (i) + "_page"].Value;
+                    if (pageString.TrimEnd(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }).Equals(pageTamplate))
+                    {
+                        if (getFieldValue(i, "rev")==null)
+                            return true;
+                    }
+                    else
+                        return false;
+            }
+        }
+        private string getFieldValue(int pageNumber,string fieldName)
+        {
+            try
+            {
+                string endVar = Doc.Variables["edocs_Page" + Doc.Variables["edocs_Page" + (pageNumber) + "_page"].Value + "_" + fieldName].Value;
+                return endVar;
+            }
+            catch
+            {
+                return null;
+            }
         }
         private void deleteDataBeforeFirstHeader(int firstHeadingPage)
         {
@@ -347,21 +545,9 @@ namespace eDocs_Editor
             Globals.ThisAddIn.Application.ActiveDocument.Fields.Update();
             Globals.ThisAddIn.Application.ScreenRefresh();
         }
-        public class CustomCell
-        {
-            public int cellRow;
-            public int cellColumn;
-            public int cellRowSpan;
-            public int cellColumnSpan;
-            public String cellText;
-        }
         private static int GetPageNumberOfRange(Word.Range range)
         {
             return (int)range.get_Information(Word.WdInformation.wdActiveEndAdjustedPageNumber);
-        }
-        private static int GetSectionNumberOfRange(Word.Range range)
-        {
-            return (int)range.get_Information(Word.WdInformation.wdActiveEndSectionNumber);
         }
         public void ChangesExport()
         {
@@ -571,11 +757,13 @@ namespace eDocs_Editor
         }
         public void initTOC()
         {
-            System.Diagnostics.Debug.WriteLine("Paragraph Count - " + Doc.TablesOfContents[1].Range.Paragraphs.Count);
-            //foreach (Word.Paragraph pra in Doc.TablesOfContents[1].Range.Paragraphs)
-            for (int i=2;i<= Doc.TablesOfContents[1].Range.Paragraphs.Count;i++)
-                        { 
-                    Word.Paragraph pra = Doc.TablesOfContents[1].Range.Paragraphs[i];
+            for (int t = 1; t <= Doc.TablesOfContents.Count; t++)
+            {
+                System.Diagnostics.Debug.WriteLine("TablesOfContents Count - " + Doc.TablesOfContents.Count);
+                for (int i = 2; i <= Doc.TablesOfContents[t].Range.Paragraphs.Count; i++)
+                {
+                    Word.Paragraph pra = Doc.TablesOfContents[t].Range.Paragraphs[i];
+                    System.Diagnostics.Debug.WriteLine("Paragraph Count - " + Doc.TablesOfContents[t].Range.Paragraphs.Count);
                     if (IsAlert && settings.alert.worker.CancellationPending)
                         return;
                     string rangeText = pra.Range.Text;
@@ -592,39 +780,8 @@ namespace eDocs_Editor
                             break;
                         }
                     }
+                }
             }
-        }
-        public void replaceTextInTOc2(Word.Paragraph par, int findText)
-        {
-            try
-            {
-                string final;
-                string temp = par.Range.Text;           
-                string pageValue = null;
-                //Word.ParagraphFormat parFormat = par.Format;
-                try
-                {
-                    pageValue = Doc.Variables["edocs_Page" + findText + "_page"].Value;
-                    //pageValue = Regex.Replace(pageValue, @"\s", "");
-                }
-                catch (Exception e)
-                { 
-                    System.Diagnostics.Debug.WriteLine(e.Message);
-                    return;
-                }
-
-                if (temp.Length > 1)
-                {
-                    final = ReplaceAt(temp, temp.Length - 2 - findText.ToString().Length+1, findText.ToString().Length, pageValue);
-                    if (final != temp)
-                    {
-                        par.Range.Text = final;
-                        //par.Format = parFormat;
-                    }
-                }
-                
-            }
-            catch (Exception e) { System.Diagnostics.Debug.WriteLine(e.Message); }
         }
         public static string ReplaceAt(string str, int index, int length, string replace)
         {

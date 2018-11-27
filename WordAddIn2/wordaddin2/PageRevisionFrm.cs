@@ -108,13 +108,17 @@ namespace eDocs_Editor
                     endVar = Doc.Variables["edocs_Page" + page + "_page"].Value;
                     return endVar.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("\a", "");
                 }
-                catch { return "-"; }
+                catch {
+                    return "-";
+                }
             try
             {
                 endVar = Doc.Variables["edocs_Page" + Doc.Variables["edocs_Page" + page + "_page"].Value + "_" + varName].Value;
                 return endVar.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Replace("\a", "");
             }
-            catch { return "-"; }
+            catch {
+                return "-";
+            }
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -150,7 +154,6 @@ namespace eDocs_Editor
                             continue;
                         }
                     }
-                    Cursor.Current = Cursors.Default;
                 }
 
             }
