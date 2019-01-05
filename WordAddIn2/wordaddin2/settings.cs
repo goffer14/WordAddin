@@ -55,12 +55,12 @@ namespace eDocs_Editor
             if (CheckForInternetConnection())
                 logUser();
         }
-        public static void process_doc(Word.Document Doc)
+        public static void process_doc(Word.Document Doc,string type)
         {
             DocSettings DS = new DocSettings(Doc);
             DS.IsAlert = true;
             int DocPageNumber = DS.GetPageNumber(Doc);
-            if (DS.PageNumberFromHeaders(DocPageNumber))
+            if (DS.PageNumberFromHeaders(DocPageNumber,type))
                 if (settings.monitorDoc)
                 {
                     DS.processMonitoring();
@@ -72,6 +72,11 @@ namespace eDocs_Editor
             Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("toggleButton_ribbon");
             Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("rev_cbo");
             Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("date_cbo");
+        }
+        public static void moveToNewVersion(Word.Document Doc)
+        {
+            DocSettings DS = new DocSettings(Doc);
+            DS.moveToNewVersion();
         }
         public static void makeAllSameAsPrevious(Word.Document Doc)
         {
@@ -273,8 +278,10 @@ namespace eDocs_Editor
                     }
                     catch { }
                 }
-                if (pageToDo == -1 || !DS.PageNumberFromHeaders(DocPageNumber + pageToDo))
-                    RealDoc.Application.ScreenUpdating = true;
+                try { string test1 = RealDoc.Variables["processType"].Value; }
+                catch { RealDoc.Variables.Add("processType", "styles"); }
+                if (pageToDo == -1 || !DS.PageNumberFromHeaders(DocPageNumber + pageToDo, RealDoc.Variables["processType"].Value))
+                RealDoc.Application.ScreenUpdating = true;
                 RealDoc.Application.Selection.GoTo(ref what, ref which, ref currentPageNumToRef, ref missing);
                 trackChange(RealDoc, true);
             }

@@ -37,17 +37,20 @@
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_ok
             // 
             this.btn_ok.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btn_ok.Location = new System.Drawing.Point(300, 128);
+            this.btn_ok.Location = new System.Drawing.Point(315, 166);
             this.btn_ok.Name = "btn_ok";
             this.btn_ok.Size = new System.Drawing.Size(59, 25);
             this.btn_ok.TabIndex = 9;
-            this.btn_ok.Text = "Done";
+            this.btn_ok.Text = "Start";
             this.btn_ok.UseVisualStyleBackColor = true;
             this.btn_ok.Click += new System.EventHandler(this.btn_ok_Click);
             // 
@@ -55,11 +58,11 @@
             // 
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label1.Location = new System.Drawing.Point(10, 9);
+            this.label1.Location = new System.Drawing.Point(108, -1);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(172, 33);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Page Number Selector";
+            this.label1.Text = "Process type selector";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label3
@@ -141,7 +144,7 @@
             this.tableLayoutPanel1.Controls.Add(this.H2, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.I2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(13, 45);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(28, 59);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
@@ -150,11 +153,49 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(346, 80);
             this.tableLayoutPanel1.TabIndex = 40;
             // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(12, 31);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(76, 17);
+            this.radioButton1.TabIndex = 41;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Styels type";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(12, 152);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(125, 17);
+            this.radioButton2.TabIndex = 42;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Only by page number";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button1.Location = new System.Drawing.Point(186, 166);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(123, 25);
+            this.button1.TabIndex = 43;
+            this.button1.Text = "Move to new version";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // setStylesToDoc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(386, 158);
+            this.ClientSize = new System.Drawing.Size(386, 203);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.radioButton2);
+            this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn_ok);
@@ -170,6 +211,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -184,5 +226,8 @@
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -169,7 +169,7 @@ namespace eDocs_Editor
             catch { }
             Doc.Variables.Add(page_text + "_"+ VariablesText, value);
         }
-        public bool PageNumberFromHeaders(int DocPageNumber)
+        public bool PageNumberFromHeaders(int DocPageNumber,string type)
         {
             Word.Range rng = Doc.Range();
             List<header> PageHeader = new List<header>();
@@ -185,16 +185,23 @@ namespace eDocs_Editor
                 try { Doc.Sections[i].Footers[Word.WdHeaderFooterIndex.wdHeaderFooterPrimary].PageNumbers.RestartNumberingAtSection = false; }
                 catch { }
             }
-            try
+            if (type.Equals("styles"))
             {
-                PageHeader = getHeadingArray(headingStyles);
+                try
+                {
+                    PageHeader = getHeadingArray(headingStyles);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Something went wrong: " + rngPageNumber + Environment.NewLine + " Error Msg: " + ex.Message.ToString());
+                    if (IsAlert)
+                        settings.alert.Close();
+                    return false;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Something went wrong: " + rngPageNumber + Environment.NewLine + " Error Msg: " + ex.Message.ToString());
-                if (IsAlert)
-                    settings.alert.Close();
-                return false;
+                    PageHeader.Add(new header(1, ""));
             }
             return InsertPageNumberToDataBase(PageHeader, DocPageNumber);
         }
@@ -212,7 +219,6 @@ namespace eDocs_Editor
                 deleteDataBeforeFirstHeader(PageHeader[0].pageNum);
             try
             {
-
                 for (int i = 0; i < PageHeader.Count; i++)
                 {
                     if (i == PageHeader.Count - 1)
@@ -233,9 +239,11 @@ namespace eDocs_Editor
                             valtext = PageHeader[i].getHeadingString() + " - P" + addToINTRO;
                             addToINTRO++;
                         }
-                        else
+                        else if(PageHeader[i].getHeadingString().Length>0)
                             valtext = PageHeader[i].getHeadingString() + " - P" + (j - last_page_num).ToString();
-                        try{Doc.Variables[edoc_page_text].Delete();}catch{ }
+                        else
+                            valtext = "P" + (j - last_page_num).ToString();
+                        try {Doc.Variables[edoc_page_text].Delete();}catch{ }
                         Doc.Variables.Add(edoc_page_text, valtext);
                         //addEmptyFiled(realPage);
                     }
@@ -262,6 +270,48 @@ namespace eDocs_Editor
             setVarString("text3", pageNumber);
             setVarString("text4", pageNumber);
 
+        }
+        public void moveToNewVersion()
+        {
+            foreach (Word.Variable var in Doc.Variables)
+            {
+                if (var.Value.Contains(" P-"))
+                {
+                    System.Diagnostics.Debug.WriteLine("Old String - " + var.Value);
+                    String oldPageVar = var.Value;
+                    string oldValue = var.Value;
+                    string newValue = var.Value.Replace(" P-", " P");
+                    updatePageVars(newValue, oldValue);
+                    var.Value = newValue;
+                    System.Diagnostics.Debug.WriteLine("New String - " + var.Value);
+                }
+
+            }
+            UpDateFields();
+        }
+        private void updatePageVars(string newPageText,string OldPageText)
+        {
+            setNewValue("date", newPageText, OldPageText);
+            setNewValue("rev", newPageText, OldPageText);
+            setNewValue("issue", newPageText, OldPageText);
+            setNewValue("effective", newPageText, OldPageText);
+            setNewValue("text1", newPageText, OldPageText);
+            setNewValue("text2", newPageText, OldPageText);
+            setNewValue("text3", newPageText, OldPageText);
+            setNewValue("text4", newPageText, OldPageText);
+        }
+        private void setNewValue(string VariablesText, string newPageText, string OldPageText)
+        {
+            string oldValue;
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("OldPageText + VariablesText" + OldPageText + "_" + VariablesText);
+                oldValue = Doc.Variables["edocs_Page"+OldPageText + "_" + VariablesText].Value;
+                System.Diagnostics.Debug.WriteLine("oldValue - " + oldValue);
+            }
+            catch { return; }
+            Doc.Variables.Add("edocs_Page"+newPageText + "_" + VariablesText, oldValue);
+            System.Diagnostics.Debug.WriteLine("newPageText + VariablesText" + newPageText + "_" + VariablesText);
         }
         public void setVarString(string varName, int page)
         {

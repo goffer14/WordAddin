@@ -52,7 +52,7 @@ namespace BackgroundWorkerDemo
                     settings.init_ListOfE_New(Doc);
                     break;
                 case 5:
-                    settings.process_doc(Doc);
+                    settings.process_doc(Doc, Doc.Variables["processType"].Value);
                     break;
                 case 6:
                     settings.makeAllSameAsPrevious(Doc);
@@ -63,8 +63,10 @@ namespace BackgroundWorkerDemo
                 case 8:
                     settings.initTOC(Doc);
                     break;
-
-
+                case 9:
+                    settings.moveToNewVersion(Doc);
+                    break;
+                    
             }
 
         }

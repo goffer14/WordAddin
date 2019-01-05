@@ -309,20 +309,6 @@ namespace eDocs_Editor
             DS.InesrtRevDatatoAllHeadingCells(filedName,rng);
             DS.UpDateFields();
         }
-        public void OnProcesseDoc(Office.IRibbonControl control)
-        {
-            if (!isActiveAddin())
-                return;
-            Doc = Globals.ThisAddIn.Application.ActiveDocument;
-            if (!settings.check_if_edoc(Doc))
-            {
-                MessageBox.Show("eDoc Only");
-                return;
-            }
-
-            alert = new AlertForm(Doc, 5, null,0);
-            alert.Show();
-        }
         public void seteDocsStyels(Office.IRibbonControl control)
         {
             if (!isActiveAddin())
@@ -356,6 +342,11 @@ namespace eDocs_Editor
         public static void changeStyles(Word.Document Doc)
         {
             alert = new AlertForm(Doc, 5, null,0);
+            alert.Show();
+        }
+        public static void moveToNewVersion(Word.Document Doc)
+        {
+            alert = new AlertForm(Doc, 9, null, 0);
             alert.Show();
         }
         public void OnExportChagnes(Office.IRibbonControl control)

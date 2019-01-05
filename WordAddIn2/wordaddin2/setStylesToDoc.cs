@@ -48,24 +48,35 @@ namespace eDocs_Editor
         }
         private void btn_ok_Click(object sender, EventArgs e)
         {
+            if (radioButton1.Checked)
+            {
+                Doc.Variables["processType"].Value = "styles";
                 if (H2.SelectedIndex != I2.SelectedIndex && I2.SelectedIndex != A2.SelectedIndex)
                     if (H2.SelectedIndex != A2.SelectedIndex)
-                         {
+                    {
                         Doc.Variables["heading2_name"].Value = H2.Items[H2.SelectedIndex].ToString();
-                            if (checkBox1.Checked)
-                                Doc.Variables["introduction2"].Value = I2.Items[I2.SelectedIndex].ToString();
-                            else
-                                Doc.Variables["introduction2"].Value = "Empty";
-                            if (checkBox3.Checked)
-                                Doc.Variables["appendix2"].Value = A2.Items[A2.SelectedIndex].ToString();
-                            else
-                                Doc.Variables["appendix2"].Value = "Empty";
-                            MyRibbon.changeStyles(Doc);
+                        if (checkBox1.Checked)
+                            Doc.Variables["introduction2"].Value = I2.Items[I2.SelectedIndex].ToString();
+                        else
+                            Doc.Variables["introduction2"].Value = "Empty";
+                        if (checkBox3.Checked)
+                            Doc.Variables["appendix2"].Value = A2.Items[A2.SelectedIndex].ToString();
+                        else
+                            Doc.Variables["appendix2"].Value = "Empty";
+                        MyRibbon.changeStyles(Doc);
                         this.Close();
                         this.Dispose();
                         return;
                     }
-            MessageBox.Show("Value mistake - All styles must be different");
+                MessageBox.Show("Value mistake - All styles must be different");
+            }
+            else
+            {
+                Doc.Variables["processType"].Value = "pages";
+                MyRibbon.changeStyles(Doc);
+                this.Close();
+                this.Dispose();
+            }
         }
 
         private void setStylesToDoc_Load(object sender, EventArgs e)
@@ -73,7 +84,6 @@ namespace eDocs_Editor
             int selectedH2 = 0;
             int selectedI2 = 1;
             int selectedA2 = 3;
-
             object[] mylistSource = new object[Doc.Styles.Count];
             // populate source with test data
             for (int i = 1; i <= Doc.Styles.Count; i++)
@@ -113,6 +123,12 @@ namespace eDocs_Editor
             H2.SelectedIndex = selectedH2;
             I2.SelectedIndex = selectedI2;
             A2.SelectedIndex = selectedA2;
+            try {string test1 = Doc.Variables["processType"].Value;}
+            catch{Doc.Variables.Add("processType", "styles");}
+            if (Doc.Variables["processType"].Value.Equals("styles"))
+                radioButton1.Checked = true;
+            else
+                radioButton2.Checked = true;
             Cursor.Current = Cursors.Default;
         }
 
@@ -129,6 +145,33 @@ namespace eDocs_Editor
         private void A2_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+                I2.Enabled = radioButton1.Checked;
+                H2.Enabled = radioButton1.Checked;
+                A2.Enabled = radioButton1.Checked;
+                checkBox1.Enabled = radioButton1.Checked;
+                checkBox3.Enabled = radioButton1.Checked;
+                label3.Enabled = radioButton1.Checked;
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            I2.Enabled = !radioButton2.Checked;
+            H2.Enabled = !radioButton2.Checked;
+            A2.Enabled = !radioButton2.Checked;
+            checkBox1.Enabled = !radioButton2.Checked;
+            checkBox3.Enabled = !radioButton2.Checked;
+            label3.Enabled = !radioButton2.Checked;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MyRibbon.moveToNewVersion(Doc);
+            this.Close();
+            this.Dispose();
         }
     }
 }
