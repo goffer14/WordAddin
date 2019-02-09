@@ -20,6 +20,6 @@ namespace eDocs_Editor
         public String getHeadingString()
         {
             return headingNum;
-        }   
+        }
     }
 }

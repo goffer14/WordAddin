@@ -83,7 +83,27 @@ namespace eDocs_Editor
             {
                 Cursor.Current = Cursors.WaitCursor;
                 pageRev = getVarString("rev", i);
-                eDocPage = getVarString("page", i);
+
+                try {
+                    string pageTemplate = Doc.Variables["pageTemplate"].Value;
+
+                    switch(pageTemplate)
+                    {
+                        case "X-P1":
+                            eDocPage = getVarString("X-P1", i);
+                            break;
+                        case "X-P-1":
+                            eDocPage = getVarString("X-P-1", i);
+                            break;
+                        case "X1":
+                            eDocPage = getVarString("X1", i);
+                            break;
+                    }
+                }
+                catch {
+                    eDocPage = getVarString("page", i);
+                }
+
                 pageDate = getVarString("date", i);
                 pageIssue = getVarString("issue", i);
                 pageEffectiveDate = getVarString("effective", i);

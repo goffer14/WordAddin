@@ -237,15 +237,20 @@ namespace eDocs_Editor
                         if (PageHeader[i].getHeadingString() == "INTRO")
                         {
                             valtext = PageHeader[i].getHeadingString() + " - P" + addToINTRO;
+                            addPageTemplates(valtext, PageHeader[i].getHeadingString(), addToINTRO);
                             addToINTRO++;
                         }
-                        else if(PageHeader[i].getHeadingString().Length>0)
-                            valtext = PageHeader[i].getHeadingString() + " - P" + (j - last_page_num).ToString();
                         else
-                            valtext = "P" + (j - last_page_num).ToString();
+                        {
+                            if (PageHeader[i].getHeadingString().Length > 0)
+                                valtext = PageHeader[i].getHeadingString() + " - P" + (j - last_page_num).ToString();
+                            else
+                                valtext = "P" + (j - last_page_num).ToString();
+                            addPageTemplates(valtext, PageHeader[i].getHeadingString(), (j - last_page_num));
+                        }
                         try {Doc.Variables[edoc_page_text].Delete();}catch{ }
                         Doc.Variables.Add(edoc_page_text, valtext);
-                        //addEmptyFiled(realPage);
+
                     }
                 }
             }
@@ -257,6 +262,44 @@ namespace eDocs_Editor
                 return false;
             }
             return true;
+        }
+        private void addPageTemplates(string edoc_page_text,string getHeadingString,int page)
+        {
+            //X-P1
+            string pageTemplateEdocCPx = "edocs_Page" + edoc_page_text + "_X-P1";
+            string valtext;
+            if (getHeadingString == "INTRO")
+                valtext = getHeadingString + "-P" + page;
+            else if (getHeadingString.Length > 0)
+                valtext = getHeadingString + "-P" + page;
+            else
+                valtext = "P" + page;
+            try { Doc.Variables[pageTemplateEdocCPx].Delete(); } catch { }
+            Doc.Variables.Add(pageTemplateEdocCPx, valtext);
+
+            //X-P-1
+            string pageTemplateEdocC_P_x = "edocs_Page" + edoc_page_text + "_X-P-1"; 
+            if (getHeadingString == "INTRO")
+                valtext = getHeadingString + "-P-" + page;
+            else if (getHeadingString.Length > 0)
+                valtext = getHeadingString + "-P-" + page;
+            else
+                valtext = "P-" + page;
+            try { Doc.Variables[pageTemplateEdocC_P_x].Delete(); } catch { }
+            Doc.Variables.Add(pageTemplateEdocC_P_x, valtext);
+
+            //X1
+            string pageTemplateEdocX = "edocs_Page" + edoc_page_text + "_X1";
+            if (getHeadingString == "INTRO")
+                valtext = getHeadingString + "-" + page;
+            else if (getHeadingString.Length > 0)
+                valtext = getHeadingString + "-" + page;
+            else
+                valtext = page.ToString();
+            try { Doc.Variables[pageTemplateEdocX].Delete(); } catch { }
+            Doc.Variables.Add(pageTemplateEdocX, valtext);
+
+
         }
         private void addEmptyFiled(int pageNumber)
         {
@@ -844,9 +887,24 @@ namespace eDocs_Editor
             string pageValue = null;
             try
             {
-                pageValue = Doc.Variables["edocs_Page" + pageNum + "_page"].Value;
+                string pageTemplate = Doc.Variables["pageTemplate"].Value;
+                switch (pageTemplate)
+                {
+                    case "X-P1":
+                        pageValue = getFieldValue(pageNum, "X-P1");
+                        break;
+                    case "X-P-1":
+                        pageValue = getFieldValue(pageNum, "X-P-1");
+                        break;
+                    case "X1":
+                        pageValue = getFieldValue(pageNum, "X1");
+                        break;
+                    default:
+                        pageValue = Doc.Variables["edocs_Page" + pageNum + "_page"].Value;
+                        break;
+                }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
                 return;

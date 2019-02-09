@@ -46,7 +46,16 @@ namespace eDocs_Editor
             {
                 System.Diagnostics.Debug.WriteLine("Application_DocumentOpen Error - " + e.Message);
             }
-}
+
+            try
+            {
+                string pageCode = document.Variables["pageTemplate"].Value;
+            }
+            catch (Exception e)
+            {
+                document.Variables["pageTemplate"].Value = "X-P-1";
+            }
+        }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {

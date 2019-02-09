@@ -238,6 +238,18 @@ namespace eDocs_Editor
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             insertText("page", Doc.Application.Selection.Range);
         }
+        public void insertSectionPageTemplateText(Office.IRibbonControl control)
+        {
+            if (!isActiveAddin())
+                return;
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            string pageCode = "X-P1";
+            try{
+                pageCode = Doc.Variables["pageTemplate"].Value;
+            }
+            catch{}
+            insertText(pageCode, Doc.Application.Selection.Range);
+        }
         public void insertSectionRevText(Office.IRibbonControl control)
         {
             if (!isActiveAddin())

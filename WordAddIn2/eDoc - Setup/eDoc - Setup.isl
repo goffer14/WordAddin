@@ -4372,7 +4372,7 @@ QwBEAF8AUgBPAE0AAQBFAHgAcAByAGUAcwBzAA==
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
 		<row><td>ProductCode</td><td>{05F965FD-0DCA-436D-A47E-2D112B565CBD}</td><td/></row>
 		<row><td>ProductName</td><td>eDocs Editor</td><td/></row>
-		<row><td>ProductVersion</td><td>4.0.1</td><td/></row>
+		<row><td>ProductVersion</td><td>5.0.1</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>

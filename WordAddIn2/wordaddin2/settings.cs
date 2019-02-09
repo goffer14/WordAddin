@@ -219,8 +219,8 @@ namespace eDocs_Editor
         public static void init_ListOfE_New(Word.Document RealDoc)
         {
             // JUST FOR ADD PAGES TO
-           // BuildTable_ListOfEffctive_BigData(RealDoc, RealDoc.Tables[2]);
-            //return;
+            //BuildTable_ListOfEffctive_BigData(RealDoc, RealDoc.Tables[2]);
+           // return;
             //END OF BIG DATA
             Object SelectionNext;
             DocSettings DS = new DocSettings(RealDoc);
@@ -366,6 +366,8 @@ namespace eDocs_Editor
 
             return PageNum - startPageNumber;
         }
+
+
         public static void BuildTable_ListOfEffctive_BigData(Word.Document LOEP, Word.Table tbl)
         {
             Word.Range rng;
@@ -373,18 +375,27 @@ namespace eDocs_Editor
             for (int i=1;i<= tbl.Rows.Count; i++)
             {
                 try {
-                    PageString = getDataText(i, "date");
+                    /**
+                    PageString = i.ToString();
+                    rng = tbl.Cell(i, 1).Range;
+                    rng.Text = i.ToString();
+                    **/
+
                     rng = tbl.Cell(i, 2).Range;
+                    int rangeStart = rng.Start; 
                     rng.Text = "";
+                    rng.End = rng.Start;
                     rng.SetRange(tbl.Cell(i, 2).Range.Start, tbl.Cell(i, 2).Range.Start);
-                    LOEP.Fields.Add(rng, Word.WdFieldType.wdFieldDocVariable, PageString, true);
 
-                    PageString = getDataText(i, "rev");
-                    rng = tbl.Cell(i, 3).Range;
-                    rng.Text = "";
-                    rng.SetRange(tbl.Cell(i, 3).Range.Start, tbl.Cell(i, 3).Range.Start);
-                    LOEP.Fields.Add(rng, Word.WdFieldType.wdFieldDocVariable, PageString, true);
-
+                    LOEP.Fields.Add(rng, Word.WdFieldType.wdFieldDocVariable, getDataText("", ""), false);
+                    rng.SetRange(rangeStart + 26, rangeStart + 26);
+                    LOEP.Fields.Add(rng, Word.WdFieldType.wdFieldDocVariable, "\"pageTemplate\"", false);
+                    rng.SetRange(rangeStart + 25, rangeStart + 25);
+                    LOEP.Fields.Add(rng, Word.WdFieldType.wdFieldDocVariable, getDataText(i.ToString(), "page"), true);
+/**
+                    BuildFields(tbl.Cell(i, 3).Range, "\"edocs_PAGE" + i + "_page\"", "\"edocs_PAGE_" + "date" + "\"", "date");
+                    BuildFields(tbl.Cell(i, 4).Range, "\"edocs_PAGE" + i + "_page\"", "\"edocs_PAGE_" + "rev" + "\"", "rev");
+    **/
                 }
                 catch (Exception e)
                 {
@@ -392,7 +403,20 @@ namespace eDocs_Editor
                 }
             }
         }
-        public static string getDataText(int page,string data)
+                
+        public static void BuildFields(Word.Range range, object PageString, object textString, string data)
+        {
+            int rangeStart = range.Start;
+            range.Text = " ";
+            range.End = range.Start;
+            range.Fields.Add(range, Word.WdFieldType.wdFieldDocVariable, textString, true);
+            if (data != "page")
+            {
+                range.SetRange(rangeStart + 25, rangeStart + 25);
+                range.Fields.Add(range, Word.WdFieldType.wdFieldDocVariable, PageString, true);
+            }
+        }
+        public static string getDataText(string page,string data)
         {
             return "\"edocs_Page" + page + "_" + data + "\"";
         }

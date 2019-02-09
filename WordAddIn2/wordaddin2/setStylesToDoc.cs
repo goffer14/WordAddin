@@ -48,6 +48,21 @@ namespace eDocs_Editor
         }
         private void btn_ok_Click(object sender, EventArgs e)
         {
+            int test5 = comboBox1.SelectedIndex;
+            string test2 = comboBox1.GetItemText(comboBox1.SelectedItem);
+
+            System.Diagnostics.Debug.WriteLine("comboBox1.SelectedIndex  : " + test5);
+            System.Diagnostics.Debug.WriteLine("comboBox1.GetItemText(comboBox1.SelectedItem)  : " + test2);
+
+            try
+            {
+                string test1 = Doc.Variables["pageTemplate"].Value;
+                Doc.Variables["pageTemplate"].Value = comboBox1.GetItemText(comboBox1.SelectedItem);
+            }
+            catch
+            {
+                Doc.Variables.Add("pageTemplate", comboBox1.GetItemText(comboBox1.SelectedItem));
+            }
             if (radioButton1.Checked)
             {
                 Doc.Variables["processType"].Value = "styles";
@@ -129,6 +144,23 @@ namespace eDocs_Editor
                 radioButton1.Checked = true;
             else
                 radioButton2.Checked = true;
+            try
+            {
+                switch (Doc.Variables["pageTemplate"].Value)
+                {
+                    case "X-P1":
+                        comboBox1.SelectedIndex = 0;
+                        break;
+                    case "X-P-1":
+                        comboBox1.SelectedIndex = 1;
+                        break;
+                    case "X1":
+                        comboBox1.SelectedIndex = 2;
+                        break;
+                }
+            }
+            catch { comboBox1.SelectedIndex = 0; }
+             
             Cursor.Current = Cursors.Default;
         }
 
@@ -149,12 +181,12 @@ namespace eDocs_Editor
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-                I2.Enabled = radioButton1.Checked;
-                H2.Enabled = radioButton1.Checked;
-                A2.Enabled = radioButton1.Checked;
-                checkBox1.Enabled = radioButton1.Checked;
-                checkBox3.Enabled = radioButton1.Checked;
-                label3.Enabled = radioButton1.Checked;
+            I2.Enabled = radioButton1.Checked;
+            H2.Enabled = radioButton1.Checked;
+            A2.Enabled = radioButton1.Checked;
+            checkBox1.Enabled = radioButton1.Checked;
+            checkBox3.Enabled = radioButton1.Checked;
+            label3.Enabled = radioButton1.Checked;
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -172,6 +204,11 @@ namespace eDocs_Editor
             MyRibbon.moveToNewVersion(Doc);
             this.Close();
             this.Dispose();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
