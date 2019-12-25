@@ -243,12 +243,37 @@ namespace eDocs_Editor
             if (!isActiveAddin())
                 return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            /**
             string pageCode = "X-P1";
             try{
                 pageCode = Doc.Variables["pageTemplate"].Value;
             }
             catch{}
             insertText(pageCode, Doc.Application.Selection.Range);
+                        BuildFields( "\"edocs_Page_" + data + "\"", data);
+            **/
+
+            Word.Range range = Doc.Application.Selection.Range;
+            int rangeStart = range.Start;
+            range.Text = " ";
+            range.End = range.Start;
+            range.Fields.Add(range, Word.WdFieldType.wdFieldDocVariable, "\"edocs_Page_\"", false);
+
+
+            range.SetRange(rangeStart + 26, rangeStart + 26);
+            range.Fields.Add(range, Word.WdFieldType.wdFieldDocVariable, "\"pageTemplate\"", false);
+
+            range.SetRange(rangeStart + 25, rangeStart + 25);
+            range.Fields.Add(range, Word.WdFieldType.wdFieldDocVariable, "\"edocs_Page_page\"", false);
+
+
+            range.Start = range.Start + 25;
+            range.Fields.Add(range, Word.WdFieldType.wdFieldEmpty, @"PAGE  \* ARABIC", false);
+
+            DocSettings DS = new DocSettings(Doc, "WTF");
+            DS.UpDateFields();
+
+
         }
         public void insertSectionRevText(Office.IRibbonControl control)
         {
@@ -277,6 +302,13 @@ namespace eDocs_Editor
                 return;
             Doc = Globals.ThisAddIn.Application.ActiveDocument;
             insertText("effective", Doc.Application.Selection.Range);
+        }
+        public void insertSectionTotalPageNumber(Office.IRibbonControl control)
+        {
+            if (!isActiveAddin())
+                return;
+            Doc = Globals.ThisAddIn.Application.ActiveDocument;
+            insertText("total_pages", Doc.Application.Selection.Range);
         }
         public void insertSectionText1Text(Office.IRibbonControl control)
         {

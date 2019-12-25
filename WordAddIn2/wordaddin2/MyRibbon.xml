@@ -36,6 +36,7 @@
         <button id="Date_Section_text" label="Date code" onAction="insertSectionDateText" />
         <button id="Issue_Section_text" label="Issue code" onAction="insertSectionIssueText" />
         <button id="Effictive_Section_text" label="Effective Date" onAction="insertSectionEffictiveText" />
+        <button id="Of_Pages_text" label="P of P#" onAction="insertSectionTotalPageNumber" />
         <button id="Text_Section_1_text" label="Text 1 code" onAction="insertSectionText1Text" />
         <button id="Text_Section_2_text" label="Text 2 code" onAction="insertSectionText2Text" />
         <button id="Text_Section_3_text" label="Text 3 code" onAction="insertSectionText3Text" />
@@ -49,6 +50,7 @@
         <button id="Date_Section_text_cell" label="Date code" onAction="insertSectionDateText" />
         <button id="Issue_Section_text_cell" label="Issue code" onAction="insertSectionIssueText" />
         <button id="Effictive_Section_text_cell" label="Effective Date" onAction="insertSectionEffictiveText" />
+        <button id="Of_Pages_text_cell" label="P of P#" onAction="insertSectionTotalPageNumber" />
         <button id="Text_Section_1_text_cell" label="Text 1 code" onAction="insertSectionText1Text" />
         <button id="Text_Section_2_text_cell" label="Text 2 code" onAction="insertSectionText2Text" />
         <button id="Text_Section_3_text_cell" label="Text 3 code" onAction="insertSectionText3Text" />

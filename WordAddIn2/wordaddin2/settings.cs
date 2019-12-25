@@ -66,7 +66,7 @@ namespace eDocs_Editor
                     DS.processMonitoring();
                     settings.monitorDoc = false;
                 }
-            DS.UpDateFields();
+            DS.UpDateFields();;
             trackChange(Doc, false);
             Doc.Application.ActiveWindow.VerticalPercentScrolled = 0;
             Globals.ThisAddIn.m_Ribbon.ribbon.InvalidateControl("toggleButton_ribbon");
@@ -207,6 +207,7 @@ namespace eDocs_Editor
         public static void initTOC(Word.Document Doc)
         {
             DocSettings DS = new DocSettings(Doc);
+            DS.IsAlert = true;
             if (Doc.TablesOfContents.Count < 0)
             {
                 MessageBox.Show("Cant Find TOC in DOC");
@@ -259,7 +260,7 @@ namespace eDocs_Editor
                 int DocPageNumber = DS.GetPageNumber(RealDoc);
                 RealDoc.Activate();
                 int FirstHeaderPage = 0;
-                int pageToDo = BuildTable_ListOfEffctivePage(RealDoc, rangeForToCopy.Tables[1], DocPageNumber, FirstHeaderPage);
+                int pageToDo = BuildTable_ListOfEffctivePage(DS, rangeForToCopy.Tables[1], DocPageNumber, FirstHeaderPage);
                 copyCellsToTable(rangeForToCopy.Tables[1], DocOfE.Tables[2], (DocPageNumber + pageToDo - FirstHeaderPage), FirstHeaderPage);
                 DocOfE.Close(ref saveOption, ref originalFormat, ref routeDocument);
                 if (pageToDo > 0)
@@ -335,9 +336,8 @@ namespace eDocs_Editor
             RangeToPaste.Paragraphs.RightIndent = 0;
             Realdoc_tbl.Cell(1, 1).Range.ListFormat.RemoveNumbers();
         }
-        public static int BuildTable_ListOfEffctivePage(Word.Document RealDoc, Word.Table tbl, int PageNum, int FirstHeaderPage)
+        public static int BuildTable_ListOfEffctivePage(DocSettings DS, Word.Table tbl, int PageNum, int FirstHeaderPage)
         {
-            DocSettings DS = new DocSettings(RealDoc);
             int pagesSum = 1;
             PageNum = PageNum - FirstHeaderPage;
             int startPageNumber = PageNum;
@@ -351,9 +351,9 @@ namespace eDocs_Editor
                     RowToadd = RowToadd+1;
 
                     tbl.Rows[tbl.Rows.Count].Select();
-                RealDoc.ActiveWindow.Selection.InsertRowsBelow(RowToadd);
+                DS.Doc.Application.Selection.InsertRowsBelow(RowToadd);
                 pagesSum = tbl.Rows.Count-2;
-                PageNum = DS.GetPageNumber(RealDoc) - FirstHeaderPage;
+                PageNum = DS.GetPageNumber() - FirstHeaderPage;
                 }
 
             if (PageNum % 2 != 0)

@@ -42,6 +42,11 @@ namespace eDocs_Editor
             return doc.ComputeStatistics(Word.WdStatistic.wdStatisticPages, System.Reflection.Missing.Value);
         }
 
+        public int GetPageNumber()
+        {
+            return Doc.ComputeStatistics(Word.WdStatistic.wdStatisticPages, System.Reflection.Missing.Value);
+        }
+
         public void InesrtRevDatatoAllHeadingCells(string data, Word.Range range)
         {
                 BuildFields(range, "\"edocs_Page_page\"", "\"edocs_Page_" + data + "\"", data);
@@ -236,17 +241,17 @@ namespace eDocs_Editor
                         edoc_page_text = "edocs_Page" + realPage + "_page";
                         if (PageHeader[i].getHeadingString() == "INTRO")
                         {
-                            valtext = PageHeader[i].getHeadingString() + " - P" + addToINTRO;
-                            addPageTemplates(valtext, PageHeader[i].getHeadingString(), addToINTRO);
+                            valtext = PageHeader[i].getHeadingString() + " - P-" + addToINTRO;
+                            addPageTemplates(valtext, PageHeader[i].getHeadingString(), addToINTRO, nextPageNum - PageHeader[i].pageNum);
                             addToINTRO++;
                         }
                         else
                         {
                             if (PageHeader[i].getHeadingString().Length > 0)
-                                valtext = PageHeader[i].getHeadingString() + " - P" + (j - last_page_num).ToString();
+                                valtext = PageHeader[i].getHeadingString() + " - P-" + (j - last_page_num).ToString();
                             else
                                 valtext = "P" + (j - last_page_num).ToString();
-                            addPageTemplates(valtext, PageHeader[i].getHeadingString(), (j - last_page_num));
+                            addPageTemplates(valtext, PageHeader[i].getHeadingString(), (j - last_page_num), nextPageNum - (PageHeader[i].pageNum+last_page_num));
                         }
                         try {Doc.Variables[edoc_page_text].Delete();}catch{ }
                         Doc.Variables.Add(edoc_page_text, valtext);
@@ -263,15 +268,15 @@ namespace eDocs_Editor
             }
             return true;
         }
-        private void addPageTemplates(string edoc_page_text,string getHeadingString,int page)
+        private void addPageTemplates(string edoc_page_text,string headingString,int page ,int totalNumnber)
         {
             //X-P1
             string pageTemplateEdocCPx = "edocs_Page" + edoc_page_text + "_X-P1";
             string valtext;
-            if (getHeadingString == "INTRO")
-                valtext = getHeadingString + "-P" + page;
-            else if (getHeadingString.Length > 0)
-                valtext = getHeadingString + "-P" + page;
+            if (headingString == "INTRO")
+                valtext = headingString + "-P" + page;
+            else if (headingString.Length > 0)
+                valtext = headingString + "-P" + page;
             else
                 valtext = "P" + page;
             try { Doc.Variables[pageTemplateEdocCPx].Delete(); } catch { }
@@ -279,10 +284,10 @@ namespace eDocs_Editor
 
             //X-P-1
             string pageTemplateEdocC_P_x = "edocs_Page" + edoc_page_text + "_X-P-1"; 
-            if (getHeadingString == "INTRO")
-                valtext = getHeadingString + "-P-" + page;
-            else if (getHeadingString.Length > 0)
-                valtext = getHeadingString + "-P-" + page;
+            if (headingString == "INTRO")
+                valtext = headingString + "-P-" + page;
+            else if (headingString.Length > 0)
+                valtext = headingString + "-P-" + page;
             else
                 valtext = "P-" + page;
             try { Doc.Variables[pageTemplateEdocC_P_x].Delete(); } catch { }
@@ -290,14 +295,23 @@ namespace eDocs_Editor
 
             //X1
             string pageTemplateEdocX = "edocs_Page" + edoc_page_text + "_X1";
-            if (getHeadingString == "INTRO")
-                valtext = getHeadingString + "-" + page;
-            else if (getHeadingString.Length > 0)
-                valtext = getHeadingString + "-" + page;
+            if (headingString == "INTRO")
+                valtext = headingString + "-" + page;
+            else if (headingString.Length > 0)
+                valtext = headingString + "-" + page;
             else
                 valtext = page.ToString();
             try { Doc.Variables[pageTemplateEdocX].Delete(); } catch { }
             Doc.Variables.Add(pageTemplateEdocX, valtext);
+
+            //Total Pages
+            string totalNumberOfpages = "edocs_Page" + edoc_page_text + "_total_pages";
+            valtext = "of " + totalNumnber;
+            try { Doc.Variables[totalNumberOfpages].Delete(); } catch { }
+
+            System.Diagnostics.Debug.WriteLine("Pages - " + valtext);
+
+            Doc.Variables.Add(totalNumberOfpages, valtext);
 
 
         }
@@ -330,7 +344,7 @@ namespace eDocs_Editor
                 }
 
             }
-            UpDateFields();
+           UpDateFields();
         }
         private void updatePageVars(string newPageText,string OldPageText)
         {
@@ -409,7 +423,7 @@ namespace eDocs_Editor
                             System.Diagnostics.Debug.WriteLine("pageString : " + pageString);
                             saveDocVariables("edocs_Page" + pageString, "rev", MyRibbon.AutoRevString);
                             saveDocVariables("edocs_Page" + pageString, "date", MyRibbon.AutoDateString);
-                            //setAllHeaderNumbers(pageNumberStrat + i);
+                            setAllHeaderNumbers(pageNumberStrat + i);
                             System.Diagnostics.Debug.WriteLine("Changes Made in page : " + (pageNumberStrat + i));
                         }
                         catch
@@ -480,11 +494,14 @@ namespace eDocs_Editor
                     if (pageString.TrimEnd(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }).Equals(pageTamplate))
                     {
                         string page = Doc.Variables["edocs_Page" + (realPageIndex) + "_page"].Value;
-                        saveDocVariables("edocs_Page" + page, "rev", rev);
-                        saveDocVariables("edocs_Page" + page, "date", date);
-                        if(issue!=null) saveDocVariables("edocs_Page" + page, "issue", issue);
-                        if(effective!=null) saveDocVariables("edocs_Page" + page, "effective", effective);
-                        System.Diagnostics.Debug.WriteLine("Changes Made in page : " + page);
+                        if (getFieldValue(realPageIndex, "rev") == null)
+                        {
+                            saveDocVariables("edocs_Page" + page, "rev", rev);
+                            saveDocVariables("edocs_Page" + page, "date", date);
+                            if (issue != null) saveDocVariables("edocs_Page" + page, "issue", issue);
+                            if (effective != null) saveDocVariables("edocs_Page" + page, "effective", effective);
+                            System.Diagnostics.Debug.WriteLine("Changes Made in page : " + page);
+                        }
                         realPageIndex++;
                     }
                     else
@@ -634,9 +651,13 @@ namespace eDocs_Editor
         }
         public void UpDateFields()
         {
-            Globals.ThisAddIn.Application.Selection.Fields.Update();
-            Globals.ThisAddIn.Application.ActiveDocument.Fields.Update();
+            for (int i = 1; i <= Doc.TablesOfContents.Count; i++)
+                Doc.TablesOfContents[i].Range.Fields.Locked = -1;
             Globals.ThisAddIn.Application.ScreenRefresh();
+            Globals.ThisAddIn.Application.Selection.Fields.Update();
+            Doc.Fields.Update();
+            for (int i = 1; i <= Doc.TablesOfContents.Count; i++)
+                Doc.TablesOfContents[i].Range.Fields.Locked = 0;
         }
         private static int GetPageNumberOfRange(Word.Range range)
         {
@@ -855,6 +876,8 @@ namespace eDocs_Editor
                 System.Diagnostics.Debug.WriteLine("TablesOfContents Count - " + Doc.TablesOfContents.Count);
                 for (int i = 2; i <= Doc.TablesOfContents[t].Range.Paragraphs.Count; i++)
                 {
+                    if (IsAlert && settings.alert.worker.CancellationPending)
+                        return;
                     Word.Paragraph pra = Doc.TablesOfContents[t].Range.Paragraphs[i];
                     System.Diagnostics.Debug.WriteLine("Paragraph Count - " + Doc.TablesOfContents[t].Range.Paragraphs.Count);
                     if (IsAlert && settings.alert.worker.CancellationPending)
@@ -865,6 +888,8 @@ namespace eDocs_Editor
 
                     for (int z = numbers.Length - 1; z >= 0; z--)
                     {
+                        if (IsAlert && settings.alert.worker.CancellationPending)
+                            return;
                         if (!string.IsNullOrEmpty(numbers[z]))
                         {
                             int q = int.Parse(numbers[z]);
@@ -914,8 +939,8 @@ namespace eDocs_Editor
                 object replaceAll = Word.WdReplace.wdReplaceOne;
                 object forward = false;
                 object matchAllWord = false;
-            if (pra.Range.Find.Execute(ref findText, ref missing, ref matchAllWord, ref missing, ref missing, ref missing, ref forward, Word.WdFindWrap.wdFindAsk, ref missing, ref replaceText, ref replaceAll, ref missing, ref missing, ref missing, ref missing))
-                    System.Diagnostics.Debug.WriteLine("FOUND - " + pageNum);
+            if (pra.Range.Find.Execute(ref findText, ref missing, ref matchAllWord, ref missing, ref missing, ref missing, ref forward, Word.WdFindWrap.wdFindAsk, ref missing, ref replaceText, ref replaceAll, ref missing, true, ref missing, ref missing))
+                    System.Diagnostics.Debug.WriteLine("FOUND - " + pageNum + " new page - " + pageValue);
                 else
                     System.Diagnostics.Debug.WriteLine("Not FOUND");
             
