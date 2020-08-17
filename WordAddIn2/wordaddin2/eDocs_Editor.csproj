@@ -305,12 +305,6 @@
       <DependentUpon>LoepCreator.cs</DependentUpon>
     </Compile>
     <Compile Include="loepDocument.cs" />
-    <Compile Include="monitoringFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="monitoringFrm.Designer.cs">
-      <DependentUpon>monitoringFrm.cs</DependentUpon>
-    </Compile>
     <Compile Include="multiLOEP.cs" />
     <Compile Include="MyRibbon.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -335,9 +329,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LoepCreator.resx">
       <DependentUpon>LoepCreator.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="monitoringFrm.resx">
-      <DependentUpon>monitoringFrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PageRevisionFrm.resx">
       <DependentUpon>PageRevisionFrm.cs</DependentUpon>

@@ -40,7 +40,6 @@ namespace eDocs_Editor
         public Office.IRibbonUI ribbon;
         public static AlertForm  alert;
         public static setStylesToDoc setStyle_frm;
-        public static monitoringFrm monitoring_Frm;
         public static LoepCreator multiLoep;
         public static AuthenticateForm Authenticate_frm = null;
         public MyRibbon()
@@ -477,17 +476,6 @@ namespace eDocs_Editor
                 Doc.TrackFormatting = true;
                 Doc.TrackMoves = true;
                 Doc.TrackRevisions = true;
-                /**
-
-                if (monitoring_Frm != null)
-                {
-                    monitoring_Frm.Close();
-                    monitoring_Frm.Dispose();
-                    monitoring_Frm = null;
-                }
-                monitoring_Frm = new monitoringFrm(Doc);
-                monitoring_Frm.Show();
-    **/
                 updateMonitorRibbon();
             }
             else

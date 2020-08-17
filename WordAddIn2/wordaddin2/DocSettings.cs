@@ -110,7 +110,6 @@ namespace eDocs_Editor
 
             return fldOuter.Code.ToString();
         }
-
         public void BuildFields(Word.Range range, object PageString, object textString,string data)
         {
             int rangeStart = range.Start;
@@ -137,19 +136,6 @@ namespace eDocs_Editor
                 return Doc.Range(ref Start, ref End);
             else
                 return Doc.Range(ref Start);
-        }
-        public bool unsecure_for_edit(Word.Document DocToUnSecure)
-        {
-            object password = settings.doc_password;
-            try
-            {
-                DocToUnSecure.Unprotect(ref password);
-            }
-            catch
-            {
-                return false;
-            }
-            return true;
         }
         public void insertRev_Rdate(string PageString, string rev, string r_date, string issue, string effective, string text1, string text2, string text3, string text4)
         {
@@ -553,11 +539,16 @@ namespace eDocs_Editor
             int rngPageNumber = 0;
             int firstHeaderPage = 0;
             header midHeader = new header(0, "");
+            Word.View vw = Doc.ActiveWindow.View;
+            vw.MarkupMode = Word.WdRevisionsMode.wdInLineRevisions;
+            vw.RevisionsView = Word.WdRevisionsView.wdRevisionsViewFinal;
+            int DocPageNumber = GetPageNumber(Doc);
+            System.Diagnostics.Debug.WriteLine("DocPageNumber process doc - " + DocPageNumber);
             for (int i=0;i<headingStyles.Count;i++)
             {
                 if (headingStyles[i].Equals("Empty"))
                     continue;
-                Word.Range rng = Doc.Range();
+                Word.Range rng = Doc.Content;
                 rng.Find.set_Style(headingStyles[i]);
                 midHeader.pageNum = 0;
                 firstHeaderPage = 0;
@@ -871,15 +862,50 @@ namespace eDocs_Editor
         }
         public void initTOC()
         {
+            System.Diagnostics.Debug.WriteLine("TablesOfContents Count - " + Doc.TablesOfContents.Count);
             for (int t = 1; t <= Doc.TablesOfContents.Count; t++)
             {
-                System.Diagnostics.Debug.WriteLine("TablesOfContents Count - " + Doc.TablesOfContents.Count);
+                Doc.TablesOfContents[t].Update();
                 for (int i = 2; i <= Doc.TablesOfContents[t].Range.Paragraphs.Count; i++)
                 {
                     if (IsAlert && settings.alert.worker.CancellationPending)
                         return;
                     Word.Paragraph pra = Doc.TablesOfContents[t].Range.Paragraphs[i];
                     System.Diagnostics.Debug.WriteLine("Paragraph Count - " + Doc.TablesOfContents[t].Range.Paragraphs.Count);
+                    if (IsAlert && settings.alert.worker.CancellationPending)
+                        return;
+                    string rangeText = pra.Range.Text;
+                    string[] numbers = Regex.Split(rangeText, @"\D+");
+                    System.Diagnostics.Debug.WriteLine("Paragraph " + rangeText);
+
+                    for (int z = numbers.Length - 1; z >= 0; z--)
+                    {
+                        if (IsAlert && settings.alert.worker.CancellationPending)
+                            return;
+                        if (!string.IsNullOrEmpty(numbers[z]))
+                        {
+                            int q = int.Parse(numbers[z]);
+                            replaceTextInTOc(pra, q);
+                            //replaceTextInTOc2(pra, q);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        public void initTOF()
+        {
+            System.Diagnostics.Debug.WriteLine("TablesOfFigures Count - " + Doc.TablesOfFigures.Count);
+            for (int t = 1; t <= Doc.TablesOfFigures.Count; t++)
+            {
+                Doc.TablesOfFigures[t].Update();
+                for (int i = 2; i <= Doc.TablesOfFigures[t].Range.Paragraphs.Count; i++)
+                {
+                    if (IsAlert && settings.alert.worker.CancellationPending)
+                        return;
+                    Word.Paragraph pra = Doc.TablesOfFigures[t].Range.Paragraphs[i];
+                    System.Diagnostics.Debug.WriteLine("Paragraph Count - " + Doc.TablesOfFigures[t].Range.Paragraphs.Count);
                     if (IsAlert && settings.alert.worker.CancellationPending)
                         return;
                     string rangeText = pra.Range.Text;

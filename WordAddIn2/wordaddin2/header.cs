@@ -16,6 +16,7 @@ namespace eDocs_Editor
         {
             this.pageNum = pageNum;
             this.headingNum = headingNum;
+            System.Diagnostics.Debug.WriteLine("New header added: pageNum - " + pageNum + " headingNum - " + headingNum);
         }
         public String getHeadingString()
         {

@@ -60,6 +60,7 @@ namespace eDocs_Editor
             DocSettings DS = new DocSettings(Doc);
             DS.IsAlert = true;
             int DocPageNumber = DS.GetPageNumber(Doc);
+            System.Diagnostics.Debug.WriteLine("DocPageNumber process doc - " + DocPageNumber);
             if (DS.PageNumberFromHeaders(DocPageNumber,type))
                 if (settings.monitorDoc)
                 {
@@ -214,6 +215,7 @@ namespace eDocs_Editor
                 return;
             }
             DS.initTOC();
+            DS.initTOF();
             trackChange(Doc, true);
 
         }
